@@ -8,6 +8,8 @@ namespace Galaga
     {
         private Entity _entity;
         private DynamicShape _shape;
+        private float _moveUp = 0.0f;
+        private float _moveDown = 0.0f;
         private float _moveLeft = 0.0f;
         private float _moveRight = 0.0f;
         private float _movementSpeed = 0.01f;
@@ -18,6 +20,9 @@ namespace Galaga
             this._shape = shape;
         }
 
+        public Vec2F GetExtent(){
+            return _shape.Extent;
+        }
         public void Render()
         {
             this._entity.RenderEntity();
@@ -25,8 +30,8 @@ namespace Galaga
         private void UpdateDirection()
         {
             float x = _moveLeft + _moveRight;
-            Console.WriteLine("Update " + x);
-            _shape.Direction = new DIKUArcade.Math.Vec2F(x, 0);
+            float y = _moveUp + _moveDown;
+            _shape.Direction = new DIKUArcade.Math.Vec2F(x, y);
         }
 
         public void Move()
@@ -38,8 +43,27 @@ namespace Galaga
             if (_shape.Position.X > 0.9){
                 SetMoveRight(false);
             }
+            if (_shape.Position.Y > 0.6){
+                SetMoveUp(false); 
+            } 
+            if (_shape.Position.Y < 0){
+                SetMoveDown(false); 
+            }
             this._shape.Move();
         }
+
+        public void SetMoveUp(bool val)
+        {
+            _moveUp = val ? _moveUp + _movementSpeed : 0f;
+            UpdateDirection();
+        }
+
+        public void SetMoveDown(bool val)
+        {
+            _moveDown = val ? _moveDown - _movementSpeed : 0f;
+            UpdateDirection();
+        }
+
         public void SetMoveLeft(bool val)
         {
             _moveLeft = val ? _moveLeft - _movementSpeed : 0f;

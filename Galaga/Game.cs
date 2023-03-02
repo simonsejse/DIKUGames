@@ -7,7 +7,6 @@ using DIKUArcade.GUI;
 using DIKUArcade.Input;
 using System;
 using DIKUArcade.Events;
-using DIKUArcade.Input;
 using System.Collections.Generic;
 namespace Galaga
 {
@@ -15,6 +14,7 @@ namespace Galaga
     {
         private GameEventBus eventBus;
         private Player _player;
+        private Score score = new Score();
         private const int EXPLOSION_LENGTH_MS = 500;
         private static int numEnemies = 8;
         /* Images */
@@ -24,6 +24,7 @@ namespace Galaga
         private EntityContainer<Enemy> enemies;
         private EntityContainer<PlayerShot> playerShots;
         private AnimationContainer enemyExplosions;
+        private Text scoreText; 
 
         public Game(WindowArgs windowArgs) : base(windowArgs)
         {
@@ -35,6 +36,12 @@ namespace Galaga
             SetupPlayer();
             SetupPlayerShots();
             SetupExplosion();
+            SetupScoreText();
+        }
+
+        private void SetupScoreText(){
+            scoreText = new Text("Score: 0", new Vec2F(0.4f, 0.5f), new Vec2F(0.4f, 0.25f));
+            scoreText.SetColor(new Vec3F(1, 1, 1));
         }
 
         private void SetupExplosion(){
@@ -66,7 +73,6 @@ namespace Galaga
         }
 
         public void AddExplosion(Vec2F position, Vec2F extent) {
-            // TODO: add explosion to the AnimationContainer
             enemyExplosions.AddAnimation(
                 new StationaryShape(position, extent), EXPLOSION_LENGTH_MS, new ImageStride(EXPLOSION_LENGTH_MS / 8, explosionStrides)
             );
@@ -75,18 +81,15 @@ namespace Galaga
 
         private void IterateShots() {
             playerShots.Iterate(shot => {
-                // TODO: move the shot's shape
                 shot.Shape.AsDynamicShape().Move();
-                /* TODO: guard against window borders */ 
                 if (shot.Shape.Position.Y > 1) {
-                // TODO: delete shot
                     shot.DeleteEntity();
                 } else {
                     enemies.Iterate(enemy => {
-                        // TODO: if collision btw shot and enemy -> delete both entities
                         DynamicShape shotShape = shot.Shape.AsDynamicShape();
                         if (DIKUArcade.Physics.CollisionDetection.Aabb(shotShape, enemy.Shape).Collision){
                             AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
+                            score.IncrementScore();
                             enemy.DeleteEntity();
                             shot.DeleteEntity();
                         }
@@ -103,13 +106,23 @@ namespace Galaga
                case KeyboardKey.Escape:
                     this.window.CloseWindow();
                     break;
+                case KeyboardKey.R:
+                    SpawnEnemies();
+                    break;
                 case KeyboardKey.Space:
+                    Vec2F pos = _player.GetPosition();
                     playerShots.AddEntity(
-                        new PlayerShot(_player.GetPosition(), new Image(Path.Combine("Assets", "Images", "BulletRed2.png")))
+                        new PlayerShot(new Vec2F(pos.X + _player.GetExtent().X / 2, pos.Y + _player.GetExtent().Y / 2), new Image(Path.Combine("Assets", "Images", "BulletRed2.png")))
                     );
+                    break;
+                case KeyboardKey.W:
+                    _player.SetMoveUp(true);
                     break;
                 case KeyboardKey.A:
                     _player.SetMoveLeft(true);
+                    break;
+                case KeyboardKey.S:
+                    _player.SetMoveDown(true);
                     break;
                 case KeyboardKey.D:
                     _player.SetMoveRight(true);
@@ -122,12 +135,19 @@ namespace Galaga
         {
             switch (key)
             {
+                case KeyboardKey.W:
+                    _player.SetMoveUp(false);
+                    break;
                 case KeyboardKey.A:
                     _player.SetMoveLeft(false);
+                    break;
+                case KeyboardKey.S:
+                    _player.SetMoveDown(false);
                     break;
                 case KeyboardKey.D:
                     _player.SetMoveRight(false);
                     break;
+
             }
         }
         private void KeyHandler(KeyboardAction action, KeyboardKey key)
@@ -152,7 +172,7 @@ namespace Galaga
             enemies.RenderEntities();
             playerShots.RenderEntities();
             enemyExplosions.RenderAnimations();
-
+            scoreText.RenderText();
         }
 
         public override void Update()
@@ -161,6 +181,7 @@ namespace Galaga
             eventBus.ProcessEventsSequentially();
             _player.Move();
             IterateShots();
+            scoreText.SetText(String.Format("Score: {0}", score.GetScore()));
         }
 
 
