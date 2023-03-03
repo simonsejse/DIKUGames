@@ -132,8 +132,6 @@ namespace Galaga
                     player.SetMoveRight(true);
                     break;
             }
-            // TODO: Close window if escape is pressed
-            // TODO: switch on key string and set the player's move direction
         }
         private void KeyRelease(KeyboardKey key)
         {
