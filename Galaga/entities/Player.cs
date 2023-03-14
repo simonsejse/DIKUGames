@@ -17,8 +17,8 @@ namespace Galaga
 
         public Player(DynamicShape shape, IBaseImage image)
         {
-            this._entity = new Entity(shape, image);
-            this._shape = shape;
+            _entity = new Entity(shape, image);
+            _shape = shape;
         }
         public Vec2F GetPosition(){
             return _shape.Position;
@@ -34,7 +34,7 @@ namespace Galaga
         {
             float x = _moveLeft + _moveRight;
             float y = _moveUp + _moveDown;
-            _shape.Direction = new DIKUArcade.Math.Vec2F(x, y);
+            _shape.Direction = new Vec2F(x, y);
         }
 
         public void Move()

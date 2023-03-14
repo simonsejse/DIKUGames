@@ -12,26 +12,31 @@ namespace Galaga
 {
     public class Game : DIKUGame, IGameEventProcessor
     {
-        private GameEventBus eventBus;
-        private Player player;
-        private Score score = new Score();
-        private static int EXPLOSION_LENGTH_MS = 500;
-        private static int numEnemies = 8;
+        private readonly GameEventBus _eventBus;
+        private Player _player;
+        private readonly Score _score = new Score();
+        private const int ExplosionLengthMs = 500;
+        private const int NumEnemies = 8;
+
         /* Images */
-        private List<Image> explosionStrides;
-        private IBaseImage playerShotImage;
+        private List<Image> _explosionStrides;
+        private List<Image> _enemyStridesRed;
+        private List<Image> _enemyStridesBlue;
+        private IBaseImage _playerShotImage;
+        
         /* Containers */
-        private EntityContainer<Enemy> enemies;
-        private EntityContainer<PlayerShot> playerShots;
-        private AnimationContainer enemyExplosions;
-        private Text scoreText; 
+        private EntityContainer<Enemy> _enemies;
+        private EntityContainer<PlayerShot> _playerShots;
+            
+        private AnimationContainer _enemyExplosions;
+        private Text _scoreText; 
 
         public Game(WindowArgs windowArgs) : base(windowArgs)
         {
-            eventBus = new GameEventBus();
-            eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.WindowEvent });
+            _eventBus = new GameEventBus();
+            _eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.GameStateEvent, GameEventType.WindowEvent });
             window.SetKeyEventHandler(KeyHandler);
-            eventBus.Subscribe(GameEventType.InputEvent, this);
+            _eventBus.Subscribe(GameEventType.InputEvent, this);
             SpawnEnemies();
             SetupPlayer();
             SetupPlayerShots();
@@ -40,59 +45,67 @@ namespace Galaga
         }
 
         private void SetupScoreText(){
-            scoreText = new Text("Score: 0", new Vec2F(0.4f, 0.5f), new Vec2F(0.4f, 0.25f));
-            scoreText.SetColor(new Vec3F(1, 1, 1));
+            _scoreText = new Text("Score: 0", new Vec2F(0.4f, 0.5f), new Vec2F(0.4f, 0.25f));
+            _scoreText.SetColor(new Vec3F(1, 1, 1));
         }
 
         private void SetupExplosion(){
-           enemyExplosions = new AnimationContainer(numEnemies);
-           explosionStrides = ImageStride.CreateStrides(8, Path.Combine("Assets", "Images", "Explosion.png"));
+           _enemyExplosions = new AnimationContainer(NumEnemies);
+           _explosionStrides = ImageStride.CreateStrides(8, Path.Combine("Assets", "Images", "Explosion.png"));
         }
         private void SetupPlayer(){
-            player = new Player(
+            _player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "Player.png"))
             );
         }
         private void SetupPlayerShots(){
-            playerShots = new EntityContainer<PlayerShot>();
-            playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
+            _playerShots = new EntityContainer<PlayerShot>();
+            _playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
         }
 
         private void SpawnEnemies(){
-            List<Image> images = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
-            enemies = new EntityContainer<Enemy>(numEnemies);
-            for (int i = 0; i < numEnemies; i++) {
-                enemies.AddEntity(
+            _enemyStridesBlue = ImageStride.CreateStrides(4, Path.Combine("Assets", "Images", "BlueMonster.png"));
+            _enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("Assets", "Images", "RedMonster.png"));
+            _enemies = new EntityContainer<Enemy>(NumEnemies);
+            for (int i = 0; i < NumEnemies; i++) {
+                _enemies.AddEntity(
                     new Enemy(
                         new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
-                        new ImageStride(80, images)
+                        new ImageStride(80, _enemyStridesBlue)
                     )
-                ); 
+                );
             }
         }
 
         public void AddExplosion(Vec2F position, Vec2F extent) {
-            enemyExplosions.AddAnimation(
-                new StationaryShape(position, extent), EXPLOSION_LENGTH_MS, new ImageStride(EXPLOSION_LENGTH_MS / 8, explosionStrides)
+            _enemyExplosions.AddAnimation(
+                new StationaryShape(position, extent), ExplosionLengthMs, new ImageStride(ExplosionLengthMs / 8, _explosionStrides)
             );
         }
 
 
         private void IterateShots() {
-            playerShots.Iterate(shot => {
+            _playerShots.Iterate(shot => {
                 shot.Shape.AsDynamicShape().Move();
                 if (shot.Shape.Position.Y > 1) {
                     shot.DeleteEntity();
                 } else {
-                    enemies.Iterate(enemy => {
-                        DynamicShape shotShape = shot.Shape.AsDynamicShape();
-                        if (DIKUArcade.Physics.CollisionDetection.Aabb(shotShape, enemy.Shape).Collision){
-                            AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
-                            score.IncrementScore();
-                            enemy.DeleteEntity();
-                            shot.DeleteEntity();
-                        }
+                    _enemies.Iterate(enemy => {
+                        var shotShape = shot.Shape.AsDynamicShape();
+                        if (!DIKUArcade.Physics.CollisionDetection.Aabb(shotShape, enemy.Shape).Collision) return;
+                        _score.IncrementScore();
+                        shot.DeleteEntity();
+                        
+                        var damageEvent = new GameEvent
+                        {
+                            EventType = GameEventType.GameStateEvent,
+                            From = this,
+                            To = enemy,
+                        };
+                        _eventBus.RegisterEvent(damageEvent);
+                        //enemy.DeleteEntity();
+                        //AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
                     });
                 }
             });
@@ -108,50 +121,50 @@ namespace Galaga
                         To = this,
                         EventType = GameEventType.WindowEvent
                     };
-                    eventBus.RegisterEvent(close);
+                    _eventBus.RegisterEvent(close);
                     break;
                 case KeyboardKey.R:
                     SpawnEnemies();
                     break;
                 case KeyboardKey.Space:
-                    var pos = player.GetPosition();
-                    playerShots.AddEntity(
-                        new PlayerShot(new Vec2F(pos.X + player.GetExtent().X / 2, pos.Y + player.GetExtent().Y / 2), new Image(Path.Combine("Assets", "Images", "BulletRed2.png")))
+                    var pos = _player.GetPosition();
+                    _playerShots.AddEntity(
+                        new PlayerShot(new Vec2F(pos.X + _player.GetExtent().X / 2, pos.Y + _player.GetExtent().Y / 2), new Image(Path.Combine("Assets", "Images", "BulletRed2.png")))
                     );
                     break;
                 case KeyboardKey.W:
-                    eventBus.RegisterEvent(new GameEvent
+                    _eventBus.RegisterEvent(new GameEvent
                     {
                         From = this,
                         Message = nameof(MovementDirection.Forward),
-                        To = player, //IGameEventProcessor
+                        To = _player, //IGameEventProcessor
                         IntArg1 = 1,
                     });
                     break;
                 case KeyboardKey.A:
-                    eventBus.RegisterEvent(new GameEvent
+                    _eventBus.RegisterEvent(new GameEvent
                     {
                         From = this,
                         Message = nameof(MovementDirection.Left),
-                        To = player, //IGameEventProcessor
+                        To = _player, //IGameEventProcessor
                         IntArg1 = 1,
                     });
                     break;
                 case KeyboardKey.S:
-                    eventBus.RegisterEvent(new GameEvent
+                    _eventBus.RegisterEvent(new GameEvent
                     {
                         From = this,
                         Message = nameof(MovementDirection.Backward),
-                        To = player, //IGameEventProcessor
+                        To = _player, //IGameEventProcessor
                         IntArg1 = 1,
                     });
                     break;
                 case KeyboardKey.D:
-                    eventBus.RegisterEvent(new GameEvent
+                    _eventBus.RegisterEvent(new GameEvent
                     {
                         From = this,
                         Message = nameof(MovementDirection.Right),
-                        To = player, //IGameEventProcessor
+                        To = _player, //IGameEventProcessor
                         IntArg1 = 1,
                     });
                     break;
@@ -164,38 +177,38 @@ namespace Galaga
             switch (key)
             {
                 case KeyboardKey.W:
-                    eventBus.RegisterEvent(new GameEvent
+                    _eventBus.RegisterEvent(new GameEvent
                     {
                         From = this,
                         Message = nameof(MovementDirection.Forward),
-                        To = player, //IGameEventProcessor
+                        To = _player, //IGameEventProcessor
                         IntArg1 = 0,
                     });
                     break;
                 case KeyboardKey.A:
-                    eventBus.RegisterEvent(new GameEvent
+                    _eventBus.RegisterEvent(new GameEvent
                     {
                         From = this,
                         Message = nameof(MovementDirection.Left),
-                        To = player, //IGameEventProcessor
+                        To = _player, //IGameEventProcessor
                         IntArg1 = 0,
                     });
                     break;
                 case KeyboardKey.S:
-                    eventBus.RegisterEvent(new GameEvent
+                    _eventBus.RegisterEvent(new GameEvent
                     {
                         From = this,
                         Message = nameof(MovementDirection.Backward),
-                        To = player, //IGameEventProcessor
+                        To = _player, //IGameEventProcessor
                         IntArg1 = 0,
                     });
                     break;
                 case KeyboardKey.D:
-                    eventBus.RegisterEvent(new GameEvent
+                    _eventBus.RegisterEvent(new GameEvent
                     {
                         From = this,
                         Message = nameof(MovementDirection.Right),
-                        To = player, //IGameEventProcessor
+                        To = _player, //IGameEventProcessor
                         IntArg1 = 0,
                     });
                     break;
@@ -222,20 +235,20 @@ namespace Galaga
 
         public override void Render()
         {
-            player.Render();
-            enemies.RenderEntities();
-            playerShots.RenderEntities();
-            enemyExplosions.RenderAnimations();
-            scoreText.RenderText();
+            _player.Render();
+            _enemies.RenderEntities();
+            _playerShots.RenderEntities();
+            _enemyExplosions.RenderAnimations();
+            _scoreText.RenderText();
         }
 
         public override void Update()
         {
             window.PollEvents();
-            eventBus.ProcessEventsSequentially();
-            player.Move();
+            _eventBus.ProcessEventsSequentially();
+            _player.Move();
             IterateShots();
-            scoreText.SetText(String.Format("Score: {0}", score.GetScore()));
+            _scoreText.SetText($"Score: {_score.GetScore()}");
         }
 
 
