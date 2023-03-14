@@ -1,10 +1,11 @@
 using System;
 using DIKUArcade.Entities;
+using DIKUArcade.Events;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 namespace Galaga
 {
-    public class Player
+    public class Player : IGameEventProcessor
     {
         private Entity _entity;
         private DynamicShape _shape;
@@ -54,28 +55,54 @@ namespace Galaga
             _shape.Move();
         }
 
-        public void SetMoveUp(bool val)
+        private void SetMoveUp(bool val)
         {
             _moveUp = val ? _moveUp + _movementSpeed : 0f;
             UpdateDirection();
         }
 
-        public void SetMoveDown(bool val)
+        private void SetMoveDown(bool val)
         {
             _moveDown = val ? _moveDown - _movementSpeed : 0f;
             UpdateDirection();
         }
 
-        public void SetMoveLeft(bool val)
+        private void SetMoveLeft(bool val)
         {
             _moveLeft = val ? _moveLeft - _movementSpeed : 0f;
             UpdateDirection();
         }
 
-        public void SetMoveRight(bool val)
+        private void SetMoveRight(bool val)
         {
             _moveRight = val ? _moveRight + _movementSpeed : 0f;
             UpdateDirection();
+        }
+
+        public void ProcessEvent(GameEvent gameEvent)
+        {
+            if (gameEvent.EventType == GameEventType.PlayerEvent)
+            {
+                switch (gameEvent.Message)
+                {
+                    case nameof(MovementDirection.Forward):
+                        SetMoveUp(gameEvent.IntArg1 == 1);
+                        break;
+                    case nameof(MovementDirection.Backward):
+                        SetMoveDown(gameEvent.IntArg1 == 1);
+                        break;  
+                    case nameof(MovementDirection.Left):
+                        SetMoveLeft(gameEvent.IntArg1 == 1);
+                        break;
+                    case nameof(MovementDirection.Right):
+                        SetMoveRight(gameEvent.IntArg1 == 1);
+                        break;
+                    default:
+                        Console.WriteLine("Hvad fanden sker der?");
+                        break;
+                }
+            }
+            Console.WriteLine("I am called!");
         }
     }
 }

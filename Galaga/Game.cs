@@ -29,7 +29,7 @@ namespace Galaga
         public Game(WindowArgs windowArgs) : base(windowArgs)
         {
             eventBus = new GameEventBus();
-            eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.WindowEvent });
+            eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.PlayerEvent, GameEventType.WindowEvent });
             window.SetKeyEventHandler(KeyHandler);
             eventBus.Subscribe(GameEventType.InputEvent, this);
             SpawnEnemies();
@@ -104,7 +104,7 @@ namespace Galaga
             switch (key)
             {
                case KeyboardKey.Escape:
-                    GameEvent close = new GameEvent {
+                    var close = new GameEvent {
                         To = this,
                         EventType = GameEventType.WindowEvent
                     };
@@ -114,22 +114,46 @@ namespace Galaga
                     SpawnEnemies();
                     break;
                 case KeyboardKey.Space:
-                    Vec2F pos = player.GetPosition();
+                    var pos = player.GetPosition();
                     playerShots.AddEntity(
                         new PlayerShot(new Vec2F(pos.X + player.GetExtent().X / 2, pos.Y + player.GetExtent().Y / 2), new Image(Path.Combine("Assets", "Images", "BulletRed2.png")))
                     );
                     break;
                 case KeyboardKey.W:
-                    player.SetMoveUp(true);
+                    eventBus.RegisterEvent(new GameEvent
+                    {
+                        From = this,
+                        Message = nameof(MovementDirection.Forward),
+                        To = player, //IGameEventProcessor
+                        IntArg1 = 1,
+                    });
                     break;
                 case KeyboardKey.A:
-                    player.SetMoveLeft(true);
+                    eventBus.RegisterEvent(new GameEvent
+                    {
+                        From = this,
+                        Message = nameof(MovementDirection.Left),
+                        To = player, //IGameEventProcessor
+                        IntArg1 = 1,
+                    });
                     break;
                 case KeyboardKey.S:
-                    player.SetMoveDown(true);
+                    eventBus.RegisterEvent(new GameEvent
+                    {
+                        From = this,
+                        Message = nameof(MovementDirection.Backward),
+                        To = player, //IGameEventProcessor
+                        IntArg1 = 1,
+                    });
                     break;
                 case KeyboardKey.D:
-                    player.SetMoveRight(true);
+                    eventBus.RegisterEvent(new GameEvent
+                    {
+                        From = this,
+                        Message = nameof(MovementDirection.Right),
+                        To = player, //IGameEventProcessor
+                        IntArg1 = 1,
+                    });
                     break;
             }
             // TODO: Close window if escape is pressed
@@ -140,16 +164,40 @@ namespace Galaga
             switch (key)
             {
                 case KeyboardKey.W:
-                    player.SetMoveUp(false);
+                    eventBus.RegisterEvent(new GameEvent
+                    {
+                        From = this,
+                        Message = nameof(MovementDirection.Forward),
+                        To = player, //IGameEventProcessor
+                        IntArg1 = 0,
+                    });
                     break;
                 case KeyboardKey.A:
-                    player.SetMoveLeft(false);
+                    eventBus.RegisterEvent(new GameEvent
+                    {
+                        From = this,
+                        Message = nameof(MovementDirection.Left),
+                        To = player, //IGameEventProcessor
+                        IntArg1 = 0,
+                    });
                     break;
                 case KeyboardKey.S:
-                    player.SetMoveDown(false);
+                    eventBus.RegisterEvent(new GameEvent
+                    {
+                        From = this,
+                        Message = nameof(MovementDirection.Backward),
+                        To = player, //IGameEventProcessor
+                        IntArg1 = 0,
+                    });
                     break;
                 case KeyboardKey.D:
-                    player.SetMoveRight(false);
+                    eventBus.RegisterEvent(new GameEvent
+                    {
+                        From = this,
+                        Message = nameof(MovementDirection.Right),
+                        To = player, //IGameEventProcessor
+                        IntArg1 = 0,
+                    });
                     break;
 
             }
