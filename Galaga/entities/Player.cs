@@ -6,8 +6,8 @@ namespace Galaga
 {
     public class Player
     {
-        private Entity entity;
-        private DynamicShape shape;
+        private Entity _entity;
+        private DynamicShape _shape;
         private float _moveUp = 0.0f;
         private float _moveDown = 0.0f;
         private float _moveLeft = 0.0f;
@@ -16,40 +16,42 @@ namespace Galaga
 
         public Player(DynamicShape shape, IBaseImage image)
         {
-            this.entity = new Entity(shape, image);
-            this.shape = shape;
+            this._entity = new Entity(shape, image);
+            this._shape = shape;
         }
-
+        public Vec2F GetPosition(){
+            return _shape.Position;
+        }
         public Vec2F GetExtent(){
-            return shape.Extent;
+            return _shape.Extent;
         }
         public void Render()
         {
-            this.entity.RenderEntity();
+            this._entity.RenderEntity();
         }
         private void UpdateDirection()
         {
             float x = _moveLeft + _moveRight;
             float y = _moveUp + _moveDown;
-            shape.Direction = new DIKUArcade.Math.Vec2F(x, y);
+            _shape.Direction = new DIKUArcade.Math.Vec2F(x, y);
         }
 
         public void Move()
         {
             // TODO: move the shape and guard against the window borders
-            if (shape.Position.X < 0){
+            if (_shape.Position.X < 0){
                 SetMoveLeft(false);
             }
-            if (shape.Position.X > 0.9){
+            if (_shape.Position.X > 0.9){
                 SetMoveRight(false);
             }
-            if (shape.Position.Y > 0.6){
+            if (_shape.Position.Y > 0.6){
                 SetMoveUp(false); 
             } 
-            if (shape.Position.Y < 0){
+            if (_shape.Position.Y < 0){
                 SetMoveDown(false); 
             }
-            this.shape.Move();
+            _shape.Move();
         }
 
         public void SetMoveUp(bool val)
@@ -74,9 +76,6 @@ namespace Galaga
         {
             _moveRight = val ? _moveRight + _movementSpeed : 0f;
             UpdateDirection();
-        }
-        public Vec2F GetPosition(){
-            return shape.Position;
         }
     }
 }
