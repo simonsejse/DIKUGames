@@ -6,7 +6,7 @@ namespace Galaga;
 
 public class PlayerShot : Entity 
 {
-  private static Vec2F extent = new Vec2F(0.008f, 0.021f), direction = new Vec2F(0.0f, 0.1f);
+  private static Vec2F _extent = new Vec2F(0.008f, 0.021f), _direction = new Vec2F(0.0f, 0.1f);
   
-  public PlayerShot(Vec2F position, IBaseImage image) : base(new DynamicShape(position, extent, direction), image) {}
+  public PlayerShot(Vec2F position, IBaseImage image) : base(new DynamicShape(position, _extent, _direction), image) {}
 } 

@@ -3,11 +3,12 @@ using DIKUArcade.Entities;
 using DIKUArcade.Events;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-namespace Galaga
+
+namespace Galaga.entities
 {
     public class Player : IGameEventProcessor
     {
-        private Entity _entity;
+        public Entity Entity { get; }
         private DynamicShape _shape;
         private float _moveUp = 0.0f;
         private float _moveDown = 0.0f;
@@ -17,7 +18,7 @@ namespace Galaga
 
         public Player(DynamicShape shape, IBaseImage image)
         {
-            _entity = new Entity(shape, image);
+            Entity = new Entity(shape, image);
             _shape = shape;
         }
         public Vec2F GetPosition(){
@@ -28,7 +29,7 @@ namespace Galaga
         }
         public void Render()
         {
-            this._entity.RenderEntity();
+            Entity.RenderEntity();
         }
         private void UpdateDirection()
         {
