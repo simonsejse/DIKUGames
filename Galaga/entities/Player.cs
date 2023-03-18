@@ -1,12 +1,13 @@
 using System;
 using DIKUArcade.Entities;
 using DIKUArcade.Events;
+using DIKUArcade.Events.Generic;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 
 namespace Galaga.entities
 {
-    public class Player : IGameEventProcessor
+    public class Player : IGameEventProcessor<GameEventType>
     {
         public Entity Entity { get; }
         private DynamicShape _shape;
@@ -80,7 +81,9 @@ namespace Galaga.entities
             UpdateDirection();
         }
 
-        public void ProcessEvent(GameEvent gameEvent)
+     
+
+        public void ProcessEvent(GameEvent<GameEventType> gameEvent)
         {
             if (gameEvent.EventType == GameEventType.PlayerEvent)
             {

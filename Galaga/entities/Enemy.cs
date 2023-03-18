@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using DIKUArcade.Entities;
 using DIKUArcade.Events;
+using DIKUArcade.Events.Generic;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using Galaga.entities;
@@ -11,12 +12,11 @@ using Galaga.MovementStrategy;
 
 namespace Galaga;
 
-public class Enemy : Entity, IGameEventProcessor
+public class Enemy : Entity, IGameEventProcessor<GameEventType>
 {
     public float Speed { get; set; } = 0.0003f;
     public int Hitpoints { get; set; } = 5; 
     
-
     public readonly float Xo;
     public readonly float Yo;
     public IBaseImage AlternativeEnemyStride { get; }
@@ -36,22 +36,13 @@ public class Enemy : Entity, IGameEventProcessor
     {
         _movementStrategy.MoveEnemy(this);
     }
-
-    public void ProcessEvent(GameEvent gameEvent)
+    
+    public void ProcessEvent(GameEvent<GameEventType> gameEvent)
     {
-        if (gameEvent.From is not Game game) return;
+        if (gameEvent.EventType is not GameEventType.PlayerEvent) return;
+        //  TODO: THIS BREAKS SINCE ITS NO LONGER FROM GAME
+        //if (gameEvent.From is not Game game) return;
         
-        Hitpoints--;
-        switch (Hitpoints)
-        {
-            case < 3 and > 0:
-                Image = AlternativeEnemyStride;
-                Speed += 0.003f;
-                break;
-            case <= 0:
-                game.AddExplosion(Shape.Position, Shape.Extent);
-                DeleteEntity();
-                break;
-        }
+       
     }
 }
