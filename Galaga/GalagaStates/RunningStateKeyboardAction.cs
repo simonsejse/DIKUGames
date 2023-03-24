@@ -42,6 +42,7 @@ public class RunningStateKeyboardAction : IKeyboardIntermediaryHandler
                     );
                     break;
                 case KeyboardKey.W:
+                case KeyboardKey.Up:
                     GalagaBus.GetBus().RegisterEvent(new GameEvent<GameEventType>
                     {
                         From = this,
@@ -50,6 +51,7 @@ public class RunningStateKeyboardAction : IKeyboardIntermediaryHandler
                         IntArg1 = 1,
                     });
                     break;
+                case KeyboardKey.Left:
                 case KeyboardKey.A:
                     GalagaBus.GetBus().RegisterEvent(new GameEvent<GameEventType>
                     {
@@ -59,6 +61,7 @@ public class RunningStateKeyboardAction : IKeyboardIntermediaryHandler
                         IntArg1 = 1,
                     });
                     break;
+                case KeyboardKey.Down:
                 case KeyboardKey.S:
                     GalagaBus.GetBus().RegisterEvent(new GameEvent<GameEventType>
                     {
@@ -68,6 +71,7 @@ public class RunningStateKeyboardAction : IKeyboardIntermediaryHandler
                         IntArg1 = 1,
                     });
                     break;
+                case KeyboardKey.Right:
                 case KeyboardKey.D:
                     GalagaBus.GetBus().RegisterEvent(new GameEvent<GameEventType>
                     {
