@@ -12,7 +12,7 @@ using Galaga.MovementStrategy;
 
 namespace Galaga;
 
-public class Enemy : Entity, IGameEventProcessor<GameEventType>
+public class Enemy : Entity
 {
     public float Speed { get; set; } = 0.0003f;
     public int Hitpoints { get; set; } = 5; 
@@ -35,14 +35,5 @@ public class Enemy : Entity, IGameEventProcessor<GameEventType>
     public void Move()
     {
         _movementStrategy.MoveEnemy(this);
-    }
-    
-    public void ProcessEvent(GameEvent<GameEventType> gameEvent)
-    {
-        if (gameEvent.EventType is not GameEventType.PlayerEvent) return;
-        //  TODO: THIS BREAKS SINCE ITS NO LONGER FROM GAME
-        //if (gameEvent.From is not Game game) return;
-        
-       
     }
 }
