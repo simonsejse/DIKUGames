@@ -1,7 +1,10 @@
-﻿namespace GalagaTests;
+﻿using Galaga.entities;
+
+namespace GalagaTests;
 
 public class TestPlayer
 {
+    private Player player;
     [SetUp]
     public void Setup()
     {
