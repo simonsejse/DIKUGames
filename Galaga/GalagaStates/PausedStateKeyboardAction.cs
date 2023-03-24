@@ -3,7 +3,6 @@ using System.Drawing;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
 using DIKUArcade.Input;
-using OpenTK.Platform.Windows;
 
 namespace Galaga.GalagaStates;
 

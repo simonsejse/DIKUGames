@@ -6,7 +6,6 @@ using DIKUArcade.Events;
 using System.Collections.Generic;
 using DIKUArcade.Events.Generic;
 using Galaga.GalagaStates;
-
 namespace Galaga
 {
     public class Game : DIKUGame, IGameEventProcessor<GameEventType>

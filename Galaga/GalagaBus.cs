@@ -1,6 +1,5 @@
 ﻿using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
-
 namespace Galaga;
 
 /// <summary>

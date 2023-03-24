@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.IO;
 using DIKUArcade.Entities;
+using DIKUArcade.Events.Generic;
 using DIKUArcade.Graphics;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
@@ -8,6 +9,7 @@ using DIKUArcade.State;
 using Image = DIKUArcade.Graphics.Image;
 
 namespace Galaga.GalagaStates;
+
 
 public class MainMenu : IGameState
 {
