@@ -3,14 +3,9 @@ using DIKUArcade.Graphics;
 
 namespace Breakout.Entities;
 
-public class Level : Entity
+public class Level
 {
-    private char[][] _map;
-    private Meta _meta;
-    private Dictionary<char, string> _legends;
-    
-    public Level(Shape shape, IBaseImage image) : base(shape, image)
-    {
-        
-    }
+    public char[][] Map { get; set; }
+    public Meta Meta { get; set; }
+    public Dictionary<char, string> Legends  { get; set; }
 }
