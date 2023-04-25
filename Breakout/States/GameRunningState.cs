@@ -3,7 +3,7 @@ using DIKUArcade.State;
 
 namespace Breakout.States;
 
-public class RunningState : IGameState
+public class GameRunningState : IGameState
 {
     public void ResetState()
     {
