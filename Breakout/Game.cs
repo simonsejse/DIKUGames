@@ -8,7 +8,7 @@ namespace Breakout;
 
 public class Game : DIKUGame
 {
-    private StateMachine _stateMachine;
+    private readonly StateMachine _stateMachine;
     public Game(WindowArgs windowArgs) : base(windowArgs)
     {
         _stateMachine = new StateMachine();
@@ -27,7 +27,11 @@ public class Game : DIKUGame
     
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
     {
-        _stateMachine.ActiveState.HandleKeyEvent(action, key);
+            if (key == KeyboardKey.Escape)
+            {
+                window.CloseWindow();
+            }
+            _stateMachine.ActiveState.HandleKeyEvent(action, key);
     }
     
 }
