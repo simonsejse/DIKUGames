@@ -28,7 +28,7 @@ public class StateMachine : IGameEventProcessor<GameEventType>
     {
         GalagaBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
         GalagaBus.GetBus().Subscribe(GameEventType.InputEvent, this);
-        ActiveState = MainMenuState.GetInstance();
+        ActiveState = GameRunningState.GetInstance();
     }
 
     /// <summary>
