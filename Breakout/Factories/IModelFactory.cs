@@ -4,6 +4,6 @@ using DIKUArcade.Math;
 
 namespace Breakout.Factories;
 
-public interface ModelFactory<T> {
-    List<T> parse (string @string);
+public interface IModelFactory<out T> {
+    T Parse (string @string);
 }

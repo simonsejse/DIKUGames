@@ -1,16 +1,22 @@
+using Breakout.Factories;
+
 namespace BreakoutTests;
 
-[TestClass]
+public class LevelTests
 {
-    [TestMethod]
-    public void ParseMapString()
+    [SetUp]
+    public void Setup()
     {
-        string mapString 
+    }
 
-
-        // Assert
-        Assert.AreEqual(12, level.Width);
-        Assert.AreEqual(25, level.Height);
-
+    [Test]
+    public void TestLevel1()
+    {
+        var levelFactory = new LevelFactory();
+        var levels = levelFactory.Parse("");
+        
+        
+        
+        Assert.That(levels, Is.Empty);
     }
 }
