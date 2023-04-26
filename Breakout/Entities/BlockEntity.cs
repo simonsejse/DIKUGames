@@ -4,6 +4,8 @@ using DIKUArcade.Graphics;
 
 namespace Breakout.Entities;
 
+/// <summary>
+/// Defines the block  
 public class BlockEntity : Entity
 {
     #region Properties

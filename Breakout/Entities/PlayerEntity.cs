@@ -11,8 +11,8 @@ namespace Breakout.Entites;
 /// </summary>
 public class PlayerEntity : Entity
 {
-    private float _moveLeft;
-    private float _moveRight;
+    private float _moveRight = 0.0f;
+    private float _moveLeft = 0.0f;
     private const float MovementSpeed = 0.025f;
     
     public PlayerEntity(Shape shape, IBaseImage image) : base(shape, image)
@@ -23,7 +23,7 @@ public class PlayerEntity : Entity
 
     public void Move()
     {
-        if (Shape.Position.X < 0){
+        if (Shape.Position.X < 0f){
             SetMoveLeft(false);
         }
         if (Shape.Position.X > 1.0f - 0.2f){
