@@ -1,0 +1,31 @@
+using DIKUArcade.Math;
+using DIKUArcade.Entities;
+using DIKUArcade.Graphics;
+
+namespace Breakout.Entities{
+    public class BlockEntity : Entity
+    {
+        public int Value { get; set; }
+        public int Health { get; set; }
+
+        public BlockEntity(StationaryShape shape, IBaseImage image, Vec2F pos, int value, int health) : base(image, position)
+        {
+            Value = value;
+            Health = health;
+        }
+
+
+//GameRunning/factory vel?
+    public string GetImagePath(char blockType)
+    {
+        string imagename = legend[blockType];
+
+        string imagePath = Path.Combine("Assets", "Images", imagename);
+
+        return imagePath;
+    }
+    
+
+
+    }
+}

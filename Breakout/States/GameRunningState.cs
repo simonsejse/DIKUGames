@@ -28,6 +28,8 @@ public class GameRunningState : IGameState
     {
         var stationaryShape = new StationaryShape(new Vec2F(0, 0), new Vec2F(1, 1));
         _background = new Entity(stationaryShape, new Image(Path.Combine("Assets", "Images", "SpaceBackground.png")));
+
+        
     }
 
     public void ResetState()
