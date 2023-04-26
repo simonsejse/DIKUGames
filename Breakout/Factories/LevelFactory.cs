@@ -2,10 +2,19 @@ using Breakout.Entities;
 
 namespace Breakout.Factories;
 
+/// <summary>
+/// Concrete implementation of <see cref="IModelFactory{T}"/> for creating instances of <see cref="Level"/>.
+/// </summary>
 public class LevelFactory : IModelFactory<Level>
 {
+    /// <summary>
+    /// Parses the input data string and returns a new instance of <see cref="Level"/> with the parsed data.
+    /// </summary>
+    /// <param name="data">The input data string to parse.</param>
+    /// <returns>A new instance of <see cref="Level"/> with the parsed data.</returns>
     public Level Parse(string data)
     {
+        //TODO: Change this to LINQ as well
         var mapStart = data.Split("Map:")[1];
         var mapEnd = mapStart.Split("Map/")[0];
         var map = mapEnd.Split("\r\n").Skip(1).SkipLast(1).ToArray();
@@ -44,6 +53,5 @@ public class LevelFactory : IModelFactory<Level>
             .ToDictionary(line => line[0], line => line.Split(")")[1].Trim());
         
         return new Level(xs, meta, legend);
-
     }
 }

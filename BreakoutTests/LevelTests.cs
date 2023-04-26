@@ -1,5 +1,6 @@
 using System.Data;
 using Breakout.Factories;
+using Breakout.IO;
 
 namespace BreakoutTests;
 
@@ -17,10 +18,9 @@ public class LevelTests
     [Test]
     public void TestCentralMass()
     {
-        var fileFactory = new FileFactory();
         var levelFactory = new LevelFactory();
         
-        fileFactory.ReadFile(Path.Combine("Assets", "Levels", "central-mass.txt"), out var data);
+        FileReader.ReadFile(Path.Combine("Assets", "Levels", "central-mass.txt"), out var data);
 
         var level = levelFactory.Parse(data);
         
@@ -54,10 +54,9 @@ public class LevelTests
     [Test]
     public void TestColumns()
     {
-        var fileFactory = new FileFactory();
         var levelFactory = new LevelFactory();
         
-        fileFactory.ReadFile(Path.Combine("Assets", "Levels", "columns.txt"), out var data);
+        FileReader.ReadFile(Path.Combine("Assets", "Levels", "columns.txt"), out var data);
 
         var level = levelFactory.Parse(data);
         
@@ -92,10 +91,9 @@ public class LevelTests
     [Test]
     public void TestWall()
     {
-        var fileFactory = new FileFactory();
         var levelFactory = new LevelFactory();
         
-        fileFactory.ReadFile(Path.Combine("Assets", "Levels", "wall.txt"), out var data);
+        FileReader.ReadFile(Path.Combine("Assets", "Levels", "wall.txt"), out var data);
 
         var level = levelFactory.Parse(data);
         
@@ -129,10 +127,9 @@ public class LevelTests
     [Test]
     public void TestLevel1()
     {
-        var fileFactory = new FileFactory();
         var levelFactory = new LevelFactory();
         
-        fileFactory.ReadFile(Path.Combine("Assets", "Levels", "level1.txt"), out var data);
+        FileReader.ReadFile(Path.Combine("Assets", "Levels", "level1.txt"), out var data);
 
         var level = levelFactory.Parse(data);
         
@@ -170,10 +167,9 @@ public class LevelTests
     [Test]
     public void TestLevel2()
     {
-        var fileFactory = new FileFactory();
         var levelFactory = new LevelFactory();
         
-        fileFactory.ReadFile(Path.Combine("Assets", "Levels", "level2.txt"), out var data);
+        FileReader.ReadFile(Path.Combine("Assets", "Levels", "level2.txt"), out var data);
 
         var level = levelFactory.Parse(data);
         
@@ -211,10 +207,9 @@ public class LevelTests
     [Test]
     public void TestLevel3()
     {
-        var fileFactory = new FileFactory();
         var levelFactory = new LevelFactory();
         
-        fileFactory.ReadFile(Path.Combine("Assets", "Levels", "level3.txt"), out var data);
+        FileReader.ReadFile(Path.Combine("Assets", "Levels", "level3.txt"), out var data);
 
         var level = levelFactory.Parse(data);
         

@@ -9,27 +9,26 @@ namespace Breakout.States;
 public class GameRunningState : IGameState
 {
 
+    #region Properties and fields
     private static GameRunningState? _instance;
-
     private Entity _background;
+    #endregion
 
+    #region Constructor
+    public GameRunningState()
+    {
+        
+    }
+    #endregion
+    
+    #region Singleton pattern
     public static GameRunningState GetInstance()
     {
-        GameRunningState CreateInstance()
-        {
-            var gameRunningState = new GameRunningState();
-            gameRunningState.Init();
-            return gameRunningState;
-        }
-        return _instance ??= CreateInstance();
+        return _instance ??= new GameRunningState();
     }
+    #endregion
 
-    private void Init()
-    {
-        var stationaryShape = new StationaryShape(new Vec2F(0, 0), new Vec2F(1, 1));
-        _background = new Entity(stationaryShape, new Image(Path.Combine("Assets", "Images", "SpaceBackground.png")));
-    }
-
+    #region Methods
     public void ResetState()
     {
     }
@@ -45,5 +44,7 @@ public class GameRunningState : IGameState
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
     {
+        
     }
+    #endregion
 }
