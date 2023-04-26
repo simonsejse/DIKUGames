@@ -1,0 +1,40 @@
+Map:
+------------
+------------
+hhhhhhhhhhhh
+hhihhhhhhihh
+------------
+jjjjjijjjjjj
+jjijjjijjijj
+------------
+kkkkkkkkkkkk
+kkkkkkkkkkkk
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+Map/
+
+Meta:
+Name: LEVEL 2
+Time: 180
+PowerUp: i
+Meta/
+
+Legend:
+h) green-block.png
+i) teal-block.png
+j) blue-block.png
+k) brown-block.png
+Legend/
