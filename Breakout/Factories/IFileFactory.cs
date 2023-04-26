@@ -1,6 +1,6 @@
 ﻿namespace Breakout.Factories;
 
-public interface FileFactory
+public interface IFileFactory
 {
-    string readFile();
+    void ReadFile(string path, out string data);
 }
