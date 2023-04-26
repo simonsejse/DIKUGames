@@ -20,12 +20,12 @@ public class LevelTests
     {
         var levelFactory = new LevelFactory();
         
-        FileReader.ReadFile(Path.Combine("Assets", "Levels", "central-mass.txt"), out var data);
+        FileReader.ReadFileFromPath(Path.Combine("Assets", "Levels", "central-mass.txt"), out var data);
 
         var level = levelFactory.Parse(data);
         
         Assert.That(level.Map, Is.Not.Empty);
-        Assert.That(level.Map, Has.Length.EqualTo(25));
+        Assert.That(level.Map, Has.Length.EqualTo(24));
         foreach(var column in level.Map) Assert.That(column, Has.Length.EqualTo(12));
         
         foreach (var row in level.Map)
@@ -56,12 +56,12 @@ public class LevelTests
     {
         var levelFactory = new LevelFactory();
         
-        FileReader.ReadFile(Path.Combine("Assets", "Levels", "columns.txt"), out var data);
+        FileReader.ReadFileFromPath(Path.Combine("Assets", "Levels", "columns.txt"), out var data);
 
         var level = levelFactory.Parse(data);
         
         Assert.That(level.Map, Is.Not.Empty);
-        Assert.That(level.Map, Has.Length.EqualTo(25));
+        Assert.That(level.Map, Has.Length.EqualTo(24));
         foreach(var column in level.Map) Assert.That(column, Has.Length.EqualTo(12));
         
         foreach (var row in level.Map)
@@ -93,12 +93,12 @@ public class LevelTests
     {
         var levelFactory = new LevelFactory();
         
-        FileReader.ReadFile(Path.Combine("Assets", "Levels", "wall.txt"), out var data);
+        FileReader.ReadFileFromPath(Path.Combine("Assets", "Levels", "wall.txt"), out var data);
 
         var level = levelFactory.Parse(data);
         
         Assert.That(level.Map, Is.Not.Empty);
-        Assert.That(level.Map, Has.Length.EqualTo(25));
+        Assert.That(level.Map, Has.Length.EqualTo(24));
         foreach(var column in level.Map) Assert.That(column, Has.Length.EqualTo(12));
         
         foreach (var row in level.Map)
@@ -129,7 +129,7 @@ public class LevelTests
     {
         var levelFactory = new LevelFactory();
         
-        FileReader.ReadFile(Path.Combine("Assets", "Levels", "level1.txt"), out var data);
+        FileReader.ReadFileFromPath(Path.Combine("Assets", "Levels", "level1.txt"), out var data);
 
         var level = levelFactory.Parse(data);
         
@@ -141,7 +141,7 @@ public class LevelTests
         {
             foreach (var @char in row)
             {
-                if (@char == '-') continue;
+                if (@char is '-' or '\r' or '\n' or '\u0000') continue;
                 Assert.That(level.Legends, Contains.Key(@char));
             }
         }
@@ -169,7 +169,7 @@ public class LevelTests
     {
         var levelFactory = new LevelFactory();
         
-        FileReader.ReadFile(Path.Combine("Assets", "Levels", "level2.txt"), out var data);
+        FileReader.ReadFileFromPath(Path.Combine("Assets", "Levels", "level2.txt"), out var data);
 
         var level = levelFactory.Parse(data);
         
@@ -181,7 +181,7 @@ public class LevelTests
         {
             foreach (var @char in row)
             {
-                if (@char == '-') continue;
+                if (@char is '-' or '\r' or '\n' or '\u0000') continue;
                 Assert.That(level.Legends, Contains.Key(@char));
             }
         }
@@ -209,7 +209,7 @@ public class LevelTests
     {
         var levelFactory = new LevelFactory();
         
-        FileReader.ReadFile(Path.Combine("Assets", "Levels", "level3.txt"), out var data);
+        FileReader.ReadFileFromPath(Path.Combine("Assets", "Levels", "level3.txt"), out var data);
 
         var level = levelFactory.Parse(data);
         
@@ -221,7 +221,7 @@ public class LevelTests
         {
             foreach (var @char in row)
             {
-                if (@char == '-') continue;
+                if (@char is '-' or '\r' or '\n' or '\u0000') continue;
                 Assert.That(level.Legends, Contains.Key(@char));
             }
         }

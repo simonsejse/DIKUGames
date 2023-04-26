@@ -11,7 +11,6 @@ public static class DirectoryExplorer
     {
         if (!Directory.Exists(dir))
             return new List<string>();
-        
         try
         {
             return Directory.GetFiles(dir).Select(file => Path.GetFileName(file)).ToList();

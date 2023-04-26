@@ -1,4 +1,10 @@
-﻿using DIKUArcade.Entities;
+﻿using Breakout.Containers;
+using Breakout.Entites;
+using Breakout.Entities;
+using Breakout.Factories;
+using Breakout.Handler;
+using Breakout.Loaders;
+using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
@@ -8,16 +14,26 @@ namespace Breakout.States;
 
 public class GameRunningState : IGameState
 {
-
     #region Properties and fields
     private static GameRunningState? _instance;
-    private Entity _background;
+
+    private IKeyboardEventHandler _keyboardEventHandler;
+    
+    private PlayerEntity _playerEntity;
+    private EntityContainers _entityContainers;
+    private LevelLoader _levelLoader;
+    
     #endregion
 
+    
     #region Constructor
     public GameRunningState()
     {
-        
+        _keyboardEventHandler = new DefaultRunningStateGameEventHandler();
+        _playerEntity = new PlayerEntityFactory().Create();
+        _entityContainers = new EntityContainers();
+        _levelLoader = new LevelLoader();
+        _levelLoader.LoadLevel(0, _entityContainers.BlockEntities);
     }
     #endregion
     
@@ -35,11 +51,13 @@ public class GameRunningState : IGameState
 
     public void UpdateState()
     {
+       
     }
 
     public void RenderState()
     {
-        _background.RenderEntity();
+        _playerEntity.RenderEntity();
+        _entityContainers.RenderEntities();
     }
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)

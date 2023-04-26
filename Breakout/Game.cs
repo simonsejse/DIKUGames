@@ -1,6 +1,8 @@
+using Breakout.Events;
 using Breakout.Handler;
 using Breakout.States;
 using DIKUArcade;
+using DIKUArcade.Events;
 using DIKUArcade.GUI;
 using DIKUArcade.Input;
 
@@ -19,6 +21,7 @@ public class Game : DIKUGame
     /// <param name="windowArgs">The arguments used to create the game's window.</param>
     public Game(WindowArgs windowArgs) : base(windowArgs)
     {
+        GalagaBus.GetBus().InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.GameStateEvent});
         _stateMachine = new StateMachine();
         window.SetKeyEventHandler(HandleKeyEvent);
     }

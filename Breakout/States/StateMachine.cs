@@ -39,9 +39,9 @@ public class StateMachine : IGameEventProcessor<GameEventType>
     {
         ActiveState = stateType switch
         {
+            GameState.Menu => MainMenuState.GetInstance(),
+            GameState.Running => GameRunningState.GetInstance(),
             //GameState.Paused => .GetInstance(),
-            //GameState.Running => .GetInstance(),
-            //GameState.Menu => .GetInstance(),
             //GameState.Lost => .GetInstance(),
             _ => throw new ArgumentOutOfRangeException(nameof(stateType), stateType, null)
         };

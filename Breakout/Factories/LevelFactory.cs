@@ -17,18 +17,15 @@ public class LevelFactory : IModelFactory<Level>
         //TODO: Change this to LINQ as well
         var mapStart = data.Split("Map:")[1];
         var mapEnd = mapStart.Split("Map/")[0];
-        var map = mapEnd.Split("\r\n").Skip(1).SkipLast(1).ToArray();
+        var map = mapEnd.Split("\r\n")
+            .Select(row => row.Trim())
+            .Where(row => row.Length > 0)
+            .ToArray()
+            .Reverse() //Needed to make it go from top-to-bottom
+            .ToArray();
         
-        var xs = Enumerable.Range(0, 25).Select(i => new char[12]).ToArray();
-
-        for (var row = 0; row < map.Length; row++)
-        {
-            for (var column = 0; column < map[row].Length; column++)
-            {
-                xs[row][column] = map[row][column];
-            }
-        }
-
+        var xs = map.Select(row => row.Select(column => column).ToArray()).ToArray();
+        
         var metaStart = data.Split("Meta:")[1];
         var metaEnd = metaStart.Split("Meta/")[0];
         var metadata = metaEnd.Split("\r\n")

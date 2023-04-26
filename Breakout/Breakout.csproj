@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<Content Include="Assets\**\*.*" CopyToOutputDirectory="PreserveNewest" />
     <ProjectReference Include="..\DIKUArcade\DIKUArcade\DIKUArcade.csproj" />
   </ItemGroup>
 

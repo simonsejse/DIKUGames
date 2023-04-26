@@ -2,7 +2,7 @@
 
 public static class FileReader 
 {
-    public static void ReadFile(string path, out string data)
+    public static void ReadFileFromPath(string path, out string data)
     {
         try
         {
