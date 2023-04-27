@@ -27,8 +27,10 @@ public class PlayerEntity : Entity
     #endregion
 
     #region Methods
-    // Moves the player left or right based upon their movement fields and speed and updates their position and direction
-    // Also restricts position to be within game window limits
+    /// <summary>
+    ///Moves the player left or right based upon their movement fields and speed and updates their position
+    /// and direction. Also restricts position to be within game window limits
+    /// </summary>
     public void Move()
     {
         if (Shape.Position.X < 0f){
@@ -39,19 +41,27 @@ public class PlayerEntity : Entity
         }
         Shape.Move();
     }
-    // Updates the player's direction based upon their movement fields
+    /// <summary>
+    /// Updates the player's direction based upon their movement fields
+    /// </summary>
     private void UpdateDirection()
     {
         var x = _moveLeft + _moveRight;
         Shape.AsDynamicShape().Direction = new Vec2F(x, 0);
     }
-    // Sets the movement of the player to Left based upon a boolean value and updates the direction
+    /// <summary>
+    /// Sets the movement of the player to the left based on a boolean value and updates their direction.
+    /// </summary>
+    /// <param name="val">A boolean value indicating whether the player should move left.</param>
     public void SetMoveLeft(bool val)
     {
         _moveLeft = val ? _moveLeft - MovementSpeed : 0f;
         UpdateDirection();
     }
-    // Sets the movement of the player to Right based upon a boolean value and updates the direction
+    /// <summary>
+    /// Sets the movement of the player to the right based on a boolean value and updates their direction.
+    /// </summary>
+    /// <param name="val">A boolean value indicating whether the player should move right.</param>
     public void SetMoveRight(bool val)
     {
         _moveRight = val ? _moveRight + MovementSpeed : 0f;
