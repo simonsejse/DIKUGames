@@ -3,6 +3,7 @@ using DIKUArcade.GUI;
 
 namespace BreakoutTests;
 
+[TestFixture]
 public class PlayerEntityTests
 {
     
