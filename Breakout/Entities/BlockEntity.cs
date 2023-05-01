@@ -10,10 +10,6 @@ namespace Breakout.Entities;
 public class BlockEntity : Entity
 {
     #region Properties
-    //TestPush 2
-    /// <summary>
-    /// Gets or sets the value of the block.
-    /// </summary>
     public int Value { get; set; }
     /// <summary>
     /// Gets or sets the health of the block.
