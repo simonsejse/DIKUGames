@@ -33,16 +33,16 @@ public class LevelLoader
         {
             for (var column = 0; column < level.Map[row].Length; column++)
             {
-                var key = level.Map[row][column];
+                char key = level.Map[row][column];
                 if (key == '-') continue;
 
                 const float offsetY = 0.1f;
-                var posX = 100f/level.Map[0].Length/100f * column;
-                var posY = offsetY + 90f/level.Map.Length/100f * row;
+                float posX = 100f/level.Map[0].Length/100f * column;
+                float posY = offsetY + 90f/level.Map.Length/100f * row;
                 
                 var pos = new Vec2F(posX, posY);
 
-                var path = level.Legends.TryGetValue(key, out var image) ? image : "error-block.png";
+                string path = level.Legends.TryGetValue(key, out string? image) ? image : "error-block.png";
                 
                 var factory = new BlockEntityFactory(pos, new Image(Path.Combine("Assets", "Images", path)));
                 var blockEntity = factory.Create();

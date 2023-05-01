@@ -1,6 +1,7 @@
 ﻿namespace Breakout;
 
-public class Configuration
-{
-    
-}
+
+/// <summary>
+/// Perhaps a later implementation for easier configuration.
+/// </summary>
+public class Configuration { }
