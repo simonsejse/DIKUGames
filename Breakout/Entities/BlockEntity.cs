@@ -9,6 +9,7 @@ namespace Breakout.Entities;
 public class BlockEntity : Entity
 {
     #region Properties
+    //Test nu
     public int Value { get; set; }
     public int Health { get; set; }
     #endregion
