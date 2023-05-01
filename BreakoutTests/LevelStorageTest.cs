@@ -20,7 +20,7 @@ public class LevelStorageTest
 
     
     [Test]
-    public void TestCentralMass()
+    public void TestLoadLevelStoragePaths()
     {
         Assert.That(_levelStorage.LevelPaths, Has.Count.EqualTo(6));
     }
