@@ -6,6 +6,7 @@ namespace BreakoutTests;
 /// <summary>
 /// We have mainly used the Test-Driven Development Approach for these tests
 /// </summary>
+[TestFixture]
 public class LevelTests
 {
     [SetUp]
