@@ -16,6 +16,7 @@ public class PlayerEntity : Entity
     private float _moveRight = 0.0f;
     private float _moveLeft = 0.0f;
     private const float MovementSpeed = 0.05f;
+    
     #endregion
     
     #region Constructor
