@@ -6,26 +6,28 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 
-namespace Breakout.Loaders;
+namespace Breakout.Levels;
 
-
-public class LevelLoader
+/// <summary>
+/// A LevelLoader class implementation that follows the Dependency Inversion Principle (DIP) by
+/// depending on abstractions rather than concrete implementations.
+/// Makes it more flexible and easily interchangeable with new LevelLoaders.
+/// follows 
+/// </summary>
+public class LevelLoader : ILevelLoader<BlockEntity>
 {
-    #region Properties
     private LevelStorage _levelStorage;
     private IModelFactory<Level> _levelFactory;
-    
-    #endregion
-    #region Constructor
+
     public LevelLoader()
     {
         _levelFactory = new LevelFactory();
         _levelStorage = new LevelStorage();
     }
-    #endregion
-    #region Methods
-    public void LoadLevel(int levelNum, EntityContainer<BlockEntity> blockEntities)
+
+    public EntityContainer<BlockEntity> LoadLevel(int levelNum)
     {
+        var blockEntities = new EntityContainer<BlockEntity>();
         var filePath = _levelStorage.LevelPaths[levelNum];
         FileReader.ReadFileFromPath(Path.Combine("Assets", "Levels", filePath), out var data);
         var level = _levelFactory.Parse(data);
@@ -41,7 +43,7 @@ public class LevelLoader
                 float posY = offsetY + 90f/level.Map.Length/100f * row;
                 
                 var pos = new Vec2F(posX, posY);
-
+        
                 string path = level.Legends.TryGetValue(key, out string? image) ? image : "error-block.png";
                 
                 var factory = new BlockEntityFactory(pos, new Image(Path.Combine("Assets", "Images", path)));
@@ -49,6 +51,7 @@ public class LevelLoader
                 blockEntities.AddEntity(blockEntity);
             }
         }
+
+        return blockEntities;
     }
-    #endregion
 }

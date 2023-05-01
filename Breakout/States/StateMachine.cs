@@ -21,6 +21,7 @@ public class StateMachine : IGameEventProcessor<GameEventType>
     /// </summary>
     public IGameState ActiveState { get; private set; }
 
+    //public ILevelStrategy LevelStrategy { get; set; }
     /// <summary>
     /// Initializes a new instance of the StateMachine class.
     /// </summary>
@@ -53,4 +54,5 @@ public class StateMachine : IGameEventProcessor<GameEventType>
         
     }
 }
+
 

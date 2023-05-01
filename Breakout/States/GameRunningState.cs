@@ -3,6 +3,7 @@ using Breakout.Controller;
 using Breakout.Entites;
 using Breakout.Factories;
 using Breakout.Handler;
+using Breakout.Levels;
 using Breakout.Loaders;
 using DIKUArcade.Input;
 using DIKUArcade.State;
@@ -27,7 +28,7 @@ public class GameRunningState : IGameState
         _keyboardEventHandler = new RunningStateKeyboardController(_playerEntity);
         _entityContainers = new EntityContainers();
         _levelLoader = new LevelLoader();
-        _levelLoader.LoadLevel(0, _entityContainers.BlockEntities);
+        _entityContainers.BlockEntities = _levelLoader.LoadLevel(0);
     }
     #endregion
     

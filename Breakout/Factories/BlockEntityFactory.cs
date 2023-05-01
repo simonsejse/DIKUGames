@@ -5,6 +5,11 @@ using DIKUArcade.Math;
 
 namespace Breakout.Factories;
 
+///<summary>
+/// Dependency Inversion Principle (DIP) by depending on abstractions rather than concrete implementations,
+/// it depends on the <see cref="IEntityFactory{T}"/> interface, which allows it to be more flexible and easily
+/// interchangeable with other entity factories
+///</summary>
 public class BlockEntityFactory : IEntityFactory<BlockEntity>
 {
     private readonly Vec2F _pos;
