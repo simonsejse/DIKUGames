@@ -16,26 +16,29 @@ public class LevelFactory : IModelFactory<Level>
     {
         
         //TODO: Change this to LINQ as well
-        var mapStart = data.Split("Map:")[1];
-        var mapEnd = mapStart.Split("Map/")[0];
-        var map = mapEnd.Split( Environment.NewLine)
+        string mapStart = data.Split("Map:")[1];
+        string mapEnd = mapStart.Split("Map/")[0];
+        
+        string newLine = mapEnd.Contains("\r\n") ? "\r\n" : "\n";
+
+        string[] map = mapEnd.Split(newLine)
             .Select(row => row.Trim())
             .Where(row => row.Length > 0)
             .ToArray()
             .Reverse() //Needed to make it go from top-to-bottom
             .ToArray();
         
-        var xs = map.Select(row => row.Select(column => column).ToArray()).ToArray();
+        char[][] xs = map.Select(row => row.Select(column => column).ToArray()).ToArray();
         
-        var metaStart = data.Split("Meta:")[1];
-        var metaEnd = metaStart.Split("Meta/")[0];
-        var metadata = metaEnd.Split(Environment.NewLine)
+        string metaStart = data.Split("Meta:")[1];
+        string metaEnd = metaStart.Split("Meta/")[0];
+        Dictionary<string, string> metadata = metaEnd.Split(newLine)
             .Select(line => line.Trim())
             .Where(line => line.Length > 0)
             .ToDictionary(line => line.Split(":")[0].Trim(), line => line.Split(":")[1].Trim());
         
         
-        var name = metadata.TryGetValue("Name", out var value) ? value : null;
+        string? name = metadata.TryGetValue("Name", out string? value) ? value : null;
         int? time = metadata.TryGetValue("Time", out value) ? int.Parse(value) : null;
         char? hardened = metadata.TryGetValue("Hardened", out value) ? char.Parse(value) : null;
         char? powerUp = metadata.TryGetValue("PowerUp", out value) ? char.Parse(value) : null;
@@ -46,7 +49,7 @@ public class LevelFactory : IModelFactory<Level>
         string legendStart = data.Split("Legend:")[1];
         string legendEnd = legendStart.Split("Legend/")[0];
         
-        Dictionary<char, string> legend = legendEnd.Split(Environment.NewLine)
+        Dictionary<char, string> legend = legendEnd.Split(newLine)
             .Select(line => line.Trim())
             .Where(line => line.Length > 0)
             .ToDictionary(line => line[0], line => line.Split(")")[1].Trim());
