@@ -28,8 +28,7 @@ public class RunningStateKeyboardController : IKeyboardEventHandler
         switch (key)
         {
             case KeyboardKey.Escape:
-                GameEvent<GameEventType> close = gameEventFactory.CreateGameEventForAllProcessors(GameEventType.WindowEvent,"CLOSE_WINDOW", "", "");
-
+                GameEvent<GameEventType> close = gameEventFactory.CreateGameEventForAllProcessors(GameEventType.WindowEvent,"CLOSE_WINDOW");
                 BreakoutBus.GetBus().RegisterEvent(close);
                 break;
             case KeyboardKey.A:
