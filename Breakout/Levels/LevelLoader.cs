@@ -16,7 +16,7 @@ namespace Breakout.Levels;
 /// </summary>
 public class LevelLoader : ILevelLoader<BlockEntity>
 {
-    private HashSet<char> excludedChars = new () { '-', ' ' };
+    private static readonly HashSet<char> ExcludedChars = new () { '-', ' ' };
     
     private LevelStorage _levelStorage;
     private IModelFactory<Level> _levelFactory;
@@ -38,7 +38,7 @@ public class LevelLoader : ILevelLoader<BlockEntity>
             for (int column = 0; column < level.Map[row].Length; column++)
             {
                 char key = level.Map[row][column];
-                if (excludedChars.Contains(key)) continue;
+                if (ExcludedChars.Contains(key)) continue;
                 
                 const float offsetY = 0.1f;
                 float posX = 100f/level.Map[0].Length/100f * column;
