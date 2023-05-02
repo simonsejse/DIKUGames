@@ -3,6 +3,7 @@ using Breakout.Handler;
 using Breakout.States;
 using DIKUArcade;
 using DIKUArcade.Events;
+using DIKUArcade.Events.Generic;
 using DIKUArcade.GUI;
 using DIKUArcade.Input;
 
@@ -11,7 +12,7 @@ namespace Breakout;
 /// <summary>
 /// Represents a game object that inherits from the DIKUGame class.
 /// </summary>
-public class Game : DIKUGame
+public class Game : DIKUGame, IGameEventProcessor<GameEventType>
 {
     private readonly StateMachine _stateMachine;
     
@@ -51,5 +52,12 @@ public class Game : DIKUGame
     {
         _stateMachine.ActiveState.HandleKeyEvent(action, key);
     }
-    
+
+    public void ProcessEvent(GameEvent<GameEventType> gameEvent)
+    {
+        if (gameEvent.Message.Equals("CLOSE_WINDOW"))
+        {
+            window.CloseWindow();
+        }
+    }
 }
