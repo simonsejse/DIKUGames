@@ -16,11 +16,8 @@ jobs:
           sudo apt-get install -y libgdiplus
 
       - name: Checkout code
-      - uses: actions/checkout@v2
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v2
+        uses: actions/checkout@v2
         with:
-          node-version: '16.x'
           submodules: 'recursive'
         
       - name: Set up Node.js 16.x
@@ -36,6 +33,8 @@ jobs:
       - name: Run tests and generate coverage report
         working-directory: BreakoutTests
         run: |
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          dotnet add package coverlet.collector
           dotnet test --collect:"XPlat Code Coverage"
           reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:Report -reporttypes:Html
         
