@@ -9,26 +9,31 @@ jobs:
   test:
     runs-on: windows-latest
     steps:
-      - name: Install GLFW and mono-libgdiplus
+      - name: Install GLFW
+        shell: cmd
         run: |
-          choco install glfw3
-          choco install mono-libgdiplus
+          choco install glfw3 -y
+
+      - name: Install libgdiplus
+        shell: cmd
+        run: |
+          choco install libgdiplus -y
 
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           submodules: 'recursive'
-        
+
       - name: Set up Node.js 16.x
         uses: actions/setup-node@v2
         with:
           node-version: '16.x'
-          
+
       - name: Build DIKUArcade
         run: |
           cd DIKUArcade
           dotnet build
-          
+
       - name: Configure
         run: cmake -Bbuild -T host=x64 -A x64
 
@@ -36,17 +41,14 @@ jobs:
         run: cmake --build build --config Debug -j4
 
       - name: Install 7zip
-        run: choco install 7zip.install
-        
+        run: choco install 7zip.install -y
+
       - name: Install Mesa
         shell: cmd
         run: |
           curl.exe -L --output mesa.7z --url https://github.com/pal1000/mesa-dist-win/releases/download/20.3.2/mesa3d-20.3.2-release-msvc.7z
           "C:\Program Files\7-Zip\7z.exe" x mesa.7z
-          mklink opengl32.dll "x64\opengl32.dll"
-          mklink libglapi.dll "x64\libglapi.dll"
-        working-directory: build\tests\Debug
-        
+
       - name: Run tests and generate coverage report
         working-directory: BreakoutTests
         run: |
