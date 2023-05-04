@@ -56,7 +56,7 @@ jobs:
         with:
           repository: DIKUGroup6/dikugroup6.github.io
           ref: main
-          token: ${{ env.ACCESS_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Copy coverage report to dikugroup6.github.io repository
         run: |
@@ -71,5 +71,3 @@ jobs:
           git add reports/
           git commit -m "Add coverage report for BreakoutTests"
           git push origin main
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
