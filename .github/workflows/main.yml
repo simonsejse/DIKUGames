@@ -11,9 +11,8 @@ jobs:
     steps:
       - name: Install GLFW and mono-libgdiplus
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libglfw3 libglfw3-dev
-          sudo apt-get install -y libgdiplus
+          choco install glfw3
+          choco install mono-libgdiplus
 
       - name: Checkout code
         uses: actions/checkout@v2
