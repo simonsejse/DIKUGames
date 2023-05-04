@@ -19,9 +19,11 @@ jobs:
       - name: Run tests and generate coverage report
         working-directory: BreakoutTests
         run: |
+          mkdir TestResults
+          mkdir Report
           dotnet test --collect:"XPlat Code Coverage"
           reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:Report -reporttypes:Html
-        
+
       - name: Upload report
         uses: actions/upload-artifact@v2
         with:
