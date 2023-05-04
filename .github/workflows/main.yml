@@ -11,17 +11,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
         
       - name: Set up Node.js 16.x
         uses: actions/setup-node@v2
         with:
           node-version: '16.x'
+          
       - name: Run tests and generate coverage report
         working-directory: BreakoutTests
         run: |
           dotnet test --collect:"XPlat Code Coverage"
           reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:Report -reporttypes:Html
-
+        
       - name: Upload report
         uses: actions/upload-artifact@v2
         with:
