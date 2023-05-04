@@ -1,4 +1,4 @@
-﻿using Breakout.Entities;
+using Breakout.Entities;
 using Breakout.Factories;
 using Breakout.IO;
 using Breakout.Storage;
@@ -41,8 +41,12 @@ public class LevelLoader : ILevelLoader<BlockEntity>
                 if (ExcludedChars.Contains(key)) continue;
                 
                 const float offsetY = 0.1f;
-                float posX = 100f/level.Map[0].Length/100f * column;
-                float posY = offsetY + 90f/level.Map.Length/100f * row;
+                
+                int rowLength = level.Map[0].Length;
+                float posX = 100f / rowLength / 100f * column;
+                
+                int columnLength = level.Map.Length;
+                float posY = offsetY + 90f/columnLength/100f * row;
                 
                 var pos = new Vec2F(posX, posY);
         

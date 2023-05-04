@@ -16,7 +16,7 @@ public class GameRunningState : IGameState
     private static GameRunningState? _instance;
     private PlayerEntity _playerEntity;
     private EntityContainers _entityContainers;
-    private LevelLoader _levelLoader;
+    private readonly LevelLoader _levelLoader;
     private IKeyboardEventHandler _keyboardEventHandler;
     #endregion
 

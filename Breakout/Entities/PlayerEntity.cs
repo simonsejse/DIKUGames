@@ -47,7 +47,7 @@ public class PlayerEntity : Entity
     /// </summary>
     private void UpdateDirection()
     {
-        var x = _moveLeft + _moveRight;
+        float x = _moveLeft + _moveRight;
         Shape.AsDynamicShape().Direction = new Vec2F(x, 0);
     }
     /// <summary>
