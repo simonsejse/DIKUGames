@@ -29,7 +29,6 @@ jobs:
           cd DIKUArcade
           dotnet build
 
-
       - name: Install 7zip
         run: choco install 7zip.install -y
 
@@ -45,9 +44,32 @@ jobs:
           dotnet tool install -g dotnet-reportgenerator-globaltool
           dotnet test --collect:"XPlat Code Coverage"
           reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:Report -reporttypes:Html
-        
+
       - name: Upload report
         uses: actions/upload-artifact@v2
         with:
           name: coverage-report
           path: BreakoutTests/Report
+
+      - name: Checkout dikugroup6.github.io repository
+        uses: actions/checkout@v2
+        with:
+          repository: DIKUGroup6/dikugroup6.github.io
+          ref: main
+          token: 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
+
+      - name: Copy coverage report to dikugroup6.github.io repository
+        run: |
+          mkdir -p reports
+          cp -R BreakoutTests/Report reports/
+        shell: bash
+
+      - name: Commit and push coverage report changes to dikugroup6.github.io repository
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add reports/
+          git commit -m "Add coverage report for BreakoutTests"
+          git push origin main
+        env:
+          ACCESS_TOKEN: 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
