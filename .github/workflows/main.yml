@@ -60,8 +60,8 @@ jobs:
 
       - name: Copy coverage report to dikugroup6.github.io repository
         run: |
-          mkdir -p reports
-          cp -R BreakoutTests/Report reports/
+          mkdir -p "reports/Report-$(date +%Y-%m-%d)"
+          cp -R ${{ github.workspace }}/coverage-report/Report/* "reports/Report-$(date +%Y-%m-%d)/"
         shell: bash
 
       - name: Commit and push coverage report changes to dikugroup6.github.io repository
