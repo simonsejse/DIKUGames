@@ -16,10 +16,8 @@ jobs:
       - name: Run tests and generate report
         if: startsWith(github.head_ref, 'test/')
         run: |
-          dotnet test --logger trx
-          mkdir -p reports
-          mv **/*.trx reports/
-          zip -r reports.zip reports/
+          dotnet test --collect:"XPlat Code Coverage"
+          reportgenerator -reports:$(find TestResults -name coverage.cobertura.xml) -targetdir:Report -reporttypes:Html
         
       - name: Upload report
         if: startsWith(github.head_ref, 'test/')
