@@ -1,4 +1,3 @@
-using System.Data;
 using Breakout.Factories;
 using Breakout.IO;
 
@@ -7,6 +6,7 @@ namespace BreakoutTests;
 /// <summary>
 /// We have mainly used the Test-Driven Development Approach for these tests
 /// </summary>
+[TestFixture]
 public class LevelTests
 {
     [SetUp]
@@ -56,10 +56,10 @@ public class LevelTests
     {
         var levelFactory = new LevelFactory();
         
-        FileReader.ReadFileFromPath(Path.Combine("Assets", "Levels", "columns.txt"), out var data);
-
+        FileReader.ReadFileFromPath(Path.Combine(Directory.GetCurrentDirectory(), "Assets", "Levels", "columns.txt"), out var data);
         var level = levelFactory.Parse(data);
         
+            
         Assert.That(level.Map, Is.Not.Empty);
         Assert.That(level.Map, Has.Length.EqualTo(24));
         foreach(var column in level.Map) Assert.That(column, Has.Length.EqualTo(12));

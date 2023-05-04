@@ -1,7 +1,7 @@
 ﻿using Breakout.Entites;
 using Breakout.Events;
+using Breakout.Factories;
 using Breakout.Handler;
-using Breakout.States;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
 using DIKUArcade.Input;
@@ -15,16 +15,22 @@ namespace Breakout.Controller;
 public class RunningStateKeyboardController : IKeyboardEventHandler
 {
     private readonly PlayerEntity _playerEntity;
-    
+    private readonly IGameEventFactory<GameEventType> gameEventFactory;
+
     public RunningStateKeyboardController(PlayerEntity playerEntity)
     {
         _playerEntity = playerEntity;
+        gameEventFactory = new GameEventFactory();
     }
     
     public void HandleKeyPress(KeyboardKey key)
     {
         switch (key)
         {
+            case KeyboardKey.Escape:
+                GameEvent<GameEventType> close = gameEventFactory.CreateGameEventForAllProcessors(GameEventType.WindowEvent,"CLOSE_WINDOW");
+                BreakoutBus.GetBus().RegisterEvent(close);
+                break;
             case KeyboardKey.A:
             case KeyboardKey.Left:
                 _playerEntity.SetMoveLeft(true);
@@ -51,3 +57,5 @@ public class RunningStateKeyboardController : IKeyboardEventHandler
         }
     }
 }
+
+

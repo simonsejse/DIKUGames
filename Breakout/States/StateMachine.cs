@@ -21,13 +21,14 @@ public class StateMachine : IGameEventProcessor<GameEventType>
     /// </summary>
     public IGameState ActiveState { get; private set; }
 
+    //public ILevelStrategy LevelStrategy { get; set; }
     /// <summary>
     /// Initializes a new instance of the StateMachine class.
     /// </summary>
     public StateMachine()
     {
-        GalagaBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
-        GalagaBus.GetBus().Subscribe(GameEventType.InputEvent, this);
+        BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
+        BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
         ActiveState = GameRunningState.GetInstance();
     }
 
@@ -53,4 +54,5 @@ public class StateMachine : IGameEventProcessor<GameEventType>
         
     }
 }
+
 

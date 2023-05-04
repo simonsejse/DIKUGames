@@ -10,8 +10,8 @@ public class Application
         var windowArgs = new WindowArgs
         {
             Title = "Breakout v0.1", 
-            Width = 500, 
-            Height = 500
+            Width = 700, 
+            Height = 700
         };
         
         var game = new Game(windowArgs);

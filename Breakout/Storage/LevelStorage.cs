@@ -12,7 +12,7 @@ public class LevelStorage
     #region Constructors
     public LevelStorage()
     {
-        LevelPaths = DirectoryExplorer.GetDirectoryFilePaths("Assets\\Levels");
+        LevelPaths = DirectoryExplorer.GetDirectoryFilePaths(Path.Combine("Assets", "Levels"));
     }
     #endregion
 }
