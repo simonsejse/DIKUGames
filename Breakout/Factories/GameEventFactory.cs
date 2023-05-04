@@ -10,12 +10,15 @@ namespace Breakout.Factories;
 /// </summary>
 public class GameEventFactory : IGameEventFactory<GameEventType>
 {
-    public GameEvent<GameEventType> CreateGameEventForAllProcessors(GameEventType type, string message = "")
+    public GameEvent<GameEventType> CreateGameEventForAllProcessors(GameEventType type,
+        string message = "",
+        string stringArg1 = "")
     {
         return new GameEvent<GameEventType>
         {
             EventType = type,
             Message = message,
+            StringArg1 = stringArg1
         };
     }
 

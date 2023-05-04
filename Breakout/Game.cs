@@ -1,5 +1,4 @@
 using Breakout.Events;
-using Breakout.Handler;
 using Breakout.States;
 using DIKUArcade;
 using DIKUArcade.Events;
@@ -14,15 +13,32 @@ namespace Breakout;
 /// </summary>
 public class Game : DIKUGame, IGameEventProcessor<GameEventType>
 {
+    /// <summary>
+    /// The <see cref="StateMachine"/> represents the internal state
+    /// and uses the state pattern to infer and change
+    /// which state the game is currently in.
+    /// </summary>
     private readonly StateMachine _stateMachine;
     
+    /// <summary>
+    /// Constant field that represents all game types that will be used
+    /// throughout the applications life cycle.
+    /// </summary>
+    private static readonly IReadOnlyList<GameEventType> GameEventTypes = new List<GameEventType>
+    {
+        GameEventType.InputEvent, 
+        GameEventType.GameStateEvent,
+        GameEventType.WindowEvent
+    };
+
     /// <summary>
     /// Initializes a new instance of the Game class with the specified WindowArgs.
     /// </summary>
     /// <param name="windowArgs">The arguments used to create the game's window.</param>
     public Game(WindowArgs windowArgs) : base(windowArgs)
     {
-        BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent, GameEventType.GameStateEvent});
+        BreakoutBus.GetBus().InitializeEventBus(GameEventTypes.ToList());
+        BreakoutBus.GetBus().Subscribe(GameEventType.WindowEvent, this);
         _stateMachine = new StateMachine();
         window.SetKeyEventHandler(HandleKeyEvent);
     }
@@ -53,8 +69,13 @@ public class Game : DIKUGame, IGameEventProcessor<GameEventType>
         _stateMachine.ActiveState.HandleKeyEvent(action, key);
     }
 
+    /// <summary>
+    /// TODO: Add good comment, idk what to write lmao
+    /// </summary>
+    /// <param name="gameEvent"></param>
     public void ProcessEvent(GameEvent<GameEventType> gameEvent)
     {
+        Console.WriteLine("Pe");
         if (gameEvent.Message.Equals("CLOSE_WINDOW"))
         {
             window.CloseWindow();

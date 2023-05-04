@@ -1,5 +1,7 @@
 using System.Drawing;
+using Breakout.Controller;
 using Breakout.Factories;
+using Breakout.Handler;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Input;
@@ -12,12 +14,11 @@ public class MainMenuState : IGameState
 {
     private static MainMenuState? _instance;
     private readonly Text[] _menuButtons;
-    
-    private readonly ITextFactory _textFactory;
+    private IKeyboardPressHandler _keyboardEventHandler;
 
     public MainMenuState(ITextFactory textFactory)
     {
-        _textFactory = textFactory;
+        _keyboardEventHandler = new MainMenuStateKeyboardController();
         _menuButtons = new[]
         {
             textFactory.Create("Start Game", new Vec2F(0.1f, 0.1f), new Vec2F(0.5f, 0.5f), Color.Aqua),
@@ -45,9 +46,8 @@ public class MainMenuState : IGameState
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
     {
-        if (key == KeyboardKey.Escape)
-        {
-            //TODO: Register event to EventBus with close game
-        }
+        if (action is not KeyboardAction.KeyPress) return;
+        
+        _keyboardEventHandler.HandleKeyPress(key);
     }
 }

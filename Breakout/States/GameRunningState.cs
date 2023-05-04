@@ -4,7 +4,6 @@ using Breakout.Entites;
 using Breakout.Factories;
 using Breakout.Handler;
 using Breakout.Levels;
-using Breakout.Loaders;
 using DIKUArcade.Input;
 using DIKUArcade.State;
 

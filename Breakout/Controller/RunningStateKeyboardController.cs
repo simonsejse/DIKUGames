@@ -15,12 +15,12 @@ namespace Breakout.Controller;
 public class RunningStateKeyboardController : IKeyboardEventHandler
 {
     private readonly PlayerEntity _playerEntity;
-    private readonly IGameEventFactory<GameEventType> gameEventFactory;
+    private readonly IGameEventFactory<GameEventType> _gameEventFactory;
 
     public RunningStateKeyboardController(PlayerEntity playerEntity)
     {
         _playerEntity = playerEntity;
-        gameEventFactory = new GameEventFactory();
+        _gameEventFactory = new GameEventFactory();
     }
     
     public void HandleKeyPress(KeyboardKey key)
@@ -28,7 +28,7 @@ public class RunningStateKeyboardController : IKeyboardEventHandler
         switch (key)
         {
             case KeyboardKey.Escape:
-                GameEvent<GameEventType> close = gameEventFactory.CreateGameEventForAllProcessors(GameEventType.WindowEvent,"CLOSE_WINDOW");
+                GameEvent<GameEventType> close = _gameEventFactory.CreateGameEventForAllProcessors(GameEventType.WindowEvent,"CLOSE_WINDOW");
                 BreakoutBus.GetBus().RegisterEvent(close);
                 break;
             case KeyboardKey.A:
