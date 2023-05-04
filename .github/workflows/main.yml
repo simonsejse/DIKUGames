@@ -56,7 +56,7 @@ jobs:
         with:
           repository: DIKUGroup6/dikugroup6.github.io
           ref: main
-          token: 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
+          token: ${{ env.ACCESS_TOKEN }}
 
       - name: Copy coverage report to dikugroup6.github.io repository
         run: |
@@ -67,9 +67,9 @@ jobs:
       - name: Commit and push coverage report changes to dikugroup6.github.io repository
         run: |
           git config --global user.email "simonwa01@github.com"
-          git config --global user.name "DIKUGroup6"
+          git config --global user.name "simonsejse"
           git add reports/
           git commit -m "Add coverage report for BreakoutTests"
           git push origin main
         env:
-          ACCESS_TOKEN: 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
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
