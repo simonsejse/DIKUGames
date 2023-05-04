@@ -12,7 +12,7 @@ public class PlayerEntityFactory : IEntityFactory<PlayerEntity>
                 0.03f,
                 0.2f,
                 0.028f),
-            new Image(Path.Combine("Assets",
+            new Image(Path.Combine(Directory.GetCurrentDirectory(), "Assets",
                 "Images",
                 "Player.png")));
     }

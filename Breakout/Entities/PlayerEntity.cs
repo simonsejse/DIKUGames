@@ -16,6 +16,7 @@ public class PlayerEntity : Entity
     private float _moveRight = 0.0f;
     private float _moveLeft = 0.0f;
     private const float MovementSpeed = 0.05f;
+    
     #endregion
     
     #region Constructor
@@ -46,7 +47,7 @@ public class PlayerEntity : Entity
     /// </summary>
     private void UpdateDirection()
     {
-        var x = _moveLeft + _moveRight;
+        float x = _moveLeft + _moveRight;
         Shape.AsDynamicShape().Direction = new Vec2F(x, 0);
     }
     /// <summary>
