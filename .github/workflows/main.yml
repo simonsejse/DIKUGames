@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Install GLFW and mono-libgdiplus
         run: |
@@ -29,11 +29,24 @@ jobs:
         run: |
           cd DIKUArcade
           dotnet build
+          
+      - name: Configure
+        run: cmake -Bbuild -T host=x64 -A x64
 
-      - name: Set up Xvfb
+      - name: Build
+        run: cmake --build build --config Debug -j4
+
+      - name: Install 7zip
+        run: choco install 7zip.install
+        
+      - name: Install Mesa
+        shell: cmd
         run: |
-          export DISPLAY=:99
-          Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
+          curl.exe -L --output mesa.7z --url https://github.com/pal1000/mesa-dist-win/releases/download/20.3.2/mesa3d-20.3.2-release-msvc.7z
+          "C:\Program Files\7-Zip\7z.exe" x mesa.7z
+          mklink opengl32.dll "x64\opengl32.dll"
+          mklink libglapi.dll "x64\libglapi.dll"
+        working-directory: build\tests\Debug
         
       - name: Run tests and generate coverage report
         working-directory: BreakoutTests
