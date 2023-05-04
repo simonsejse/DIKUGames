@@ -17,7 +17,6 @@ jobs:
         run: |
           dotnet test --collect:"XPlat Code Coverage"
           reportgenerator -reports:$(find TestResults -name coverage.cobertura.xml) -targetdir:Report -reporttypes:Html
-        
       - name: Upload report
         uses: actions/upload-artifact@v2
         with:
