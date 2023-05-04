@@ -12,7 +12,7 @@ jobs:
       - name: Install GLFW
         shell: cmd
         run: |
-          choco install glfw3 -y
+          choco install glfw3 -y --allow-empty-checksums
 
       - name: Checkout code
         uses: actions/checkout@v2
