@@ -67,7 +67,7 @@ jobs:
       - name: Commit and push coverage report changes to dikugroup6.github.io repository
         run: |
           git config --global user.email "simonwa01@github.com"
-          git config --global user.name "simonsejse"
+          git config --global user.name "DIKUGroup6"
           git add reports/
           git commit -m "Add coverage report for BreakoutTests"
           git push origin main
