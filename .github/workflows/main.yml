@@ -9,6 +9,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgdiplus
+          brew install glfw
+
       - name: Checkout code
         uses: actions/checkout@v2
         with:
@@ -20,15 +26,13 @@ jobs:
           node-version: '16.x'
           
       - name: Build DIKUArcade
-        working-directory: DIKUArcade
         run: |
+          cd DIKUArcade
           dotnet build
-          
+        
       - name: Run tests and generate coverage report
         working-directory: BreakoutTests
         run: |
-          dotnet tool install -g dotnet-reportgenerator-globaltool
-          dotnet add package coverlet.collector
           dotnet test --collect:"XPlat Code Coverage"
           reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:Report -reporttypes:Html
         
