@@ -14,11 +14,6 @@ jobs:
         run: |
           choco install glfw3 -y
 
-      - name: Install libgdiplus
-        shell: cmd
-        run: |
-          choco install libgdiplus -y
-
       - name: Checkout code
         uses: actions/checkout@v2
         with:
