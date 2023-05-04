@@ -19,6 +19,11 @@ jobs:
         with:
           node-version: '16.x'
           
+      - name: Build DIKUArcade
+        working-directory: DIKUArcade
+        run: |
+          dotnet build
+          
       - name: Run tests and generate coverage report
         working-directory: BreakoutTests
         run: |
