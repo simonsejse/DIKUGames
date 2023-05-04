@@ -1,10 +1,9 @@
-name: Run tests on pull request merge
+name: Run tests and generate coverage report
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
-      - master
+      - 'test/*'
 
 jobs:
   test:
@@ -13,15 +12,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Run tests and generate report
-        if: startsWith(github.head_ref, 'test/')
+      - name: Run tests and generate coverage report
+        working-directory: BreakoutTests
         run: |
           dotnet test --collect:"XPlat Code Coverage"
           reportgenerator -reports:$(find TestResults -name coverage.cobertura.xml) -targetdir:Report -reporttypes:Html
         
       - name: Upload report
-        if: startsWith(github.head_ref, 'test/')
         uses: actions/upload-artifact@v2
         with:
-          name: test-report
-          path: reports.zip
+          name: coverage-report
+          path: BreakoutTests/Report
