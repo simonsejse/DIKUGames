@@ -1,0 +1,29 @@
+name: Run tests on pull request merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run tests and generate report
+        if: startsWith(github.head_ref, 'test/')
+        run: |
+          dotnet test --logger trx
+          mkdir -p reports
+          mv **/*.trx reports/
+          zip -r reports.zip reports/
+        
+      - name: Upload report
+        if: startsWith(github.head_ref, 'test/')
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-report
+          path: reports.zip
