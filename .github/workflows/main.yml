@@ -61,7 +61,7 @@ jobs:
       - name: Copy coverage report to dikugroup6.github.io repository
         run: |
           mkdir -p "dikugroup6.github.io/reports/Report-$(date +%Y-%m-%d)"
-          cp -R coverage-report/Report/* "dikugroup6.github.io/reports/Report-$(date +%Y-%m-%d)/"
+          cp -R D:\a\DIKUGames\DIKUGames\BreakoutTests\Report\* "dikugroup6.github.io/reports/Report-$(date +%Y-%m-%d)/"
         working-directory: DIKUGames
         shell: bash
 
