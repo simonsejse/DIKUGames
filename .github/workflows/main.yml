@@ -53,16 +53,20 @@ jobs:
           ref: main
           token: ${{ secrets.ACCESS_TOKEN }}
         
+      - name: Download coverage report artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: coverage-report
+          path: coverage-report
+        
       - name: Copy coverage report to dikugroup6.github.io repository
         run: |
           mkdir -p "dikugroup6.github.io/reports/Report-$(date +%Y-%m-%d)"
-          cp -R "D:\a\DIKUGames\DIKUGames\BreakoutTests\Report\." "dikugroup6.github.io/reports/Report-$(date +%Y-%m-%d)/"
-        shell: bash
+          cp -R coverage-report/* "dikugroup6.github.io/reports/Report-$(date +%Y-%m-%d)/"
 
-      - name: Commit and push coverage report changes to dikugroup6.github.io repository
-        run: |
-          git config --global user.email "simonwa01@github.com"
-          git config --global user.name "simonsejse"
-          git add reports/
-          git commit -m "Add coverage report for BreakoutTests"
-          git push origin main
+      - name: Commit and push changes to dikugroup6.github.io repository
+        uses: EndBug/add-and-commit@v7
+        with:
+          directory: dikugroup6.github.io
+          branch: gh-pages
+          message: "Update coverage report"
