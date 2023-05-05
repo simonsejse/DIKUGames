@@ -65,8 +65,8 @@ jobs:
         
       - name: Copy coverage report to dikugroup6.github.io repository
         run: |
-          mkdir -p "reports/Pull-Request-#${{ github.event.pull_request.number }}-Report-$(date +'%d-%m-%Y')-${{ github.event.pull_request.user.login }}"
-          rsync -av --exclude='coverage-report/' coverage-report/ "reports/Pull-Request-#${{ github.event.pull_request.number }}-Report-$(date +'%d-%m-%Y')-${{ github.event.pull_request.user.login }}/"
+          mkdir -p "reports/Pull-Request-${{ github.event.pull_request.number }}-Report-$(date +'%d-%m-%Y')-${{ github.event.pull_request.user.login }}"
+          rsync -av --exclude='coverage-report/' coverage-report/ "reports/Pull-Request-${{ github.event.pull_request.number }}-Report-$(date +'%d-%m-%Y')-${{ github.event.pull_request.user.login }}/"
 
       - name: Commit and push changes to dikugroup6.github.io repository
         uses: EndBug/add-and-commit@v7
