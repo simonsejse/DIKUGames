@@ -4,7 +4,6 @@ using Breakout.Entites;
 using Breakout.Factories;
 using Breakout.Handler;
 using Breakout.Levels;
-using Breakout.Loaders;
 using DIKUArcade.Input;
 using DIKUArcade.State;
 
@@ -16,7 +15,7 @@ public class GameRunningState : IGameState
     private static GameRunningState? _instance;
     private PlayerEntity _playerEntity;
     private EntityContainers _entityContainers;
-    private LevelLoader _levelLoader;
+    private readonly LevelLoader _levelLoader;
     private IKeyboardEventHandler _keyboardEventHandler;
     #endregion
 
@@ -57,14 +56,12 @@ public class GameRunningState : IGameState
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
     {
-        if (action == KeyboardAction.KeyPress)
-        {
-            _keyboardEventHandler.HandleKeyPress(key);
-        }
-        else
+        if (action == KeyboardAction.KeyRelease)
         {
             _keyboardEventHandler.HandleKeyRelease(key);
+            return;
         }
+        _keyboardEventHandler.HandleKeyPress(key);
     }
     #endregion
 }
