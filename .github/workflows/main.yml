@@ -1,10 +1,11 @@
 name: Run tests and generate coverage report
 
 on:
-  pull_request:
-    types: [closed]
+  pull_request_target:
+    types:
+      - closed
     branches:
-      - 'test/*'
+      - 'test/**'
 
 jobs:
   test:
