@@ -6,7 +6,11 @@ on:
       - closed
     branches:
       - 'test/**'
-
+  pull_request_target:
+    types:
+      - closed
+    branches:
+      - 'test/**'
 jobs:
   test:
     runs-on: windows-latest
