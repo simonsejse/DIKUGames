@@ -5,7 +5,6 @@ namespace BreakoutTests.StateTest;
 [TestFixture]
 public class StateTransformerTest
 {
-
     private readonly StateTransformer _transformer = new();
     
     [Test]
