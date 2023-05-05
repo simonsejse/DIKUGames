@@ -9,6 +9,9 @@ jobs:
   test:
     runs-on: windows-latest
     steps:
+      - name: Install Rsync
+        run: choco install rsync
+        
       - name: Install GLFW
         shell: cmd
         run: |
@@ -62,7 +65,7 @@ jobs:
       - name: Copy coverage report to dikugroup6.github.io repository
         run: |
           mkdir -p "reports/Report-$(date +%d-%m-%Y)"
-          xcopy /E /Exclude:coverage-report coverage-report\* "reports\Report-%DATE:/=-%"
+          rsync -av --exclude='coverage-report' coverage-report/ "reports/Report-$(date +%d-%m-%Y)/"
 
       - name: Commit and push changes to dikugroup6.github.io repository
         uses: EndBug/add-and-commit@v7
