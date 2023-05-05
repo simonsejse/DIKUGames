@@ -6,13 +6,7 @@ namespace BreakoutTests.StateTest;
 public class StateTransformerTest
 {
 
-    private StateTransformer _transformer;
-    
-    [SetUp]
-    public void Setup()
-    {
-        _transformer = new StateTransformer();
-    }
+    private readonly StateTransformer _transformer = new();
     
     [Test]
     public void TestTransformStringToState()
