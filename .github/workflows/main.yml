@@ -57,7 +57,16 @@ jobs:
           repository: DIKUGroup6/dikugroup6.github.io
           ref: main
           token: ${{ secrets.ACCESS_TOKEN }}
-
+          
+      - name: Print out variables
+        run: |
+          echo "Workspace directory: ${github.workspace}"
+          echo "Current date: $(date +%Y-%m-%d)"
+          mkdir -p "reports/Report-$(date +%Y-%m-%d)"
+          ls ${{ github.workspace }}/coverage-report/Report/
+          cp -R ${{ github.workspace }}/coverage-report/Report/* "reports/Report-$(date +%Y-%m-%d)/"
+        shell: bash
+        
       - name: Copy coverage report to dikugroup6.github.io repository
         run: |
           mkdir -p "reports/Report-$(date +%Y-%m-%d)"
