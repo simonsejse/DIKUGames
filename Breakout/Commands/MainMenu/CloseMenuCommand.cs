@@ -7,7 +7,7 @@ namespace Breakout.Commands.MainMenu;
 
 public class CloseMenuCommand : IKeyboardCommand
 {
-    private IGameEventFactory<GameEventType> _gameEventFactory;
+    private readonly IGameEventFactory<GameEventType> _gameEventFactory;
 
     public CloseMenuCommand() 
     {

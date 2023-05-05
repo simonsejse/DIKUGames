@@ -17,22 +17,19 @@ namespace Breakout.Controller;
 /// </summary>
 public class RunningStateKeyboardController : IKeyboardEventHandler
 {
-    private readonly IGameEventFactory<GameEventType> _gameEventFactory;
     public IReadOnlyDictionary<HashSet<KeyboardKey>, IKeyboardCommand> PressKeyboardActions { get; }
     public IReadOnlyDictionary<HashSet<KeyboardKey>, IKeyboardCommand> ReleaseKeyboardActions { get; }
     
     public RunningStateKeyboardController(PlayerEntity playerEntity)
     {
-        _gameEventFactory = new GameEventFactory();
         PressKeyboardActions = new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
         {
-            { SetFactory.Create(KeyboardKey.Escape), new CloseMenuCommand() },
+            { SetFactory.Create(KeyboardKey.Escape), new PauseGameCommand(new GameEventFactory()) },
             { SetFactory.Create(KeyboardKey.Left, KeyboardKey.A), new MovePlayerLeftCommand(playerEntity, true) },
             { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), new MovePlayerRightCommand(playerEntity, true) }
         };
         ReleaseKeyboardActions = new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
         {
-            { SetFactory.Create(KeyboardKey.Escape), new CloseMenuCommand() },
             { SetFactory.Create(KeyboardKey.Left, KeyboardKey.A), new MovePlayerLeftCommand(playerEntity, false) },
             { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), new MovePlayerRightCommand(playerEntity, false) }
         };
