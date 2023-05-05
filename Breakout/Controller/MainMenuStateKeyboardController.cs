@@ -1,33 +1,30 @@
-using Breakout.Events;
+using Breakout.Commands;
+using Breakout.Commands.MainMenu;
 using Breakout.Factories;
 using Breakout.Handler;
-using DIKUArcade.Events;
-using DIKUArcade.Events.Generic;
+using Breakout.States;
 using DIKUArcade.Input;
 
 namespace Breakout.Controller;
 
 public class MainMenuStateKeyboardController : IKeyboardPressHandler
 {
-    private readonly IGameEventFactory<GameEventType> _gameEventFactory;
+    public IReadOnlyDictionary<HashSet<KeyboardKey>, IKeyboardCommand> PressKeyboardActions { get; }
 
-    public MainMenuStateKeyboardController()
+    public MainMenuStateKeyboardController(MainMenuState state)
     {
-        _gameEventFactory = new GameEventFactory();
+        PressKeyboardActions = new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
+        {
+            { SetFactory.Create(KeyboardKey.Escape), new CloseMenuCommand() },
+            { SetFactory.Create(KeyboardKey.Up, KeyboardKey.W), new ShiftMenuUpCommand(state) },
+            { SetFactory.Create(KeyboardKey.Down, KeyboardKey.S), new ShiftMenuDownCommand(state) },
+            { SetFactory.Create(KeyboardKey.Enter), new EnterMainMenuCommand(state, new GameEventFactory()) },
+        };
     }
     
-    public void HandleKeyPress(KeyboardKey key)
-    {
-        switch (key)
-        {
-            case KeyboardKey.Escape:
-                GameEvent<GameEventType> closeEvent = _gameEventFactory.CreateGameEventForAllProcessors(
-                    GameEventType.WindowEvent,
-                    "CLOSE_WINDOW");
-            
-                BreakoutBus.GetBus().RegisterEvent(closeEvent);
-                break;
-
-        }
+    public void HandleKeyPress(KeyboardKey keyboardKey)
+    { 
+        var command = PressKeyboardActions.FirstOrDefault(keyPairValue => keyPairValue.Key.Contains(keyboardKey)).Value;
+        command?.Execute();
     }
 }

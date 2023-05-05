@@ -56,14 +56,12 @@ public class GameRunningState : IGameState
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
     {
-        if (action == KeyboardAction.KeyPress)
-        {
-            _keyboardEventHandler.HandleKeyPress(key);
-        }
-        else
+        if (action == KeyboardAction.KeyRelease)
         {
             _keyboardEventHandler.HandleKeyRelease(key);
+            return;
         }
+        _keyboardEventHandler.HandleKeyPress(key);
     }
     #endregion
 }

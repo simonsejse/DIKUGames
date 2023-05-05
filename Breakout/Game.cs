@@ -49,6 +49,7 @@ public class Game : DIKUGame, IGameEventProcessor<GameEventType>
     public override void Update()
     {
         _stateMachine.ActiveState.UpdateState();
+        BreakoutBus.GetBus().ProcessEventsSequentially();
     }
 
     /// <summary>
@@ -75,10 +76,7 @@ public class Game : DIKUGame, IGameEventProcessor<GameEventType>
     /// <param name="gameEvent"></param>
     public void ProcessEvent(GameEvent<GameEventType> gameEvent)
     {
-        Console.WriteLine("Pe");
-        if (gameEvent.Message.Equals("CLOSE_WINDOW"))
-        {
-            window.CloseWindow();
-        }
+        if (!"CLOSE_WINDOW".Equals(gameEvent.Message)) return;
+        window.CloseWindow();
     }
 }
