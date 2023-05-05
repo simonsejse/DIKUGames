@@ -24,11 +24,6 @@ jobs:
         with:
           node-version: '16.x'
 
-      - name: Build DIKUArcade
-        run: |
-          cd DIKUArcade
-          dotnet build
-
       - name: Install 7zip
         run: choco install 7zip.install -y
 
@@ -61,7 +56,7 @@ jobs:
       - name: Copy coverage report to dikugroup6.github.io repository
         run: |
           mkdir -p "dikugroup6.github.io/reports/Report-$(date +%Y-%m-%d)"
-          cp -R "D:\a\DIKUGames\DIKUGames\BreakoutTests\Report\*" "dikugroup6.github.io/reports/Report-$(date +%Y-%m-%d)/"
+          cp -R "D:\a\DIKUGames\DIKUGames\BreakoutTests\Report\." "dikugroup6.github.io/reports/Report-$(date +%Y-%m-%d)/"
         shell: bash
 
       - name: Commit and push coverage report changes to dikugroup6.github.io repository
