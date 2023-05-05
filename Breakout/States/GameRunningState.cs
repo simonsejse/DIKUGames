@@ -78,7 +78,6 @@ public class GameRunningState : IGameState
     public void RenderState()
     {
         _playerEntity.RenderEntity();
-        //_ballEntity.RenderEntity();
         _entityContainers.RenderEntities();
     }
 
