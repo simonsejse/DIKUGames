@@ -5,10 +5,10 @@ on:
     types:
       - closed
       
-      
 jobs:
   test:
     runs-on: windows-latest
+    if: startsWith(github.event.pull_request.head.ref, 'test/') && github.event.pull_request.merged == true
     steps:
       - name: Install Rsync
         run: choco install rsync
