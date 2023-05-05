@@ -39,7 +39,6 @@ public class MainMenuState : IGameState
 
     public void UpdateState()
     {
-        Console.WriteLine(ActiveButton);
     }
 
     public void RenderState()
