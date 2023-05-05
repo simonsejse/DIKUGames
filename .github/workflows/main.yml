@@ -5,12 +5,14 @@ on:
     types:
       - closed
     branches:
-      - 'test/**'
+      - 'test/*'
   pull_request_target:
     types:
       - closed
     branches:
-      - 'test/**'
+      - 'test/*'
+      
+      
 jobs:
   test:
     runs-on: windows-latest
