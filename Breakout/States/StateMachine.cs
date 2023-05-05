@@ -17,6 +17,7 @@ public class StateMachine : IGameEventProcessor<GameEventType>
         {
             { GameState.Menu, GameRunningState.GetInstance() },
             { GameState.Running, GameRunningState.GetInstance() },
+            { GameState.Paused, PauseState.GetInstance() }
         };
 
     
