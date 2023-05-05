@@ -27,12 +27,14 @@ public class GameRunningState : IGameState
     public GameRunningState()
     {
         _playerEntity = new PlayerEntityFactory().Create();
-        // TODO: Koordinater, position, speed burde være ud fra Player's nuværende position
-        _ballEntity = new BallEntityFactory(0.1f, new Vec2F(0.01f, 0.01f)).Create();
         _keyboardEventHandler = new RunningStateKeyboardController(_playerEntity);
         _entityContainers = new EntityContainers();
         _levelLoader = new LevelLoader();
         _levelLoader.LoadLevel(0, _entityContainers.BlockEntities);
+        
+        _ballEntity = new BallEntityFactory(0.1f, new Vec2F(0.01f, 0.01f)).Create();
+        _entityContainers.BallEntities.AddEntity(_ballEntity);
+
     }
     #endregion
     
@@ -76,7 +78,7 @@ public class GameRunningState : IGameState
     public void RenderState()
     {
         _playerEntity.RenderEntity();
-        _ballEntity.RenderEntity();
+        //_ballEntity.RenderEntity();
         _entityContainers.RenderEntities();
     }
 
