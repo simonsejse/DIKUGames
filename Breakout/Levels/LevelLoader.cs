@@ -16,8 +16,8 @@ namespace Breakout.Levels;
 /// </summary>
 public class LevelLoader : ILevelLoader<BlockEntity>
 {
-    private LevelStorage _levelStorage;
-    private IModelFactory<Level> _levelFactory;
+    private readonly LevelStorage _levelStorage;
+    private readonly IModelFactory<Level> _levelFactory;
 
     public LevelLoader()
     {
@@ -27,20 +27,24 @@ public class LevelLoader : ILevelLoader<BlockEntity>
 
     public EntityContainer<BlockEntity> LoadLevel(int levelNum)
     {
-        var blockEntities = new EntityContainer<BlockEntity>();
-        var filePath = _levelStorage.LevelPaths[levelNum];
+        EntityContainer<BlockEntity> blockEntities = new();
+        string filePath = _levelStorage.LevelPaths[levelNum];
         FileReader.ReadFileFromPath(Path.Combine("Assets", "Levels", filePath), out var data);
         var level = _levelFactory.Parse(data);
-        for (var row = 0; row < level.Map.Length; row++)
+        for (int row = 0; row < level.Map.Length; row++)
         {
-            for (var column = 0; column < level.Map[row].Length; column++)
+            for (int column = 0; column < level.Map[row].Length; column++)
             {
                 char key = level.Map[row][column];
                 if (key == '-') continue;
 
                 const float offsetY = 0.1f;
-                float posX = 100f/level.Map[0].Length/100f * column;
-                float posY = offsetY + 90f/level.Map.Length/100f * row;
+                
+                int rowLength = level.Map[0].Length;
+                float posX = 100f / rowLength / 100f * column;
+                
+                int columnLength = level.Map.Length;
+                float posY = offsetY + 90f/columnLength/100f * row;
                 
                 var pos = new Vec2F(posX, posY);
         

@@ -1,3 +1,4 @@
+using Breakout.Commands;
 using DIKUArcade.Input;
 
 namespace Breakout.Handler;
@@ -7,7 +8,9 @@ namespace Breakout.Handler;
 /// that will be implemented by concrete classes that will provide actual implementations
 /// for both key release and key press events.
 /// </summary>
-public interface IKeyboardEventHandler : IKeyboardPressHandler, IKeyboardReleaseHandler { }
+public interface IKeyboardEventHandler : IKeyboardPressHandler, IKeyboardReleaseHandler
+{
+}
 
 /// <summary>
 /// The abstract interface for handling key press events, that will be
@@ -16,7 +19,8 @@ public interface IKeyboardEventHandler : IKeyboardPressHandler, IKeyboardRelease
 /// </summary>
 public interface IKeyboardPressHandler
 {
-    void HandleKeyPress(KeyboardKey key);
+    IReadOnlyDictionary<HashSet<KeyboardKey>, IKeyboardCommand> PressKeyboardActions { get; }
+    void  HandleKeyPress(KeyboardKey key);
 }
 
 /// <summary>
@@ -26,5 +30,6 @@ public interface IKeyboardPressHandler
 /// </summary>
 public interface IKeyboardReleaseHandler
 {
+    IReadOnlyDictionary<HashSet<KeyboardKey>, IKeyboardCommand> ReleaseKeyboardActions { get; }
     void HandleKeyRelease(KeyboardKey key);
 }

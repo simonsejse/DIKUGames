@@ -10,7 +10,7 @@ namespace Galaga
 {
     public class Game : DIKUGame, IGameEventProcessor<GameEventType>
     {
-        private StateMachine _stateMachine;
+        private readonly StateMachine _stateMachine;
 
         public Game(WindowArgs windowArgs) : base(windowArgs)
         {

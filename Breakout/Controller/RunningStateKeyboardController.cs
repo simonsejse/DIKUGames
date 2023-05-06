@@ -1,7 +1,10 @@
-﻿using Breakout.Entites;
+﻿using Breakout.Commands;
+using Breakout.Commands.GameRunning;
+using Breakout.Commands.MainMenu;
+using Breakout.Entites;
 using Breakout.Events;
+using Breakout.Factories;
 using Breakout.Handler;
-using Breakout.States;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
 using DIKUArcade.Input;
@@ -14,40 +17,35 @@ namespace Breakout.Controller;
 /// </summary>
 public class RunningStateKeyboardController : IKeyboardEventHandler
 {
-    private readonly PlayerEntity _playerEntity;
+    public IReadOnlyDictionary<HashSet<KeyboardKey>, IKeyboardCommand> PressKeyboardActions { get; }
+    public IReadOnlyDictionary<HashSet<KeyboardKey>, IKeyboardCommand> ReleaseKeyboardActions { get; }
     
     public RunningStateKeyboardController(PlayerEntity playerEntity)
     {
-        _playerEntity = playerEntity;
-    }
-    
-    public void HandleKeyPress(KeyboardKey key)
-    {
-        switch (key)
+        PressKeyboardActions = new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
         {
-            case KeyboardKey.A:
-            case KeyboardKey.Left:
-                _playerEntity.SetMoveLeft(true);
-                break;
-            case KeyboardKey.D:
-            case KeyboardKey.Right:
-                _playerEntity.SetMoveRight(true);
-                break;
-        }
+            { SetFactory.Create(KeyboardKey.Escape), new PauseGameCommand(new GameEventFactory()) },
+            { SetFactory.Create(KeyboardKey.Left, KeyboardKey.A), new MovePlayerLeftCommand(playerEntity, true) },
+            { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), new MovePlayerRightCommand(playerEntity, true) }
+        };
+        ReleaseKeyboardActions = new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
+        {
+            { SetFactory.Create(KeyboardKey.Left, KeyboardKey.A), new MovePlayerLeftCommand(playerEntity, false) },
+            { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), new MovePlayerRightCommand(playerEntity, false) }
+        };
     }
 
-    public void HandleKeyRelease(KeyboardKey key)
+    public void HandleKeyPress(KeyboardKey keyboardKey)
     {
-        switch (key)
-        {
-            case KeyboardKey.A:
-            case KeyboardKey.Left:
-                _playerEntity.SetMoveLeft(false);
-                break;
-            case KeyboardKey.D:
-            case KeyboardKey.Right:
-                _playerEntity.SetMoveRight(false);
-                break;
-        }
+        var command = PressKeyboardActions.FirstOrDefault(keyPairValue => keyPairValue.Key.Contains(keyboardKey)).Value;
+        command?.Execute();
+    }
+
+    public void HandleKeyRelease(KeyboardKey keyboardKey)
+    {
+        var command = ReleaseKeyboardActions.FirstOrDefault(keyPairValue => keyPairValue.Key.Contains(keyboardKey)).Value;
+        command?.Execute();
     }
 }
+
+

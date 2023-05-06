@@ -1,4 +1,4 @@
-﻿namespace Breakout.Loaders;
+﻿namespace Breakout.Levels;
 
 public interface ILevelStrategy
 {

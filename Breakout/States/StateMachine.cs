@@ -11,6 +11,16 @@ namespace Breakout.States;
 /// </summary>
 public class StateMachine : IGameEventProcessor<GameEventType>
 {
+
+    private static readonly IReadOnlyDictionary<GameState, IGameState> GameStates =
+        new Dictionary<GameState, IGameState>
+        {
+            { GameState.Menu, GameRunningState.GetInstance() },
+            { GameState.Running, GameRunningState.GetInstance() },
+            { GameState.Paused, PauseState.GetInstance() }
+        };
+
+    
     /// <summary>
     /// The transformer used to convert from and to string representations to GameState enums, respectively.
     /// </summary>
@@ -28,8 +38,7 @@ public class StateMachine : IGameEventProcessor<GameEventType>
     public StateMachine()
     {
         BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
-        BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
-        ActiveState = GameRunningState.GetInstance();
+        ActiveState = MainMenuState.GetInstance();
     }
 
     /// <summary>
@@ -38,20 +47,21 @@ public class StateMachine : IGameEventProcessor<GameEventType>
     /// <param name="stateType">The type of game state to switch to.</param>
     private void SwitchState(GameState stateType)
     {
-        ActiveState = stateType switch
-        {
-            GameState.Menu => MainMenuState.GetInstance(),
-            GameState.Running => GameRunningState.GetInstance(),
-            //GameState.Paused => .GetInstance(),
-            //GameState.Lost => .GetInstance(),
-            _ => throw new ArgumentOutOfRangeException(nameof(stateType), stateType, null)
-        };
+        if (!GameStates.ContainsKey(stateType))
+            throw new ArgumentException("State does not exist!", nameof(stateType));
+        
+        ActiveState = GameStates[stateType];
     }
         
     ///TODO: Add XML something like used to process events for switching between states
     public void ProcessEvent(GameEvent<GameEventType> gameEvent)
     {
+        if (gameEvent.EventType is not GameEventType.GameStateEvent) return;
+        if (!gameEvent.Message.Equals("CHANGE_STATE")) return;
         
+        string gameEventStringArg1 = gameEvent.StringArg1;
+        SwitchState(_stateTransformer.TransformStringToState(gameEventStringArg1));
+
     }
 }
 
