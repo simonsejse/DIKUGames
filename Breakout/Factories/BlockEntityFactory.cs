@@ -1,4 +1,5 @@
-﻿using Breakout.Entities;
+﻿using Breakout.Entities.BlockTypes;
+using Breakout.Entities;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;

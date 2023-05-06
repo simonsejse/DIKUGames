@@ -2,6 +2,7 @@
 using Breakout.Factories;
 using Breakout.IO;
 using Breakout.Entites;
+using Breakout.Entities.Blocks;
 using DIKUArcade.GUI;
 using DIKUArcade.Math;
 
