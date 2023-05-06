@@ -2,6 +2,7 @@
 
 namespace Breakout.Entities;
 
+
 public class EntityRenderer
 {
     #region Methods

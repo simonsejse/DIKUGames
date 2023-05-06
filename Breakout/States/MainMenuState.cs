@@ -1,5 +1,7 @@
 using System.Drawing;
+using Breakout.Controller;
 using Breakout.Factories;
+using Breakout.Handler;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Input;
@@ -11,18 +13,23 @@ namespace Breakout.States;
 public class MainMenuState : IGameState
 {
     private static MainMenuState? _instance;
-    private readonly Text[] _menuButtons;
-    
-    private readonly ITextFactory _textFactory;
+    private readonly IKeyboardPressHandler _keyboardEventHandler;
 
-    public MainMenuState(ITextFactory textFactory)
+    private readonly Entity _background;
+    public Text[] MenuButtons { get; }
+    public int ActiveButton { get; set; }
+
+    private MainMenuState(ITextFactory textFactory)
     {
-        _textFactory = textFactory;
-        _menuButtons = new[]
+        ActiveButton = 0;
+        _background = new BackgroundFactory("Assets", "Images", "shipit_titlescreen.png").Create();
+        MenuButtons = new[]
         {
-            textFactory.Create("Start Game", new Vec2F(0.1f, 0.1f), new Vec2F(0.5f, 0.5f), Color.Aqua),
-            textFactory.Create("Quit", new Vec2F(0.1f, 0f), new Vec2F(0.5f, 0.5f), Color.White)
+            textFactory.Create("Start Game", new Vec2F(0.1f, 0.1f), new Vec2F(0.5f, 0.5f), Color.Crimson),
+            textFactory.Create("Quit", new Vec2F(0.1f, 0f), new Vec2F(0.5f, 0.5f), Color.White),
+            textFactory.Create("Level Selector (Soon)", new Vec2F(0.1f, -0.1f), new Vec2F(0.6f, 0.5f), Color.White)
         };
+        _keyboardEventHandler = new MainMenuStateKeyboardController(this);
     }
     
     public static MainMenuState GetInstance()
@@ -40,14 +47,14 @@ public class MainMenuState : IGameState
 
     public void RenderState()
     {
-        foreach(var text in _menuButtons) text.RenderText();
+        _background.RenderEntity();
+        foreach(var text in MenuButtons) text.RenderText();
     }
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
     {
-        if (key == KeyboardKey.Escape)
-        {
-            //TODO: Register event to EventBus with close game
-        }
+        if (action is not KeyboardAction.KeyPress) return;
+        
+        _keyboardEventHandler.HandleKeyPress(key);
     }
 }

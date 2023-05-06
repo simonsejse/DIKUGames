@@ -6,7 +6,7 @@ namespace Breakout.Events;
 /// <summary>
 /// Singleton design patterns.
 /// </summary>
-public static class GalagaBus {
+public static class BreakoutBus {
     /// <summary>
     /// Static event bus reference. 
     /// </summary>

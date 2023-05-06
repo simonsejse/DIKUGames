@@ -6,7 +6,7 @@ namespace Breakout.Containers;
 
 public class EntityContainers
 {
-    private EntityRenderer _entityRenderer;
+    private readonly EntityRenderer _entityRenderer;
     public EntityContainer<BlockEntity> BlockEntities { get; set; }
     public EntityContainer<BallEntity> BallEntities { get; }
     

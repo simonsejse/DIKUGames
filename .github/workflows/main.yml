@@ -1,0 +1,76 @@
+name: Run tests and generate coverage report
+
+on:
+  pull_request:
+    types:
+      - closed
+      
+jobs:
+  test:
+    runs-on: windows-latest
+    if: startsWith(github.event.pull_request.head.ref, 'test/') && github.event.pull_request.merged == true
+    steps:
+      - name: Install Rsync
+        run: choco install rsync
+        
+      - name: Install GLFW
+        shell: cmd
+        run: |
+          choco install glfw3 -y --allow-empty-checksums
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Set up Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+
+      - name: Install 7zip
+        run: choco install 7zip.install -y
+
+      - name: Install Mesa
+        shell: cmd
+        run: |
+          curl.exe -L --output mesa.7z --url https://github.com/pal1000/mesa-dist-win/releases/download/20.3.2/mesa3d-20.3.2-release-msvc.7z
+          "C:\Program Files\7-Zip\7z.exe" x mesa.7z
+
+      - name: Run tests and generate coverage report
+        working-directory: BreakoutTests
+        run: |
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          dotnet test --collect:"XPlat Code Coverage"
+          reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:Report -reporttypes:Html
+
+      - name: Upload report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: BreakoutTests/Report
+
+      - name: Checkout dikugroup6.github.io repository
+        uses: actions/checkout@v2
+        with:
+          repository: DIKUGroup6/dikugroup6.github.io
+          ref: main
+          token: ${{ secrets.ACCESS_TOKEN }}
+        
+      - name: Download coverage report artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: coverage-report
+          path: coverage-report
+        
+      - name: Copy coverage report to dikugroup6.github.io repository
+        run: |
+          mkdir -p "reports/Pull-Request-${{ github.event.pull_request.number }}-Report-$(date +'%d-%m-%Y')-${{ github.event.pull_request.user.login }}"
+          rsync -av --exclude='coverage-report/' coverage-report/ "reports/Pull-Request-${{ github.event.pull_request.number }}-Report-$(date +'%d-%m-%Y')-${{ github.event.pull_request.user.login }}/"
+
+      - name: Commit and push changes to dikugroup6.github.io repository
+        uses: EndBug/add-and-commit@v7
+        with:
+          directory: dikugroup6.github.io
+          branch: main
+          message: "Update coverage report"
