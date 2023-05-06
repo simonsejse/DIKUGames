@@ -6,6 +6,7 @@ using Breakout.Handler;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;
+using Breakout.Levels;
 
 namespace Breakout.States;
 
