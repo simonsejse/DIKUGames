@@ -63,7 +63,7 @@ public class BallEntity : Entity
             if (data.CollisionDir == CollisionDirection.CollisionDirLeft ||
                 data.CollisionDir == CollisionDirection.CollisionDirRight)
             {
-                this.Shape.Extent.X *= -1.0f;
+                Shape.Extent.X *= -1.0f;
             } else if (data.CollisionDir == CollisionDirection.CollisionDirUp ||
                        data.CollisionDir == CollisionDirection.CollisionDirDown)
             {
