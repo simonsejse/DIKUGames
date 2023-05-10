@@ -1,9 +1,4 @@
-using DIKUArcade.Math;
-using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
-using Breakout.Entities.BlockTypes;
-
-namespace Breakout.Entities.Blocks;
+namespace Breakout.Entities.BlockTypes;
 
 /// <summary>
 /// Defines the class for the special block type hungry block from the interface IBlockTypes
@@ -16,7 +11,7 @@ public class HungryBlockType : IBlockType
     /// A method of handling collision between the block and the ball entity
     /// </summary>
     /// <param name="block">The blockentity</param>
-    void IBlockType.CollisionHandler(BlockEntity block) 
+    public void CollisionHandler(BlockEntity block) 
     {
         block.TakeDamage();
         // should "eat" the ball, by deleting it and spawning it a random place on the map
