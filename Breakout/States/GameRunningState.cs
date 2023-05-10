@@ -1,6 +1,5 @@
 ﻿using Breakout.Containers;
 using Breakout.Controller;
-using Breakout.Entites;
 using Breakout.Entities;
 using Breakout.Factories;
 using Breakout.Handler;
@@ -9,6 +8,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;
+using Breakout.Levels;
 
 namespace Breakout.States;
 
@@ -17,7 +17,6 @@ public class GameRunningState : IGameState
     #region Properties and fields
     private static GameRunningState? _instance;
     private PlayerEntity _playerEntity;
-    private BallEntity _ballEntity;
     private EntityContainers _entityContainers;
     private EntityContainer<BlockEntity> _blockEntities;
     private readonly LevelLoader _levelLoader;
@@ -36,6 +35,7 @@ public class GameRunningState : IGameState
         _blockEntities = _levelLoader.LoadLevel(0);
          _ballEntity = new BallEntityFactory(0.1f, new Vec2F(0.01f, 0.01f)).Create();
         _entityContainers.BallEntities.AddEntity(_ballEntity);
+
     }
     #endregion
     
@@ -48,15 +48,6 @@ public class GameRunningState : IGameState
 
     #region Methods
 
-    /*
-    public void AddEntity(ObjectType objectType)
-    {
-        var (shape, position) = ObjectTypeFactory.CreateShape(objectType);
-        var dynamicShape = new DynamicShape(shape.Position, shape.Extent, shape.Direction);
-        EntityContainer.AddDynamicEntity(dynamicShape);
-        dynamicShape.SetPosition(position);
-    }
-    */
     public void ResetState()
     {
     }
@@ -71,12 +62,8 @@ public class GameRunningState : IGameState
        //CheckBlockCollisions(_ballEntity, blockEntities);
 
 
-       if (_ballEntity.OutOfBounds())
-       {
-           //TODO: Lose life
-           _ballEntity.Launch();
-           // Egentlig, vi skal nok have en initialize-state pre-state? spørg
-       }
+       
+       
     }
 
     public void RenderState()
@@ -91,9 +78,11 @@ public class GameRunningState : IGameState
         if (action == KeyboardAction.KeyRelease)
         {
             _keyboardEventHandler.HandleKeyRelease(key);
-            return;
         }
-        _keyboardEventHandler.HandleKeyPress(key);
+        else
+        {
+            _keyboardEventHandler.HandleKeyPress(key);
+        }
     }
     #endregion
 }

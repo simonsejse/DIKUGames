@@ -4,7 +4,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 
 
-namespace Breakout.Entites;
+namespace Breakout.Entities;
 
 public class BallEntity : Entity
 {
@@ -69,6 +69,7 @@ public class BallEntity : Entity
         // Adjust the Y direction based on the position relative to the block
         if (deltaY < 0 && _direction.Y > 0)
         {
+
             _direction.Y *= -1.0f; // Bounce upwards
         }
         else if (deltaY > 0 && _direction.Y < 0)

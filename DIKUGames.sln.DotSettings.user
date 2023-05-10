@@ -1,4 +1,9 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1016a4fd_002D2cbf_002D4390_002Dbcfb_002Db7700f9a67c2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestRendering" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.EntityContainerTest.TestRendering&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1709f17e_002D41ad_002D4fdd_002Db3af_002D0bdb12c10677/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestFromStringToState #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;NUnit3x::33773149-6DC2-4DB3-9E36-DD2C4346FCDB::net7.0::GalagaTests.StateMachineTesting&lt;/TestId&gt;
@@ -31,10 +36,11 @@
     &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.LevelTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c1bc4175_002D7a75_002D4f0d_002D9c48_002Dc27af391a6c6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestFromStringToState #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c1bc4175_002D7a75_002D4f0d_002D9c48_002Dc27af391a6c6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestFromStringToState #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.LevelTests&lt;/TestId&gt;
     &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.LevelStorageTest.TestCentralMass&lt;/TestId&gt;
     &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.LevelStorageTest&lt;/TestId&gt;
+    &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.EntityContainerTest.TestRendering&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
