@@ -1,7 +1,3 @@
-using DIKUArcade.Math;
-using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
-
 namespace Breakout.Entities.BlockTypes;
 
 /// <summary>
@@ -14,7 +10,7 @@ public class UnbreakableBlockType : IBlockType
     /// A method of handling collision between the block and the ball entity
     /// </summary>
     /// <param name="block">The blockentity</param>
-    void IBlockType.CollisionHandler(BlockEntity block) 
+    public void CollisionHandler(BlockEntity block) 
     {
         // do nothing upon collision
     }
