@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Breakout\Breakout.csproj" />
+    <ProjectReference Include="..\DIKUArcade\DIKUArcade/DIKUArcade.csproj" />
   </ItemGroup>
 
   <ItemGroup>

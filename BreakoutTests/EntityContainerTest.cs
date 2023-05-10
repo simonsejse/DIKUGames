@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Breakout.Containers;
 using Breakout.Factories;
 using Breakout.IO;
 using Breakout.Entities;
@@ -10,25 +11,22 @@ namespace BreakoutTests;
 /// <summary>
 /// We have mainly used the Test-Driven Development Approach for these tests
 /// </summary>
-public class BallEntityTests
+public class EntityContainerTest
 {
-    private BallEntity ballEntity;
+    private EntityContainers _entityContainers;
     
     [SetUp]
     public void Setup()
     {
-        ballEntity = new BallEntityFactory(0.1f, new Vec2F(0.01f, 0.01f)).Create();
+        _entityContainers = new EntityContainers();
     }
 
     
     [Test]
-    public void TestMove()
+    public void TestRendering()
     {
-        var initPos = ballEntity.Shape.Position;
-        
-        ballEntity.Move();
-        
-        Assert.AreNotEqual(initPos, ballEntity.Shape.Position);
+        _entityContainers.RenderEntities();
+        _entityContainers.RenderEntities();
     }
 
   

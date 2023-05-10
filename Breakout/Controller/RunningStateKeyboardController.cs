@@ -1,8 +1,7 @@
 ﻿using Breakout.Commands;
 using Breakout.Commands.GameRunning;
 using Breakout.Commands.MainMenu;
-using Breakout.Entites;
-using Breakout.Events;
+using Breakout.Entities;
 using Breakout.Factories;
 using Breakout.Handler;
 using DIKUArcade.Events;

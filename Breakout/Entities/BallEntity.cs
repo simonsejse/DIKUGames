@@ -3,7 +3,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Physics;
 
-namespace Breakout.Entites;
+namespace Breakout.Entities;
 
 public class BallEntity : Entity
 {
@@ -63,7 +63,7 @@ public class BallEntity : Entity
             if (data.CollisionDir == CollisionDirection.CollisionDirLeft ||
                 data.CollisionDir == CollisionDirection.CollisionDirRight)
             {
-                this.Shape.Extent.X *= -1.0f;
+                Shape.Extent.X *= -1.0f;
             } else if (data.CollisionDir == CollisionDirection.CollisionDirUp ||
                        data.CollisionDir == CollisionDirection.CollisionDirDown)
             {

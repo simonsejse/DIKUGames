@@ -1,4 +1,5 @@
-﻿using Breakout.Entities;
+﻿using Breakout.Entities.BlockTypes;
+using Breakout.Entities;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
@@ -23,6 +24,6 @@ public class BlockEntityFactory : IEntityFactory<BlockEntity>
 
     public BlockEntity Create()
     {
-        return new BlockEntity(new StationaryShape(_pos, new Vec2F(0.08333333333f, 0.04f)), _image, 0, 100);
+        return new BlockEntity(new StationaryShape(_pos, new Vec2F(0.08333333333f, 0.04f)), _image, 0, 100, new HungryBlockType());
     }
 }
