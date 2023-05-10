@@ -1,8 +1,11 @@
 ﻿using Breakout.Containers;
 using Breakout.Controller;
 using Breakout.Entites;
+using Breakout.Entities;
 using Breakout.Factories;
 using Breakout.Handler;
+using Breakout.Levels;
+using DIKUArcade.Entities;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;
@@ -16,6 +19,7 @@ public class GameRunningState : IGameState
     private PlayerEntity _playerEntity;
     private BallEntity _ballEntity;
     private EntityContainers _entityContainers;
+    private EntityContainer<BlockEntity> _blockEntities;
     private readonly LevelLoader _levelLoader;
     private IKeyboardEventHandler _keyboardEventHandler;
     #endregion
@@ -29,7 +33,7 @@ public class GameRunningState : IGameState
         _entityContainers = new EntityContainers();
         _levelLoader = new LevelLoader();
         
-        _entityContainers.BlockEntities = _levelLoader.LoadLevel(0);
+        _blockEntities = _levelLoader.LoadLevel(0);
          _ballEntity = new BallEntityFactory(0.1f, new Vec2F(0.01f, 0.01f)).Create();
         _entityContainers.BallEntities.AddEntity(_ballEntity);
     }
@@ -61,7 +65,10 @@ public class GameRunningState : IGameState
     {
        _playerEntity.Move();
        _ballEntity.Move();
-       //_ballEntity.CollideWithObject(ObjectType);
+       _ballEntity.CheckBlockCollisions(_ballEntity, _blockEntities);
+       CollisionManager.CheckBallPlayerCollision(_ballEntity, _playerEntity);
+   
+       //CheckBlockCollisions(_ballEntity, blockEntities);
 
 
        if (_ballEntity.OutOfBounds())
@@ -76,6 +83,7 @@ public class GameRunningState : IGameState
     {
         _playerEntity.RenderEntity();
         _entityContainers.RenderEntities();
+        _blockEntities.RenderEntities();
     }
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
