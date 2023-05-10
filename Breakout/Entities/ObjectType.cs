@@ -2,7 +2,7 @@
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 
-namespace Breakout.Entites;
+namespace Breakout.Entities;
 
     /// <summary>
     /// Enumeration of different types of game objects in Breakout.

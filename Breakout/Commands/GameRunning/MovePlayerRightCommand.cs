@@ -1,4 +1,4 @@
-using Breakout.Entites;
+using Breakout.Entities;
 
 namespace Breakout.Commands.GameRunning;
 

@@ -47,6 +47,16 @@ public class BlockEntity : Entity
     public virtual void TakeDamage() 
     {
         Health--;
+        if(Health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        DeleteEntity();
+        //player.AddPoints(Value);
     }
 
     public void CollisionHandler()

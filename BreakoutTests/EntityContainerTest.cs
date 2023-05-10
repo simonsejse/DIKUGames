@@ -2,10 +2,9 @@
 using Breakout.Containers;
 using Breakout.Factories;
 using Breakout.IO;
-using Breakout.Entites;
+using Breakout.Entities;
 using DIKUArcade.GUI;
 using DIKUArcade.Math;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace BreakoutTests;
 
