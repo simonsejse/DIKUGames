@@ -3,7 +3,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Physics;
 
-namespace Breakout.Entites;
+namespace Breakout.Entities;
 
 public class BallEntity : Entity
 {

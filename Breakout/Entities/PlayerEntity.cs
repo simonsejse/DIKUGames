@@ -4,7 +4,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 
-namespace Breakout.Entites;
+namespace Breakout.Entities;
 
 /// <summary>
 /// A class that represents the player entity.
@@ -16,6 +16,7 @@ public class PlayerEntity : Entity
     private float _moveRight = 0.0f;
     private float _moveLeft = 0.0f;
     private const float MovementSpeed = 0.05f;
+    private int _points = 0;
     
     #endregion
     
@@ -29,7 +30,7 @@ public class PlayerEntity : Entity
 
     #region Methods
     /// <summary>
-    ///Moves the player left or right based upon their movement fields and speed and updates their position
+    /// Moves the player left or right based upon their movement fields and speed and updates their position
     /// and direction. Also restricts position to be within game window limits
     /// </summary>
     public void Move()
@@ -69,4 +70,21 @@ public class PlayerEntity : Entity
         UpdateDirection();
     }
     #endregion
+
+    /// <summary>
+    /// Adds count points to the player's points. If the added points are not positive, do nothing
+    /// </summary>
+    /// <param name="val">Integer for the added points.</param>
+    public void AddPoints(int count)
+    {
+        if(count >= 0)
+        {
+            _points += count;
+        }
+    }
+
+    public int GetPoints()
+    {
+        return _points;
+    }
 }

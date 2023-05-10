@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Breakout.Factories;
 using Breakout.IO;
-using Breakout.Entites;
+using Breakout.Entities;
 using DIKUArcade.GUI;
 using DIKUArcade.Math;
 
