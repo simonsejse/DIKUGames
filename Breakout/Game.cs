@@ -78,6 +78,5 @@ public class Game : DIKUGame, IGameEventProcessor<GameEventType>
     {
         if (!"CLOSE_WINDOW".Equals(gameEvent.Message)) return;
         window.CloseWindow();
-      
     }
 }

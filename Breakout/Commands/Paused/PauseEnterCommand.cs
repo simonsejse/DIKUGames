@@ -26,9 +26,10 @@ public class PauseEnterCommand : IKeyboardCommand
                 "CHANGE_STATE",
                 Enum.GetName(GameState.Running) ?? "Running"),
             _ => _gameEventFactory.CreateGameEventForAllProcessors(GameEventType.GameStateEvent,
-                "CHANGE_STATE", //TODO: Maybe RESET_STATE or something
+                "CHANGE_STATE", 
                 Enum.GetName(GameState.Menu) ?? "Menu"),
         };
+        _menu.ActiveButton = 0;
         BreakoutBus.GetBus().RegisterEvent(@event);
     }
 }

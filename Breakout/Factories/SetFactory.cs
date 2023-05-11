@@ -1,7 +1,6 @@
-using Breakout.Commands;
 using DIKUArcade.Input;
 
-namespace Breakout;
+namespace Breakout.Factories;
 
 public static class SetFactory
 {

@@ -1,4 +1,4 @@
-﻿using Breakout.Containers;
+using Breakout.Containers;
 using System.Drawing;
 using Breakout.Controller;
 using Breakout.Entities;
@@ -25,37 +25,31 @@ public class GameRunningState : IGameState
     private IKeyboardEventHandler _keyboardEventHandler;
     #endregion
 
-    
-    #region Constructor
     public GameRunningState()
     {
-        _playerEntity = new PlayerEntityFactory().Create();
+        _playerEntity = PlayerEntity.Create();
         _keyboardEventHandler = new RunningStateKeyboardController(_playerEntity);
         _entityContainers = new EntityContainers();
         _levelLoader = new LevelLoader();
         
         _blockEntities = _levelLoader.LoadLevel(0);
-         _ballEntity = new BallEntityFactory(0.1f, new Vec2F(0.01f, 0.01f)).Create();
+         _ballEntity = BallEntity.Create(0.1f, new Vec2F(0.01f, 0.01f));
         _entityContainers.BallEntities.AddEntity(_ballEntity);
     }
-    #endregion
+
     
-    #region Singleton pattern
     public static GameRunningState GetInstance()
     {
         return _instance ??= new GameRunningState();
     }
-    #endregion
-
-    #region Methods
-
+    
     public void ResetState()
     {
-        _playerEntity = new PlayerEntityFactory().Create();
+        _playerEntity = PlayerEntity.Create();
         _keyboardEventHandler = new RunningStateKeyboardController(_playerEntity);
         _entityContainers = new EntityContainers();
         _blockEntities = _levelLoader.LoadLevel(0);
-        _ballEntity = new BallEntityFactory(0.1f, new Vec2F(0.01f, 0.01f)).Create();
+        _ballEntity = BallEntity.Create(0.1f, new Vec2F(0.01f, 0.01f));
         _entityContainers.BallEntities.AddEntity(_ballEntity);
     }
 
@@ -85,5 +79,4 @@ public class GameRunningState : IGameState
             _keyboardEventHandler.HandleKeyPress(key);
         }
     }
-    #endregion
 }
