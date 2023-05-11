@@ -48,7 +48,6 @@ public class Game : DIKUGame, IGameEventProcessor<GameEventType>
     /// </summary>
     public override void Update()
     {
-        BreakoutBus.GetBus().ProcessEventsSequentially();
         _stateMachine.ActiveState.UpdateState();
         BreakoutBus.GetBus().ProcessEventsSequentially();
     }

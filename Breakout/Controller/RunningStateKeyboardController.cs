@@ -16,35 +16,29 @@ namespace Breakout.Controller;
 /// </summary>
 public class RunningStateKeyboardController : IKeyboardEventHandler
 {
-    public IReadOnlyDictionary<HashSet<KeyboardKey>, IKeyboardCommand> PressKeyboardActions { get; }
-    public IReadOnlyDictionary<HashSet<KeyboardKey>, IKeyboardCommand> ReleaseKeyboardActions { get; }
+    public Dictionary<HashSet<KeyboardKey>, IKeyboardCommand> PressKeyboardActions { get; }
+    public Dictionary<HashSet<KeyboardKey>, IKeyboardCommand> ReleaseKeyboardActions { get; }
     
     public RunningStateKeyboardController(PlayerEntity playerEntity)
     {
+        var movePlayerRightCommand = new MovePlayerRightCommand(playerEntity, true);
+        var movePlayerLeftCommand = new MovePlayerLeftCommand(playerEntity, true);
         PressKeyboardActions = new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
         {
-            { SetFactory.Create(KeyboardKey.Escape), new PauseGameCommand(new GameEventFactory()) },
-            { SetFactory.Create(KeyboardKey.Left, KeyboardKey.A), new MovePlayerLeftCommand(playerEntity, true) },
-            { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), new MovePlayerRightCommand(playerEntity, true) }
+            { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), movePlayerRightCommand },
+            { SetFactory.Create(KeyboardKey.Left, KeyboardKey.A), movePlayerLeftCommand },
+            { SetFactory.Create(KeyboardKey.Escape), new PauseGameCommand(new GameEventFactory()) }
         };
+        
+        var playerLeftCommand = new MovePlayerLeftCommand(playerEntity, false);
+        var playerRightCommand = new MovePlayerRightCommand(playerEntity, false);
         ReleaseKeyboardActions = new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
         {
-            { SetFactory.Create(KeyboardKey.Left, KeyboardKey.A), new MovePlayerLeftCommand(playerEntity, false) },
-            { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), new MovePlayerRightCommand(playerEntity, false) }
+            { SetFactory.Create(KeyboardKey.Left, KeyboardKey.A), playerLeftCommand },
+            { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), playerRightCommand }
         };
     }
-
-    public void HandleKeyPress(KeyboardKey keyboardKey)
-    {
-        var command = PressKeyboardActions.FirstOrDefault(keyPairValue => keyPairValue.Key.Contains(keyboardKey)).Value;
-        command?.Execute();
-    }
-
-    public void HandleKeyRelease(KeyboardKey keyboardKey)
-    {
-        var command = ReleaseKeyboardActions.FirstOrDefault(keyPairValue => keyPairValue.Key.Contains(keyboardKey)).Value;
-        command?.Execute();
-    }
+    
 }
 
 

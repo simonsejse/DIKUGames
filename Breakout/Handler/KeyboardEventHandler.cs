@@ -19,8 +19,13 @@ public interface IKeyboardEventHandler : IKeyboardPressHandler, IKeyboardRelease
 /// </summary>
 public interface IKeyboardPressHandler
 {
-    IReadOnlyDictionary<HashSet<KeyboardKey>, IKeyboardCommand> PressKeyboardActions { get; }
-    void  HandleKeyPress(KeyboardKey key);
+    Dictionary<HashSet<KeyboardKey>, IKeyboardCommand> PressKeyboardActions { get; }
+
+    void HandleKeyPress(KeyboardKey key)
+    {
+        var command = PressKeyboardActions.FirstOrDefault(keyPairValue => keyPairValue.Key.Contains(key)).Value;
+        command?.Execute();
+    }
 }
 
 /// <summary>
@@ -30,6 +35,12 @@ public interface IKeyboardPressHandler
 /// </summary>
 public interface IKeyboardReleaseHandler
 {
-    IReadOnlyDictionary<HashSet<KeyboardKey>, IKeyboardCommand> ReleaseKeyboardActions { get; }
-    void HandleKeyRelease(KeyboardKey key);
+    Dictionary<HashSet<KeyboardKey>, IKeyboardCommand> ReleaseKeyboardActions { get; }
+
+    //TODO: public class DefaultKeyboardReleaseHandler : IKeyboardreleaseHandler
+    void HandleKeyRelease(KeyboardKey key)
+    {
+        var command = ReleaseKeyboardActions.FirstOrDefault(keyPairValue => keyPairValue.Key.Contains(key)).Value;
+        command?.Execute();
+    }
 }

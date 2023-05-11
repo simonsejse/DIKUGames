@@ -10,16 +10,16 @@ using DIKUArcade.State;
 
 namespace Breakout.States;
 
-public class MainMenuState : IGameState
+public class MainMenu : IGameState, IMenu
 {
-    private static MainMenuState? _instance;
+    private static MainMenu? _instance;
     private readonly IKeyboardPressHandler _keyboardEventHandler;
 
     private readonly Entity _background;
     public Text[] MenuButtons { get; }
     public int ActiveButton { get; set; }
 
-    private MainMenuState(ITextFactory textFactory)
+    private MainMenu(ITextFactory textFactory)
     {
         ActiveButton = 0;
         _background = new BackgroundFactory("Assets", "Images", "shipit_titlescreen.png").Create();
@@ -32,14 +32,22 @@ public class MainMenuState : IGameState
         _keyboardEventHandler = new MainMenuStateKeyboardController(this);
     }
     
-    public static MainMenuState GetInstance()
+    public static MainMenu GetInstance()
     {
-        return _instance ??= new MainMenuState(new DefaultTextFactory());
+        return _instance ??= new MainMenu(new DefaultTextFactory());
+    }
+    
+    public void SetButtonColor(int index, Color color)
+    {
+        if (index < 0 || index > MenuButtons.Length)
+            return;
+        MenuButtons[index].SetColor(color);
     }
 
     public void ResetState()
     {
     }
+
 
     public void UpdateState()
     {
