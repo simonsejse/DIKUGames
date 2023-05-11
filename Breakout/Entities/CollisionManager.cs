@@ -1,4 +1,4 @@
-﻿using Breakout.Entites;
+﻿using Breakout.Entities;
 using DIKUArcade.Physics;
 using DIKUArcade.Math;
 
@@ -16,7 +16,7 @@ public static class CollisionManager
 
             Vec2F diff = playerCenter - ballCenter;
 
-            Vec2F newDirection = new Vec2F(ballEntity.GetDirection().X, -ballEntity.GetDirection().Y);
+            Vec2F newDirection = new(ballEntity.GetDirection().X, -ballEntity.GetDirection().Y);
             ballEntity.ChangeDirection(newDirection.X, newDirection.Y);
 
             float angleAdjustmentX = diff.X * 0.6f;

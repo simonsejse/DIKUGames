@@ -1,28 +1,24 @@
 using System.Drawing;
-using Breakout.States;
-using DIKUArcade.Graphics;
+using Breakout.Handler;
 
 namespace Breakout.Commands.MainMenu;
 
 public class ShiftMenuUpCommand : IKeyboardCommand
 {
-    private readonly MainMenuState _state;
+    private readonly IMenu _state;
 
-    public ShiftMenuUpCommand(MainMenuState state)
+    public ShiftMenuUpCommand(IMenu state)
     {
         _state = state;
     }
 
     public void Execute()
     {
-        
         int activeButton = _state.ActiveButton;
-        Text[] menuButtons = _state.MenuButtons;
         if (activeButton <= 0) return;
-        
-        menuButtons[activeButton].SetColor(Color.White);
-        activeButton = --_state.ActiveButton;
-        menuButtons[activeButton].SetColor(Color.Crimson);
-    }
 
+        _state.SetButtonColor(activeButton, Color.White);
+        activeButton = --_state.ActiveButton;
+        _state.SetButtonColor(activeButton, Color.Crimson);
+    }
 }

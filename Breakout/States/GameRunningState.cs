@@ -17,6 +17,7 @@ public class GameRunningState : IGameState
     #region Properties and fields
     private static GameRunningState? _instance;
     private PlayerEntity _playerEntity;
+    private BallEntity _ballEntity;
     private EntityContainers _entityContainers;
     private EntityContainer<BlockEntity> _blockEntities;
     private readonly LevelLoader _levelLoader;
@@ -35,7 +36,6 @@ public class GameRunningState : IGameState
         _blockEntities = _levelLoader.LoadLevel(0);
          _ballEntity = new BallEntityFactory(0.1f, new Vec2F(0.01f, 0.01f)).Create();
         _entityContainers.BallEntities.AddEntity(_ballEntity);
-
     }
     #endregion
     
@@ -50,20 +50,20 @@ public class GameRunningState : IGameState
 
     public void ResetState()
     {
+        _playerEntity = new PlayerEntityFactory().Create();
+        _keyboardEventHandler = new RunningStateKeyboardController(_playerEntity);
+        _entityContainers = new EntityContainers();
+        _blockEntities = _levelLoader.LoadLevel(0);
+        _ballEntity = new BallEntityFactory(0.1f, new Vec2F(0.01f, 0.01f)).Create();
+        _entityContainers.BallEntities.AddEntity(_ballEntity);
     }
 
     public void UpdateState()
     {
        _playerEntity.Move();
        _ballEntity.Move();
-       _ballEntity.CheckBlockCollisions(_ballEntity, _blockEntities);
+       _ballEntity.CheckBlockCollisions(_ballEntity, _blockEntities, _playerEntity);
        CollisionManager.CheckBallPlayerCollision(_ballEntity, _playerEntity);
-   
-       //CheckBlockCollisions(_ballEntity, blockEntities);
-
-
-       
-       
     }
 
     public void RenderState()
