@@ -57,7 +57,7 @@ public class GameRunningState : IGameState
     {
        _playerEntity.Move();
        _ballEntity.Move();
-       _ballEntity.CheckBlockCollisions(_ballEntity, _blockEntities);
+       _ballEntity.CheckBlockCollisions(_ballEntity, _blockEntities, _playerEntity);
        CollisionManager.CheckBallPlayerCollision(_ballEntity, _playerEntity);
    
        //CheckBlockCollisions(_ballEntity, blockEntities);

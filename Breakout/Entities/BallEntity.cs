@@ -82,7 +82,8 @@ public class BallEntity : Entity
         }
     }
     
-    public void CheckBlockCollisions(BallEntity ballEntity, EntityContainer<BlockEntity> blockEntities)
+    public void CheckBlockCollisions(BallEntity ballEntity, EntityContainer<BlockEntity> blockEntities,
+        PlayerEntity playerEntity)
     {
         bool blockCollision = false; // Flag to track if a block has been deleted during a collision
 
@@ -91,11 +92,12 @@ public class BallEntity : Entity
             if (!blockCollision && DIKUArcade.Physics.CollisionDetection.Aabb(ballEntity.Shape.AsDynamicShape(), block.Shape).Collision)
             {
                 blockCollision = true;
-                block.Health--;
-                if (block.Health > 0)
+                block.CollisionHandler();
+                ballEntity.BounceOffBlock(block);
+                if (block.IsDead())
                 {
-                    ballEntity.BounceOffBlock(block);
-                    block.DeleteEntity();
+                    playerEntity.AddPoints(block.Value);
+                    Console.WriteLine(playerEntity.GetPoints());
                 }
             }
         });
