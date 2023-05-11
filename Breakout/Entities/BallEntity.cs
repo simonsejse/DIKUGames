@@ -141,5 +141,21 @@ public class BallEntity : Entity
     {
         _direction = Vec2F.Normalize(_direction);
     }
-
+    
+    /// <summary>
+    /// A factory method for instantiating a default BallEntity
+    /// </summary>
+    /// <param name="direction">The direction of the ball.</param>
+    /// <param name="speed">The speed of the ball.</param>
+    /// <returns>A BallEntity instance</returns>
+    public static BallEntity Create(float speed, Vec2F direction)
+    {
+        return new BallEntity(new DynamicShape(0.5f - 0.03f / 2,
+                0.03f + 0.03f,
+                0.03f,
+                0.03f),
+            new Image(Path.Combine("Assets",
+                "Images",
+                "Ball.png")), direction, speed);
+    }
 }

@@ -1,0 +1,42 @@
+Map:
+bbbbbbbbbbbb
+------------
+-#--------#-
+--#------#--
+---#----#---
+----#--#----
+------------
+------------
+---Y----Y---
+000Y----Y000
+000Y----Y000
+000Y----Y000
+000Y-##-Y000
+000Y----Y000
+YYYYwwwwYYYY
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+------------
+Map/
+
+Meta:
+Name: LEVEL 3
+Time: 180
+PowerUp: #
+Unbreakable: Y
+Meta/
+
+Legend:
+0) orange-block.png
+w) darkgreen-block.png
+#) green-block.png
+Y) brown-block.png
+b) yellow-block.png
+Legend/

@@ -18,7 +18,7 @@ public class MainMenuStateKeyboardController : IKeyboardPressHandler
             { SetFactory.Create(KeyboardKey.Escape), new CloseMenuCommand() },
             { SetFactory.Create(KeyboardKey.Up, KeyboardKey.W), new ShiftMenuUpCommand(state) },
             { SetFactory.Create(KeyboardKey.Down, KeyboardKey.S), new ShiftMenuDownCommand(state) },
-            { SetFactory.Create(KeyboardKey.Enter), new MainMenuEnterCommand(state.ActiveButton, new GameEventFactory()) },
+            { SetFactory.Create(KeyboardKey.Enter), new MainMenuEnterCommand(state, new GameEventFactory()) },
         };
     }
 }
