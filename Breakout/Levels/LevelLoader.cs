@@ -47,13 +47,13 @@ public class LevelLoader : ILevelLoader<BlockEntity>
                 int columnLength = level.Map.Length;
                 float posY = offsetY + 90f/columnLength/100f * row;
                 
-                var pos = new Vec2F(posX, posY);
+                Vec2F pos = new Vec2F(posX, posY);
         
                 string path = level.Legends.TryGetValue(key, out string? image) ? image : "error-block.png";
                 string path2 = path.Replace(".png", "-damaged.png");
-                var factory = new BlockEntityFactory(pos, new Image(Path.Combine("Assets", "Images", path)),
+                BlockEntityFactory factory = new BlockEntityFactory(pos, new Image(Path.Combine("Assets", "Images", path)),
                     new Image(Path.Combine("Assets", "Images", path2)));
-                var blockEntity = factory.Create();
+                BlockEntity blockEntity = factory.Create();
                 blockEntities.AddEntity(blockEntity);
             }
         }

@@ -8,7 +8,7 @@ public class HardenedBlockType : IBlockType
 {
     #region Methods
     /// <summary>
-    /// A method of handling collision between the block and the ball entity
+    /// A method handling what happens when a collision is detected
     /// </summary>
     /// <param name="block">The blockentity</param>
     public void CollisionHandler(BlockEntity block) 
@@ -16,6 +16,7 @@ public class HardenedBlockType : IBlockType
         block.TakeDamage();
         if (block.Health <= (block.StartHealth / 2))
         {
+            /// Changes the block image to the damaged version, if the block is half health or below
             block.Image = block.Image2;
         }
     }
