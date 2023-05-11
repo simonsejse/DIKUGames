@@ -17,6 +17,7 @@ public class GameRunningState : IGameState
     #region Properties and fields
     private static GameRunningState? _instance;
     private PlayerEntity _playerEntity;
+    private BallEntity _ballEntity;
     private EntityContainers _entityContainers;
     private EntityContainer<BlockEntity> _blockEntities;
     private readonly LevelLoader _levelLoader;
