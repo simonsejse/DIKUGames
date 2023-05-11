@@ -6,20 +6,20 @@ using DIKUArcade.Events.Generic;
 
 namespace Breakout.Commands.MainMenu;
 
-public class EnterMainMenuCommand : IKeyboardCommand
+public class MainMenuEnterCommand : IKeyboardCommand
 {
-    private readonly MainMenuState _state;
+    private readonly int _index;
     private readonly GameEventFactory _gameEventFactory;
 
-    public EnterMainMenuCommand(MainMenuState state, GameEventFactory gameEventFactory)
+    public MainMenuEnterCommand(int index, GameEventFactory gameEventFactory)
     {
-        _state = state;
+        _index = index;
         _gameEventFactory = gameEventFactory;
     }
 
     public void Execute()
     {
-        GameEvent<GameEventType> @event = _state.ActiveButton switch
+        GameEvent<GameEventType> @event = _index switch
         {
             0 => _gameEventFactory.CreateGameEventForAllProcessors(GameEventType.GameStateEvent,
                 "CHANGE_STATE",

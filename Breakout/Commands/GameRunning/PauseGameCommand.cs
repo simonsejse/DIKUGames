@@ -21,6 +21,7 @@ public class PauseGameCommand : IKeyboardCommand
             GameEventType.GameStateEvent,
             "CHANGE_STATE",
             Enum.GetName(GameState.Paused) ?? "Paused");
+        
         BreakoutBus.GetBus().RegisterEvent(pauseEvent);
     }
 }

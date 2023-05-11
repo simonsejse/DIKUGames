@@ -1,4 +1,5 @@
 using System.Drawing;
+using Breakout.Handler;
 using Breakout.States;
 using DIKUArcade.Graphics;
 
@@ -6,9 +7,9 @@ namespace Breakout.Commands.MainMenu;
 
 public class ShiftMenuDownCommand : IKeyboardCommand
 {
-    private readonly MainMenuState _state;
+    private readonly IMenu _state;
 
-    public ShiftMenuDownCommand(MainMenuState state)
+    public ShiftMenuDownCommand(IMenu state)
     {
         _state = state;
     }
