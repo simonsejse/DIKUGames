@@ -1,10 +1,9 @@
 namespace Breakout.Entities.BlockTypes;
 
 /// <summary>
-/// Defines the class for the special block type hungry block from the interface IBlockTypes
-/// The block should be able to consume the ball upon colission 
+/// This is the standard block type
 /// </summary>
-public class HungryBlockType : IBlockType 
+public class StandardBlockType : IBlockType 
 {
     #region Methods
     /// <summary>
@@ -14,7 +13,6 @@ public class HungryBlockType : IBlockType
     public void CollisionHandler(BlockEntity block) 
     {
         block.TakeDamage();
-        // should "eat" the ball, by deleting it and spawning it a random place on the map
     }
     #endregion
 }

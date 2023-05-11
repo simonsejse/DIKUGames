@@ -16,6 +16,7 @@ public class BlockEntity : Entity
     /// Gets or sets the health of the block.
     /// </summary>
     public int Health { get; set; }
+    public int StartHealth { get; set; }
     public IBlockType BlockType { get; set; }
     
     #endregion
@@ -36,6 +37,11 @@ public class BlockEntity : Entity
         Value = value;
         Health = health;
         BlockType = blockType;
+        if (blockType is HardenedBlockType) 
+        {
+            Health = Health * 2;
+        }
+        StartHealth = Health;
     }
     
     #endregion
@@ -55,7 +61,7 @@ public class BlockEntity : Entity
 
     public bool IsDead()
     {
-        if (Health >= 0)
+        if (Health <= 0)
         {
             return true;
         }
