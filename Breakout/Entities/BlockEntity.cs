@@ -67,4 +67,15 @@ public class BlockEntity : Entity
         BlockType.CollisionHandler(this);
     }
     #endregion
+
+    public static BlockEntity Create(Vec2F pos, Image image, IBlockType blockType)
+    {
+        return new BlockEntity(
+            new StationaryShape(pos, new Vec2F(0.08333333333f, 0.04f)),
+            image, 
+            10, 
+            100,
+            blockType
+        );
+    }
 }

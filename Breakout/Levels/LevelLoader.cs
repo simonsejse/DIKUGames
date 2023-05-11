@@ -51,8 +51,7 @@ public class LevelLoader : ILevelLoader<BlockEntity>
         
                 string path = level.Legends.TryGetValue(key, out string? image) ? image : "error-block.png";
                 
-                var factory = new BlockEntityFactory(pos, new Image(Path.Combine("Assets", "Images", path)));
-                var blockEntity = factory.Create();
+                var blockEntity = BlockEntity.Create(pos, new Image(Path.Combine("Assets", "Images", path)), new HungryBlockType());
                 blockEntities.AddEntity(blockEntity);
             }
         }
