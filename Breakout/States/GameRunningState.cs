@@ -1,4 +1,5 @@
 ﻿using Breakout.Containers;
+using System.Drawing;
 using Breakout.Controller;
 using Breakout.Entities;
 using Breakout.Factories;
@@ -8,7 +9,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;
-using Breakout.Levels;
+using DIKUArcade.Graphics;
 
 namespace Breakout.States;
 
