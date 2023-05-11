@@ -95,7 +95,6 @@ public class BallEntity : Entity
                 if (block.IsDead())
                 {
                     playerEntity.AddPoints(block.Value);
-                    Console.WriteLine(playerEntity.GetPoints());
                 }
             }
         });

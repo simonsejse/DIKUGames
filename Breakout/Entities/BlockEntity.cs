@@ -16,7 +16,9 @@ public class BlockEntity : Entity
     /// Gets or sets the health of the block.
     /// </summary>
     public int Health { get; set; }
+    public int StartHealth { get; set; }
     public IBlockType BlockType { get; set; }
+    public IBaseImage Image2 { get; set; }
     
     #endregion
     
@@ -30,12 +32,18 @@ public class BlockEntity : Entity
     /// <param name="value">The value of the block.</param>
     /// <param name="health">The health of the block.</param>
     /// <param name="blockType">The type of the block.</param>
-    public BlockEntity(Shape shape, IBaseImage image, int value, int health, IBlockType blockType) : 
+    public BlockEntity(Shape shape, IBaseImage image, IBaseImage image2, int value, int health, IBlockType blockType) : 
         base(shape, image)
     {
         Value = value;
         Health = health;
         BlockType = blockType;
+        if (blockType is HardenedBlockType) 
+        {
+            Health = Health * 2;
+        }
+        StartHealth = Health;
+        Image2 = image2;
     }
     
     #endregion
@@ -55,7 +63,7 @@ public class BlockEntity : Entity
 
     public bool IsDead()
     {
-        if (Health >= 0)
+        if (Health <= 0)
         {
             return true;
         }

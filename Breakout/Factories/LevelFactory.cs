@@ -47,7 +47,7 @@ public class LevelFactory : IModelFactory<Level>
         char? powerUp = metadata.TryGetValue("PowerUp", out value) ? char.Parse(value) : null;
         char? unbreakable = metadata.TryGetValue("Unbreakable", out value) ? char.Parse(value) : null;
         
-        var meta = new Meta(name, time, hardened, powerUp, unbreakable);
+        Meta meta = new Meta(name, time, hardened, powerUp, unbreakable);
  
         string legendStart = data.Split("Legend:")[1];
         string legendEnd = legendStart.Split("Legend/")[0];
