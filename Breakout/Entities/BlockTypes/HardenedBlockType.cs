@@ -16,7 +16,7 @@ public class HardenedBlockType : IBlockType
         block.TakeDamage();
         if (block.Health <= (block.StartHealth / 2))
         {
-            Console.WriteLine("Should be cracked block");
+            block.Image = block.Image2;
         }
     }
 

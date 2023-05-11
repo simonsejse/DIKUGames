@@ -50,8 +50,9 @@ public class LevelLoader : ILevelLoader<BlockEntity>
                 var pos = new Vec2F(posX, posY);
         
                 string path = level.Legends.TryGetValue(key, out string? image) ? image : "error-block.png";
-                
-                var factory = new BlockEntityFactory(pos, new Image(Path.Combine("Assets", "Images", path)));
+                string path2 = path.Replace(".png", "-damaged.png");
+                var factory = new BlockEntityFactory(pos, new Image(Path.Combine("Assets", "Images", path)),
+                    new Image(Path.Combine("Assets", "Images", path2)));
                 var blockEntity = factory.Create();
                 blockEntities.AddEntity(blockEntity);
             }
