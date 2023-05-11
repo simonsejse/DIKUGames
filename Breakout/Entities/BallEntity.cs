@@ -1,9 +1,10 @@
-﻿using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
+﻿using Breakout.Entities;
 using DIKUArcade.Math;
-using DIKUArcade.Physics;
+using DIKUArcade.Entities;
+using DIKUArcade.Graphics;
 
-namespace Breakout.Entites;
+
+namespace Breakout.Entities;
 
 public class BallEntity : Entity
 {
@@ -13,6 +14,8 @@ public class BallEntity : Entity
     private Vec2F _direction;
     // Maximum speed for ball entities
     private const float MaxSpeed = 0.3f;
+
+
     
     #endregion
     
@@ -55,25 +58,85 @@ public class BallEntity : Entity
         return Shape.Position.Y + Shape.Extent.Y < 0;
     }
 
-    public bool CollideWithObject(Shape shape)
+    private void BounceOffBlock(BlockEntity block)
     {
-        var data = CollisionDetection.Aabb(this.Shape.AsDynamicShape(), shape);
-        if (data.Collision)
+        float ballCenterY = Shape.Position.Y + Shape.Extent.Y / 2;
+        float blockCenterY = block.Shape.Position.Y + block.Shape.Extent.Y / 2;
+
+        float deltaY = ballCenterY - blockCenterY;
+        _direction.X *= 1.0f;
+
+        // Adjust the Y direction based on the position relative to the block
+        if (deltaY < 0 && _direction.Y > 0)
         {
-            if (data.CollisionDir == CollisionDirection.CollisionDirLeft ||
-                data.CollisionDir == CollisionDirection.CollisionDirRight)
-            {
-                Shape.Extent.X *= -1.0f;
-            } else if (data.CollisionDir == CollisionDirection.CollisionDirUp ||
-                       data.CollisionDir == CollisionDirection.CollisionDirDown)
-            {
-                this.Shape.Extent.Y *= -1.0f;
-            }
 
-            return true;
+            _direction.Y *= -1.0f; // Bounce upwards
         }
+        else if (deltaY > 0 && _direction.Y < 0)
+        {
+            _direction.Y *= -1.0f; // Bounce downwards
+        }
+        else
+        {
+            _direction.X *= -1.0f; // Only change the X direction
+        }
+    }
+    
+    public void CheckBlockCollisions(BallEntity ballEntity, EntityContainer<BlockEntity> blockEntities,
+        PlayerEntity playerEntity)
+    {
+        bool blockCollision = false; // Flag to track if a block has been deleted during a collision
 
-        return false;
+        blockEntities.Iterate(block =>
+        {
+            if (!blockCollision && DIKUArcade.Physics.CollisionDetection.Aabb(ballEntity.Shape.AsDynamicShape(), block.Shape).Collision)
+            {
+                blockCollision = true;
+                block.CollisionHandler();
+                ballEntity.BounceOffBlock(block);
+                if (block.IsDead())
+                {
+                    playerEntity.AddPoints(block.Value);
+                    Console.WriteLine(playerEntity.GetPoints());
+                }
+            }
+        });
+    }
+    
+
+    public void ChangeDirection(float deltaX, float deltaY)
+    {
+        _direction.X = deltaX;
+        _direction.Y = deltaY;
+    }
+
+    public void SetDirection(Vec2F direction)
+    {
+        _direction = direction;
+    }
+
+    public Vec2F GetDirection()
+    {
+        return _direction;
+    }
+
+    public void RotateDirection(float angle)
+    {
+        float radians = angle * (float)Math.PI / 180.0f;
+
+        float newX = _direction.X * (float)Math.Cos(radians) - _direction.Y * (float)Math.Sin(radians);
+        float newY = _direction.X * (float)Math.Sin(radians) + _direction.Y * (float)Math.Cos(radians);
+
+        _direction.X = newX;
+        _direction.Y = newY;
+    }
+
+    private bool CheckCollision(BallEntity ballEntity, BlockEntity block)
+    {
+        var ballShape = ballEntity.Shape.AsDynamicShape();
+        var blockShape = block.Shape.AsDynamicShape();
+
+        return DIKUArcade.Physics.CollisionDetection.Aabb(ballShape, blockShape).Collision;
     }
 
     // R.5

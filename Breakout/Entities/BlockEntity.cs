@@ -47,6 +47,19 @@ public class BlockEntity : Entity
     public virtual void TakeDamage() 
     {
         Health--;
+        if (IsDead())
+        {
+            DeleteEntity();
+        }
+    }
+
+    public bool IsDead()
+    {
+        if (Health >= 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     public void CollisionHandler()

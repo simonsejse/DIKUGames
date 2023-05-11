@@ -1,8 +1,10 @@
 ﻿using Breakout.Containers;
 using Breakout.Controller;
-using Breakout.Entites;
+using Breakout.Entities;
 using Breakout.Factories;
 using Breakout.Handler;
+using Breakout.Levels;
+using DIKUArcade.Entities;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;
@@ -15,7 +17,9 @@ public class GameRunningState : IGameState
     #region Properties and fields
     private static GameRunningState? _instance;
     private PlayerEntity _playerEntity;
+    private BallEntity _ballEntity;
     private EntityContainers _entityContainers;
+    private EntityContainer<BlockEntity> _blockEntities;
     private readonly LevelLoader _levelLoader;
     private IKeyboardEventHandler _keyboardEventHandler;
     #endregion
@@ -29,9 +33,10 @@ public class GameRunningState : IGameState
         _entityContainers = new EntityContainers();
         _levelLoader = new LevelLoader();
         
-        _entityContainers.BlockEntities = _levelLoader.LoadLevel(0);
-        var ball = new BallEntityFactory(0.01f, new Vec2F(0.01f, 0.01f)).Create();
-        _entityContainers.BallEntities.AddEntity(ball);
+        _blockEntities = _levelLoader.LoadLevel(0);
+         _ballEntity = new BallEntityFactory(0.1f, new Vec2F(0.01f, 0.01f)).Create();
+        _entityContainers.BallEntities.AddEntity(_ballEntity);
+
     }
     #endregion
     
@@ -51,17 +56,12 @@ public class GameRunningState : IGameState
     public void UpdateState()
     {
        _playerEntity.Move();
-       _entityContainers.BallEntities.Iterate(entity =>
-       {
-           entity.Move();
-           if (entity.OutOfBounds())
-           {
-               //TODO: Lose life
-               //_entityContainers.BallEntities.Remove ... should remove it
-               entity.Launch();
-           }
-       });
-       //_ballEntity.CollideWithObject(ObjectType);
+       _ballEntity.Move();
+       _ballEntity.CheckBlockCollisions(_ballEntity, _blockEntities, _playerEntity);
+       CollisionManager.CheckBallPlayerCollision(_ballEntity, _playerEntity);
+   
+       //CheckBlockCollisions(_ballEntity, blockEntities);
+
 
        
        
@@ -71,6 +71,7 @@ public class GameRunningState : IGameState
     {
         _playerEntity.RenderEntity();
         _entityContainers.RenderEntities();
+        _blockEntities.RenderEntities();
     }
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)

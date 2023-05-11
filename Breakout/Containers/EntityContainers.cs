@@ -1,6 +1,5 @@
 ﻿using Breakout.Entities;
 using Breakout.Entities.BlockTypes;
-using Breakout.Entites;
 using DIKUArcade.Entities;
 
 namespace Breakout.Containers;
