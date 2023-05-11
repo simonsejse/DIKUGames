@@ -20,6 +20,7 @@ public class EntityContainers
         BlockEntities.RenderEntities();
         BallEntities.RenderEntities();
     }
+    
     public void AddBallEntity(BallEntity ballEntity)
     {
         BallEntities.AddEntity(ballEntity);
