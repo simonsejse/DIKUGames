@@ -24,6 +24,6 @@ public class BlockEntityFactory : IEntityFactory<BlockEntity>
 
     public BlockEntity Create()
     {
-        return new BlockEntity(new StationaryShape(_pos, new Vec2F(0.08333333333f, 0.04f)), _image, 0, 100, new HungryBlockType());
+        return new BlockEntity(new StationaryShape(_pos, new Vec2F(0.08333333333f, 0.04f)), _image, 10, 100, new HungryBlockType());
     }
 }
