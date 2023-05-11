@@ -13,7 +13,7 @@ public class BallEntity : Entity
     private float _speed;
     private Vec2F _direction;
     // Maximum speed for ball entities
-    private const float MaxSpeed = 0.3f;
+    private const float MaxSpeed = 0.25f;
 
 
     
@@ -24,7 +24,7 @@ public class BallEntity : Entity
     public BallEntity(Shape shape, IBaseImage image, Vec2F direction, float speed) : base(shape, image)
     {
         _direction = direction;
-        _speed = 0.01f;
+        _speed = speed;
     }
     #endregion
     #region Methods
@@ -36,19 +36,19 @@ public class BallEntity : Entity
         {
             _direction = Vec2F.Normalize(_direction) * MaxSpeed;
         }
-        
-        // Sets the ball direction + moves it
+
+        Vec2F movement = _direction * _speed;
+
         Shape.AsDynamicShape().Direction = _direction;
         Shape.Move();
         
-        // Collision with game window
         if (Shape.Position.Y + Shape.Extent.Y > 1)
         {
-            _direction.Y *= -1.0f; // Flip Y-direction
+            _direction.Y *= -1.0f; 
         }
-        if (Shape.Position.X - Shape.Extent.X < 0 || Shape.Position.X + Shape.Extent.X > 1)
+        if (Shape.Position.X - Shape.Extent.X < -0.03f || Shape.Position.X + Shape.Extent.X > 1)
         {
-            _direction.X *= -1.0f; // Flip X-direction
+            _direction.X *= -1.0f; 
         }
     }
 
@@ -57,35 +57,60 @@ public class BallEntity : Entity
     {
         return Shape.Position.Y + Shape.Extent.Y < 0;
     }
-
-    private void BounceOffBlock(BlockEntity block)
+    public void BounceOffBlock(BlockEntity block)
     {
+        float ballCenterX = Shape.Position.X + Shape.Extent.X / 2;
         float ballCenterY = Shape.Position.Y + Shape.Extent.Y / 2;
+        float blockCenterX = block.Shape.Position.X + block.Shape.Extent.X / 2;
         float blockCenterY = block.Shape.Position.Y + block.Shape.Extent.Y / 2;
+        float blockHeight = 0.08333333333f / 2;
+        float targetY = 0.689999964f;
 
+        float deltaX = ballCenterX - blockCenterX;
         float deltaY = ballCenterY - blockCenterY;
+
+        if (Math.Abs(deltaX) < 0.5f && Math.Abs(deltaY) < 0.5f)
+        {
+            float minY = targetY - blockHeight - 0.03f;
+            float maxY = targetY + blockHeight + 0.03f;
+            
+            if (Shape.Position.Y >= minY && Shape.Position.Y <= maxY)
+            {
+                float targetX = (Shape.Position.Y - targetY) * (2 / blockHeight);
+                
+                if (Math.Abs(Shape.Position.X - targetX) < 0.03f)
+                {
+                    _direction.X *= -1.0f;
+                    _direction.Y *= -1.0f;
+                    return;
+                }
+            }
+        }
+        
+    if (deltaY < 0 && _direction.Y > 0)
+    {
         _direction.X *= 1.0f;
-
-        // Adjust the Y direction based on the position relative to the block
-        if (deltaY < 0 && _direction.Y > 0)
-        {
-
-            _direction.Y *= -1.0f; // Bounce upwards
-        }
-        else if (deltaY > 0 && _direction.Y < 0)
-        {
-            _direction.Y *= -1.0f; // Bounce downwards
-        }
-        else
-        {
-            _direction.X *= -1.0f; // Only change the X direction
-        }
+        _direction.Y *= -1.0f; 
+        
     }
+    else if (deltaY > 0 && _direction.Y < 0)
+    {
+        _direction.Y *= -1.0f;
+    }
+    else
+    {
+        _direction.X *= -1.0f;
+    }
+}
+
+
+
+
     
     public void CheckBlockCollisions(BallEntity ballEntity, EntityContainer<BlockEntity> blockEntities,
         PlayerEntity playerEntity)
     {
-        bool blockCollision = false; // Flag to track if a block has been deleted during a collision
+        bool blockCollision = false;
 
         blockEntities.Iterate(block =>
         {
@@ -120,24 +145,7 @@ public class BallEntity : Entity
         return _direction;
     }
 
-    public void RotateDirection(float angle)
-    {
-        float radians = angle * (float)Math.PI / 180.0f;
 
-        float newX = _direction.X * (float)Math.Cos(radians) - _direction.Y * (float)Math.Sin(radians);
-        float newY = _direction.X * (float)Math.Sin(radians) + _direction.Y * (float)Math.Cos(radians);
-
-        _direction.X = newX;
-        _direction.Y = newY;
-    }
-
-    private bool CheckCollision(BallEntity ballEntity, BlockEntity block)
-    {
-        var ballShape = ballEntity.Shape.AsDynamicShape();
-        var blockShape = block.Shape.AsDynamicShape();
-
-        return DIKUArcade.Physics.CollisionDetection.Aabb(ballShape, blockShape).Collision;
-    }
 
     // R.5
     public void Launch()

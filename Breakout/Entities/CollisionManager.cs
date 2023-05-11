@@ -10,21 +10,49 @@ public static class CollisionManager
     public static void CheckBallPlayerCollision(BallEntity ballEntity, PlayerEntity playerEntity)
     {
         if (CollisionDetection.Aabb(ballEntity.Shape.AsDynamicShape(), playerEntity.Shape.AsDynamicShape()).Collision)
-        {
-            Vec2F playerCenter = playerEntity.Shape.Position + (playerEntity.Shape.Extent * 0.5f);
-            Vec2F ballCenter = ballEntity.Shape.Position + (ballEntity.Shape.Extent * 0.5f);
-
-            Vec2F diff = playerCenter - ballCenter;
-
-            Vec2F newDirection = new(ballEntity.GetDirection().X, -ballEntity.GetDirection().Y);
-            ballEntity.ChangeDirection(newDirection.X, newDirection.Y);
-
-            float angleAdjustmentX = diff.X * 0.6f;
-
-            ballEntity.RotateDirection(angleAdjustmentX);
-            
-            ballEntity.Shape.Move(new Vec2F(0.0f, 0.0f));
-        }
+    {
+        Vec2F ballCenter = ballEntity.Shape.Position + (ballEntity.Shape.Extent * 0.5f);
+        
+        float playerWidth = playerEntity.Shape.Extent.X;
+        float relativeCollisionX = (ballCenter.X - playerEntity.Shape.Position.X) / playerWidth;
+        
+                
+                
+                if (ballEntity.GetDirection().X > 0 && relativeCollisionX >= 0.15f && relativeCollisionX <= 0.2f)
+                {
+                    if (ballEntity.GetDirection().Y >= 0.68999964f && ballEntity.GetDirection().Y > 0)
+                    {
+                        // Only change the Y direction
+                        ballEntity.ChangeDirection(ballEntity.GetDirection().X, -ballEntity.GetDirection().Y);
+                    }
+                    else
+                    {
+                        float angle = (float)Math.Atan2(ballEntity.GetDirection().Y, ballEntity.GetDirection().X);
+                        float angleFactor = 1.3f + Math.Abs((float)Math.Cos(angle)) * 0.3f;
+                        ballEntity.ChangeDirection(ballEntity.GetDirection().X * angleFactor, -ballEntity.GetDirection().Y * angleFactor);
+                    }
+                }
+                else if (ballEntity.GetDirection().X < 0 && relativeCollisionX >= 0.15f && relativeCollisionX <= 0.2f)
+                {
+                    if (ballEntity.GetDirection().Y >= 0.68999964f && ballEntity.GetDirection().Y > 0)
+                    {
+                        // Only change the Y direction
+                        ballEntity.ChangeDirection(ballEntity.GetDirection().X, -ballEntity.GetDirection().Y);
+                    }
+                    else
+                    {
+                        float angle = (float)Math.Atan2(ballEntity.GetDirection().Y, ballEntity.GetDirection().X);
+                        float angleFactor = 1.3f + Math.Abs((float)Math.Cos(angle)) * 0.3f;
+                        ballEntity.ChangeDirection(ballEntity.GetDirection().X * angleFactor, -ballEntity.GetDirection().Y * angleFactor);
+                    }
+                }
+                else
+                {
+                    ballEntity.ChangeDirection(ballEntity.GetDirection().X, -ballEntity.GetDirection().Y);
+                }
+                
+                ballEntity.Shape.Move(ballEntity.GetDirection());
+    }
     }
     #endregion
 }

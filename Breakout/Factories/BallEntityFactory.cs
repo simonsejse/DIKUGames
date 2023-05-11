@@ -22,10 +22,10 @@ public class BallEntityFactory : IEntityFactory<BallEntity>
     #endregion
     public BallEntity Create()
     {
-        return new BallEntity(new DynamicShape(0.5f - 0.03f / 2,
-                0.03f + 0.03f,
-                0.03f,
-                0.03f),
+        return new BallEntity(new DynamicShape(0.5f - 0.028f / 2,
+                0.032f + 0.03f,
+                0.032f,
+                0.032f),
             new Image(Path.Combine("Assets",
                 "Images",
                 "Ball.png")), _direction, _speed);

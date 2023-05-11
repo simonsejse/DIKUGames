@@ -35,7 +35,7 @@ public class GameRunningState : IGameState
         
         _blockEntities = _levelLoader.LoadLevel(0);
          _ballEntity = new BallEntityFactory(0.1f, new Vec2F(0.01f, 0.01f)).Create();
-        _entityContainers.BallEntities.AddEntity(_ballEntity);
+         _entityContainers.BallEntities.AddEntity(_ballEntity);
     }
     #endregion
     
