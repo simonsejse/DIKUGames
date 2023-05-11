@@ -18,7 +18,7 @@ public class DefaultTextFactory : ITextFactory
     /// <param name="color">The color of the text.</param>
     /// <returns>A new instance of the <see cref="Text"/> class.</returns>
     public Text Create(string text, Vec2F pos, Vec2F extent, Color color) {
-        var button = new Text(text, pos, extent);
+        Text button = new Text(text, pos, extent);
         button.SetColor(color);
         return button;
     }

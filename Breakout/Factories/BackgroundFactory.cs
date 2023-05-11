@@ -15,7 +15,7 @@ public class BackgroundFactory : IEntityFactory<Entity>
     
     public Entity Create()
     {
-        var image = new Image(_imagePath);
+        Image image = new Image(_imagePath);
         return new Entity(new StationaryShape(new Vec2F(0, 0), new Vec2F(1, 1)), image);
     }
 }
