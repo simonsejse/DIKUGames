@@ -8,7 +8,7 @@ namespace Breakout.Entities;
 
 public class BallEntity : Entity
 {
-    #region Properties and fields
+
     // Field for ball's movement speed and direction
     private float _speed;
     private Vec2F _direction;
@@ -17,17 +17,15 @@ public class BallEntity : Entity
 
 
     
-    #endregion
+
     
-    #region Constructor
     // Constructor that intializes player's shape and image by using the base class constructor
     public BallEntity(Shape shape, IBaseImage image, Vec2F direction, float speed) : base(shape, image)
     {
         _direction = direction;
         _speed = 0.01f;
     }
-    #endregion
-    #region Methods
+
     
     public void Move()
     {
@@ -145,5 +143,4 @@ public class BallEntity : Entity
         _direction = Vec2F.Normalize(_direction);
     }
 
-    #endregion
 }
