@@ -13,8 +13,8 @@ public class HardenedBlockType : IBlockType
     /// <summary>
     /// A method handling what happens when a collision is detected
     /// </summary>
-    /// <param name="block">The blockentity</param>
-    public void CollisionHandler(BlockEntity block) 
+    /// <param name="block">The <see cref="BlockEntity"/> instance.</param>
+    public void HandleCollision(BlockEntity block) 
     {
         block.TakeDamage();
         if (block.Health > block.StartHealth / 2) return;

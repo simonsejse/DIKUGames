@@ -17,12 +17,6 @@ namespace Breakout.Levels;
 /// </summary>
 public class LevelLoader : ILevelLoader<BlockEntity>
 {
-    private Dictionary<char, IBlockType> _blockTypes = new()
-    {
-        { 'u', new UnbreakableBlockType() }
-        
-    };
-
     private readonly LevelStorage _levelStorage;
     private readonly IModelFactory<Level> _levelFactory;
 

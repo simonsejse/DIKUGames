@@ -2,6 +2,7 @@
 using Breakout.Factories;
 using Breakout.IO;
 using Breakout.Entities;
+using Breakout.Utility;
 using DIKUArcade.GUI;
 using DIKUArcade.Math;
 
@@ -17,7 +18,7 @@ public class BallEntityTests
     [SetUp]
     public void Setup()
     {
-        ballEntity = BallEntity.Create(0.1f, new Vec2F(0.01f, 0.01f));
+        ballEntity = BallEntity.Create(ConstantsUtil.BallPosition, ConstantsUtil.BallExtent, ConstantsUtil.BallSpeed, ConstantsUtil.BallDirection);
     }
 
     [Test]

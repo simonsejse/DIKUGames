@@ -5,5 +5,5 @@ namespace Breakout.Entities.BlockTypes;
 public interface IBlockType
 {
     IBlockTypeBehavior GetBlockTypeBehavior();
-    void CollisionHandler(BlockEntity block);
+    void HandleCollision(BlockEntity block);
 }

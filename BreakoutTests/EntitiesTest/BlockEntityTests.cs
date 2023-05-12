@@ -75,7 +75,7 @@ public class BlockEntityTest
             new UnbreakableBlockType()
         );
         Assert.That(blockEntity.Health, Is.EqualTo(-1));
-        blockEntity.TakeDamage();
+        blockEntity.HandleCollision();
         Assert.That(blockEntity.Health, Is.EqualTo(-1));
     }
 }
