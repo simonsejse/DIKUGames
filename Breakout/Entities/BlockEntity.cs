@@ -59,7 +59,8 @@ public class BlockEntity : Entity
 
     public void CollisionHandler()
     {
-        BlockType.CollisionHandler(this);
+        Console.WriteLine("Penis");
+        BlockType.HandleCollision(this);
     }
 
     /// <summary>

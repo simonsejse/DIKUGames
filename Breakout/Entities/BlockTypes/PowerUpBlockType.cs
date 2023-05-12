@@ -6,7 +6,7 @@ public class PowerUpBlockType : IBlockType
 {
     public IBlockTypeBehavior GetBlockTypeBehavior() => new PowerUpBlockTypeBehaviour();
 
-    public void CollisionHandler(BlockEntity block)
+    public void HandleCollision(BlockEntity block)
     {
         // not a part of the assignment (9G)
     }

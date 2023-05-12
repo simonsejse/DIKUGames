@@ -1,4 +1,5 @@
 ﻿using Breakout.Entities;
+using Breakout.States;
 using DIKUArcade.Math;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
@@ -49,6 +50,7 @@ public class BallEntity : Entity
     {
         return Shape.Position.Y + Shape.Extent.Y < 0;
     }
+    
     public void BounceOffBlock(BlockEntity block)
     {
         float ballCenterX = Shape.Position.X + Shape.Extent.X / 2;
@@ -107,10 +109,10 @@ public class BallEntity : Entity
             if (!DIKUArcade.Physics.CollisionDetection.Aabb(Shape.AsDynamicShape(), block.Shape).Collision) return;
             block.CollisionHandler();
             BounceOffBlock(block);
-            if (block.IsDead())
-            {
-                playerEntity.AddPoints(block.Value);
-            }
+            if (!block.IsDead()) return;
+            
+            playerEntity.AddPoints(block.Value);
+            //state.UpdateText();
         });
     }
     

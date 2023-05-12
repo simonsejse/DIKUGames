@@ -1,3 +1,4 @@
+using System.Drawing;
 using Breakout.Containers;
 using Breakout.Controller;
 using Breakout.Entities;
@@ -7,6 +8,7 @@ using Breakout.Handler;
 using Breakout.Levels;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
+using DIKUArcade.Graphics;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;
@@ -20,10 +22,17 @@ public class GameRunningState : IGameState
     private readonly LevelLoader _levelLoader;
     private IKeyboardEventHandler _keyboardEventHandler;
     private readonly EntityManager _entityManager;
+    
+    private Text _scoreText = null!;
+    private Text _levelText = null!;
+    private Text _healthText = null!;
+    private readonly ITextFactory _textFactory;
+
     private int CurrentLevel { get; set; }
 
     public GameRunningState()
     {
+        
         CurrentLevel = 0;
         
         _gameEventFactory = new GameEventFactory();
@@ -35,6 +44,9 @@ public class GameRunningState : IGameState
         _keyboardEventHandler = new RunningStateKeyboardController(_entityManager.PlayerEntity);
         
         _entityManager.AddBallEntity(BallEntity.Create(0.1f, new Vec2F(0.01f, 0.01f)));
+        
+        _textFactory = new DefaultTextFactory();
+        UpdateText();
     }
     
     public static GameRunningState GetInstance()
@@ -55,6 +67,9 @@ public class GameRunningState : IGameState
 
     public void RenderState()
     {
+        _healthText.RenderText();
+        _scoreText.RenderText();
+        _levelText.RenderText();
         _entityManager.RenderEntities();
     }
 
@@ -82,8 +97,15 @@ public class GameRunningState : IGameState
         {
             CurrentLevel++;
             _entityManager.BlockEntities = _levelLoader.LoadLevel(CurrentLevel);
+            UpdateText();
         }
     }
-
-    public int GetLevel() => CurrentLevel;
+    
+    public void UpdateText()
+    {
+        int lives = _entityManager.PlayerEntity.GetLives();
+        _healthText = _textFactory.Create($"{lives} {string.Concat(Enumerable.Repeat("❤", lives))}", ConstantsUtil.HealthPosition, ConstantsUtil.HealthExtent, Color.Red);
+        _scoreText = _textFactory.Create($"Score: {_entityManager.PlayerEntity.GetPoints()}", ConstantsUtil.ScorePosition, ConstantsUtil.ScoreExtent, Color.White);
+        _levelText = _textFactory.Create($"Level: {CurrentLevel}", ConstantsUtil.LevelPosition, ConstantsUtil.LevelExtent, Color.White);
+    }
 }
