@@ -1,6 +1,6 @@
 ﻿using DIKUArcade.Math;
 
-namespace Breakout;
+namespace Breakout.Utility;
 
 public static class ConstantsUtil
 {
@@ -33,4 +33,8 @@ public static class ConstantsUtil
 
     public static readonly Vec2F LevelPosition = new(0.01f, -0.02f);
     public static readonly Vec2F LevelExtent = new(0.2f, 0.2f);
+    
+    
+    public static readonly Vec2F BallDirection = new(0.01f, 0.01f);
+    public const float BallSpeed = 0.1f;
 }

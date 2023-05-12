@@ -1,6 +1,7 @@
 using DIKUArcade.Math;
 using DIKUArcade.Entities;
 using Breakout.Entities.BlockTypes;
+using Breakout.Utility;
 using DIKUArcade.Graphics;
 
 namespace Breakout.Entities;
@@ -57,11 +58,8 @@ public class BlockEntity : Entity
         }
     }
 
-    public void CollisionHandler()
-    {
-        Console.WriteLine("Penis");
-        BlockType.HandleCollision(this);
-    }
+    public void HandleCollision() => BlockType.HandleCollision(this);
+    
 
     /// <summary>
     /// A factory method for instantiating a default BlockEntity

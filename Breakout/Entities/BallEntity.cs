@@ -1,5 +1,6 @@
 ﻿using Breakout.Entities;
 using Breakout.States;
+using Breakout.Utility;
 using DIKUArcade.Math;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
@@ -95,28 +96,8 @@ public class BallEntity : Entity
         {
             _direction.X *= -1.0f;
         }
-}
-
-
-
-
-    
-    public void CheckBlockCollisions(EntityContainer<BlockEntity> blockEntities, PlayerEntity playerEntity)
-    {
-
-        blockEntities.Iterate(block =>
-        {
-            if (!DIKUArcade.Physics.CollisionDetection.Aabb(Shape.AsDynamicShape(), block.Shape).Collision) return;
-            block.CollisionHandler();
-            BounceOffBlock(block);
-            if (!block.IsDead()) return;
-            
-            playerEntity.AddPoints(block.Value);
-            //state.UpdateText();
-        });
     }
     
-
     public void ChangeDirection(float deltaX, float deltaY)
     {
         _direction.X = deltaX;
@@ -140,17 +121,19 @@ public class BallEntity : Entity
     {
         _direction = Vec2F.Normalize(_direction);
     }
-    
+
     /// <summary>
     /// A factory method for instantiating a default BallEntity
     /// </summary>
-    /// <param name="direction">The direction of the ball.</param>
+    /// <param name="pos">The position of the ball.</param>
+    /// <param name="extent">The extent of the ball.</param>
     /// <param name="speed">The speed of the ball.</param>
+    /// <param name="direction">The direction of the ball.</param>
     /// <returns>A BallEntity instance</returns>
-    public static BallEntity Create(float speed, Vec2F direction)
+    public static BallEntity Create(Vec2F pos, Vec2F extent, float speed, Vec2F direction)
     {
         return new BallEntity(
-            new DynamicShape(ConstantsUtil.BallPosition, ConstantsUtil.BallExtent),
+            new DynamicShape(pos, extent),
             new Image(Path.Combine("Assets", "Images", "Ball.png")), direction, speed);
     }
     

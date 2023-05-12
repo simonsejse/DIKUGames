@@ -1,11 +1,24 @@
-using Breakout.Entities;
+using Breakout.States;
+using DIKUArcade.Entities;
 using DIKUArcade.Physics;
-using DIKUArcade.Math;
 
 namespace Breakout.Entities;
 
-public static class CollisionManager
+public static class CollisionProcessor
 {
+    public static void CheckBlockCollisions(EntityContainer<BlockEntity> blockEntities, BallEntity ball, PlayerEntity playerEntity, GameRunningState state)
+    {
+        blockEntities.Iterate(block =>
+        {
+            if (!DIKUArcade.Physics.CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), block.Shape).Collision) return;
+            block.HandleCollision();
+            ball.BounceOffBlock(block);
+            if (!block.IsDead()) return;
+            
+            playerEntity.AddPoints(block.Value);
+            state.UpdateText();
+        });
+    }
     public static void CheckBallPlayerCollision(BallEntity ballEntity, PlayerEntity playerEntity)
     {
         if (!CollisionDetection.Aabb(ballEntity.Shape.AsDynamicShape(), playerEntity.Shape.AsDynamicShape())
