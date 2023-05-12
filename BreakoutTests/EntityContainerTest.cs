@@ -3,6 +3,7 @@ using Breakout.Containers;
 using Breakout.Factories;
 using Breakout.IO;
 using Breakout.Entities;
+using Breakout.States;
 using DIKUArcade.GUI;
 using DIKUArcade.Math;
 
@@ -13,12 +14,14 @@ namespace BreakoutTests;
 /// </summary>
 public class EntityContainerTest
 {
+    private GameRunningState _gameRunningState;
     private EntityManager _entityManager;
     
     [SetUp]
     public void Setup()
     {
-        _entityManager = new EntityManager();
+        _gameRunningState = new GameRunningState();
+        _entityManager = new EntityManager(_gameRunningState);
     }
 
     
@@ -26,8 +29,6 @@ public class EntityContainerTest
     public void TestRendering()
     {
         _entityManager.RenderEntities();
-        _entityManager.RenderEntities();
     }
-
-  
+    
 }

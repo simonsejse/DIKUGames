@@ -1,33 +1,24 @@
-﻿using System.Drawing;
-using Breakout.Entities;
-using Breakout.Factories;
+﻿using Breakout.Entities;
 using Breakout.States;
+using Breakout.Utility;
 using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 
 namespace Breakout.Containers;
 
 public class EntityManager
 {
-    private ITextFactory _textFactory;
+    private readonly GameRunningState _state;
     public EntityContainer<BlockEntity> BlockEntities { get; set; }
     public EntityContainer<BallEntity> BallEntities { get; }
     public PlayerEntity PlayerEntity { get; }
-    private Text _scoreText;
-    private Text _levelText;
-    private Text _healthText;
 
-    public EntityManager()
+    public EntityManager(GameRunningState state)
     {
+        _state = state;
         PlayerEntity = PlayerEntity.Create();
         BlockEntities = new EntityContainer<BlockEntity>();
         BallEntities = new EntityContainer<BallEntity>();
-        _textFactory = new DefaultTextFactory();
-        int lives = PlayerEntity.GetLives();
-        _healthText = _textFactory.Create($"{lives} {string.Concat(Enumerable.Repeat("❤", lives))}", ConstantsUtil.HealthPosition, ConstantsUtil.HealthExtent, Color.Red);
-        _scoreText = _textFactory.Create($"Score: {PlayerEntity.GetPoints()}", ConstantsUtil.ScorePosition, ConstantsUtil.ScoreExtent, Color.White);
-        _levelText = _textFactory.Create("Level: 0", ConstantsUtil.LevelPosition, ConstantsUtil.LevelExtent, Color.White);
     }
 
     public void RenderEntities()
@@ -35,9 +26,6 @@ public class EntityManager
         BlockEntities.RenderEntities();
         BallEntities.RenderEntities();
         PlayerEntity.RenderEntity();
-        _scoreText.RenderText();
-        _levelText.RenderText();
-        _healthText.RenderText();
     }
 
     public void Move()
@@ -45,20 +33,20 @@ public class EntityManager
         PlayerEntity.Move();
         BallEntities.Iterate(ball =>
         {
-            ball.CheckBlockCollisions(BlockEntities, PlayerEntity);
-            CollisionManager.CheckBallPlayerCollision(ball, PlayerEntity);
+            CollisionProcessor.CheckBlockCollisions(BlockEntities, ball, PlayerEntity, _state);
+            CollisionProcessor.CheckBallPlayerCollision(ball, PlayerEntity);
+            if (ball.OutOfBounds())
+            {
+                ball.DeleteEntity(); //Iterate lets us mutate the container while iterating
+                PlayerEntity.TakeLife();
+                _state.UpdateText();
+                AddBallEntity(BallEntity.Create(PlayerEntity.Shape.Position + PlayerEntity.Shape.Extent / 2, ConstantsUtil.BallExtent,
+                    ConstantsUtil.BallSpeed, ConstantsUtil.BallDirection * new Vec2F(1f, -1f)));
+            }
             ball.Move();
         });
     }
 
-    public void Update(GameRunningState state)
-    {
-        int lives = PlayerEntity.GetLives();
-        _healthText = _textFactory.Create($"{lives} {string.Concat(Enumerable.Repeat("❤", lives))}", ConstantsUtil.HealthPosition, ConstantsUtil.HealthExtent, Color.Red);
-        _scoreText = _textFactory.Create($"Score: {PlayerEntity.GetPoints()}", ConstantsUtil.ScorePosition, ConstantsUtil.ScoreExtent, Color.White);
-        _levelText = _textFactory.Create($"Level: {state.GetLevel()}", ConstantsUtil.LevelPosition, ConstantsUtil.LevelExtent, Color.White);
-    }
-    
     public void AddBallEntity(BallEntity ballEntity)
     {
         BallEntities.AddEntity(ballEntity);

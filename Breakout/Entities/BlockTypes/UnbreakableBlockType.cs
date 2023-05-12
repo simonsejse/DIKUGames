@@ -13,7 +13,7 @@ public class UnbreakableBlockType : IBlockType
     /// A method of handling collision between the block and the ball entity
     /// </summary>
     /// <param name="block">The blockentity</param>
-    public void CollisionHandler(BlockEntity block) 
+    public void HandleCollision(BlockEntity block) 
     {
         // do nothing upon collision
     }
