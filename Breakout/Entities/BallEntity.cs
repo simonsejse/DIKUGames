@@ -120,6 +120,7 @@ public class BallEntity : Entity
     public void Launch()
     {
         _direction = Vec2F.Normalize(_direction);
+        // a
     }
 
     /// <summary>
