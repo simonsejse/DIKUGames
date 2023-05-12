@@ -100,6 +100,16 @@ public class PlayerEntity : Entity
         if (_lives <= 0) return;
         _lives--;
     }
+
+    public bool GetMoveLeft()
+    {
+        return _moveLeft != 0f;
+    }
+
+    public bool GetMoveRight()
+    {
+        return _moveRight != 0f;
+    }
     
     
     /// <summary>
