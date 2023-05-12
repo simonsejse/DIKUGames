@@ -15,10 +15,6 @@ public class BallEntity : Entity
     // Maximum speed for ball entities
     private const float MaxSpeed = 0.3f;
 
-
-    
-
-    
     // Constructor that intializes player's shape and image by using the base class constructor
     public BallEntity(Shape shape, IBaseImage image, Vec2F direction, float speed) : base(shape, image)
     {
@@ -32,7 +28,7 @@ public class BallEntity : Entity
         // Limit speed of the ball
         if (_direction.Length() > MaxSpeed)
         {
-            _direction = Vec2F.Normalize(_direction) * MaxSpeed;
+            _direction = Vec2F.Normalize(_direction) * _speed;
         }
         
         // Sets the ball direction + moves it
@@ -80,18 +76,18 @@ public class BallEntity : Entity
         }
     }
     
-    public void CheckBlockCollisions(BallEntity ballEntity, EntityContainer<BlockEntity> blockEntities,
+    public void CheckBlockCollisions(EntityContainer<BlockEntity> blockEntities,
         PlayerEntity playerEntity)
     {
         bool blockCollision = false; // Flag to track if a block has been deleted during a collision
 
         blockEntities.Iterate(block =>
         {
-            if (!blockCollision && DIKUArcade.Physics.CollisionDetection.Aabb(ballEntity.Shape.AsDynamicShape(), block.Shape).Collision)
+            if (!blockCollision && DIKUArcade.Physics.CollisionDetection.Aabb(Shape.AsDynamicShape(), block.Shape).Collision)
             {
                 blockCollision = true;
                 block.CollisionHandler();
-                ballEntity.BounceOffBlock(block);
+                BounceOffBlock(block);
                 if (block.IsDead())
                 {
                     playerEntity.AddPoints(block.Value);
@@ -128,7 +124,7 @@ public class BallEntity : Entity
         _direction.Y = newY;
     }
 
-    private bool CheckCollision(BallEntity ballEntity, BlockEntity block)
+    private bool CheckCollision(Entity ballEntity, Entity block)
     {
         var ballShape = ballEntity.Shape.AsDynamicShape();
         var blockShape = block.Shape.AsDynamicShape();
@@ -150,12 +146,9 @@ public class BallEntity : Entity
     /// <returns>A BallEntity instance</returns>
     public static BallEntity Create(float speed, Vec2F direction)
     {
-        return new BallEntity(new DynamicShape(0.5f - 0.03f / 2,
-                0.03f + 0.03f,
-                0.03f,
-                0.03f),
-            new Image(Path.Combine("Assets",
-                "Images",
-                "Ball.png")), direction, speed);
+        return new BallEntity(
+            new DynamicShape(ConstantsUtil.BallPosition, ConstantsUtil.BallExtent),
+            new Image(Path.Combine("Assets", "Images", "Ball.png")), direction, speed);
     }
+    
 }

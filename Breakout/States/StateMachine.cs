@@ -12,12 +12,12 @@ namespace Breakout.States;
 public class StateMachine : IGameEventProcessor<GameEventType>
 {
 
-    private static readonly Dictionary<GameState, IGameState> States = new()
-        {
-            { GameState.Menu, MainMenuState.GetInstance() },
-            { GameState.Running, GameRunningState.GetInstance() },
-            { GameState.Paused, PauseState.GetInstance() }
-        };
+    private static readonly Dictionary<GameState, Func<IGameState>> States = new()
+    {
+        { GameState.Menu, MainMenuState.GetInstance },
+        { GameState.Running, GameRunningState.GetInstance },
+        { GameState.Paused, GamePauseState.GetInstance }
+    };
 
     
     /// <summary>
@@ -48,21 +48,35 @@ public class StateMachine : IGameEventProcessor<GameEventType>
     {
         if (!States.ContainsKey(stateType))
             throw new ArgumentException("State does not exist!", nameof(stateType));
-        ActiveState = States[stateType];
+
+        ActiveState = States[stateType]();
     }
         
-    ///TODO: Add XML something like used to process events for switching between states
     public void ProcessEvent(GameEvent<GameEventType> gameEvent)
     {
-        if (gameEvent.EventType is not GameEventType.GameStateEvent) return;
-        
-        if (!gameEvent.Message.StartsWith("CHANGE_STATE")) return;
-        
-        string gameEventStringArg1 = gameEvent.StringArg1;
-        SwitchState(_stateTransformer.TransformStringToState(gameEventStringArg1));
+        if (gameEvent.EventType != GameEventType.GameStateEvent) return;
 
-        if (gameEvent.Message.Equals("CHANGE_STATE_RESET"))
-            ActiveState.ResetState();
+        string message = gameEvent.Message;
+        string arg1 = gameEvent.StringArg1;
+
+        switch (message)
+        {
+            case "CHANGE_STATE":
+                SwitchState(_stateTransformer.TransformStringToState(arg1));
+                break;
+            case "NEW_GAME":
+                ResetAllStates();
+                SwitchState(_stateTransformer.TransformStringToState(arg1));
+                break;
+        }
+    }
+
+    private void ResetAllStates()
+    {
+        foreach (Func<IGameState> state in States.Values)
+        {
+            state().ResetState();
+        }
     }
 }
 

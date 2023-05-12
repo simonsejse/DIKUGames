@@ -25,9 +25,8 @@ public class MainMenuState : IGameState, IMenu
         _background = new BackgroundFactory("Assets", "Images", "shipit_titlescreen.png").Create();
         MenuButtons = new[]
         {
-            textFactory.Create("Start Game", new Vec2F(0.1f, 0.1f), new Vec2F(0.5f, 0.5f), Color.Crimson),
-            textFactory.Create("Quit", new Vec2F(0.1f, 0f), new Vec2F(0.5f, 0.5f), Color.White),
-            textFactory.Create("Level Selector (Soon)", new Vec2F(0.1f, -0.1f), new Vec2F(0.6f, 0.5f), Color.White)
+            textFactory.Create("Start Game",ConstantsUtil.StartGamePosition, ConstantsUtil.StartGameExtent, Color.Crimson),
+            textFactory.Create("Quit", ConstantsUtil.QuitGamePosition, ConstantsUtil.QuitGameExtent, Color.White),
         };
         _keyboardEventHandler = new MainMenuStateKeyboardController(this);
     }
@@ -46,6 +45,7 @@ public class MainMenuState : IGameState, IMenu
 
     public void ResetState()
     {
+        _instance = null;
     }
 
 

@@ -13,20 +13,20 @@ namespace BreakoutTests;
 /// </summary>
 public class EntityContainerTest
 {
-    private EntityContainers _entityContainers;
+    private EntityManager _entityManager;
     
     [SetUp]
     public void Setup()
     {
-        _entityContainers = new EntityContainers();
+        _entityManager = new EntityManager();
     }
 
     
     [Test]
     public void TestRendering()
     {
-        _entityContainers.RenderEntities();
-        _entityContainers.RenderEntities();
+        _entityManager.RenderEntities();
+        _entityManager.RenderEntities();
     }
 
   
