@@ -4,7 +4,7 @@ using DIKUArcade.GUI;
 namespace BreakoutTests.EntitiesTest;
 
 [TestFixture]
-public class PlayerEntityTests
+public class PlayerFactoryTests
 {
     
     [SetUp]
