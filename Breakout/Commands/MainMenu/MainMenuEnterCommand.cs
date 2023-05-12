@@ -23,11 +23,10 @@ public class MainMenuEnterCommand : IKeyboardCommand
         GameEvent<GameEventType> @event = _menu.ActiveButton switch
         {
             0 => _gameEventFactory.CreateGameEventForAllProcessors(GameEventType.GameStateEvent,
-                "CHANGE_STATE_RESET",
+                "NEW_GAME",
                 Enum.GetName(GameState.Running) ?? "Running"),
             _ => _gameEventFactory.CreateGameEventForAllProcessors(GameEventType.WindowEvent, "CLOSE_WINDOW")
         };
-        _menu.ActiveButton = 0;
         BreakoutBus.GetBus().RegisterEvent(@event);
     }
 }

@@ -10,30 +10,30 @@ using DIKUArcade.State;
 
 namespace Breakout.States;
 
-public class PauseState : IGameState, IMenu
+public class GamePauseState : IGameState, IMenu
 {
-    private static PauseState? _instance;
+    private static GamePauseState? _instance;
     private readonly Entity _background;
     private readonly IKeyboardPressHandler _keyboardEventHandler;
 
     public int ActiveButton { get; set; }
     public Text[] MenuButtons { get; }
     
-    public PauseState(ITextFactory textFactory)
+    public GamePauseState(ITextFactory textFactory)
     {
         ActiveButton = 0;
         _background = new BackgroundFactory("Assets", "Images", "SpaceBackground.png").Create();
         MenuButtons = new[]
         {
-            textFactory.Create("Continue", new Vec2F(0.1f, 0.1f), new Vec2F(0.5f, 0.5f), Color.Crimson),
-            textFactory.Create("Main Menu", new Vec2F(0.1f, 0f), new Vec2F(0.5f, 0.5f), Color.White),
+            textFactory.Create("Continue", ConstantsUtil.ContinueGamePosition, ConstantsUtil.ContinueGameExtent, Color.Crimson),
+            textFactory.Create("Main Menu", ConstantsUtil.ToMainMenuPosition, ConstantsUtil.ToMainMenuExtent, Color.White),
         };
         _keyboardEventHandler = new PauseStateKeyboardController(this);
     }
     
-    public static PauseState GetInstance()
+    public static GamePauseState GetInstance()
     {
-        return _instance ??= new PauseState(new DefaultTextFactory());
+        return _instance ??= new GamePauseState(new DefaultTextFactory());
     }
     
 
@@ -46,6 +46,7 @@ public class PauseState : IGameState, IMenu
 
     public void ResetState()
     {
+        _instance = null;
     }
 
     public void UpdateState()

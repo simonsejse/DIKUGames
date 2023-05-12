@@ -11,24 +11,20 @@ namespace Breakout.Entities;
 /// </summary>
 public class PlayerEntity : Entity
 {
-    #region Properties and fields
     // Field for player's movement and its movement speed
     private float _moveRight = 0.0f;
     private float _moveLeft = 0.0f;
     private const float MovementSpeed = 0.05f;
     private int _points = 0;
+    private int _lives;
     
-    #endregion
     
-    #region Constructor
     // Constructor that intializes player's shape and image by using the base class constructor
     public PlayerEntity(Shape shape, IBaseImage image) : base(shape, image)
     {
-
+        _lives = 3;
     }
-    #endregion
 
-    #region Methods
     /// <summary>
     /// Moves the player left or right based upon their movement fields and speed and updates their position
     /// and direction. Also restricts position to be within game window limits
@@ -69,24 +65,42 @@ public class PlayerEntity : Entity
         _moveRight = val ? _moveRight + MovementSpeed : 0f;
         UpdateDirection();
     }
-    #endregion
 
     /// <summary>
     /// Adds count points to the player's points. If the added points are not positive, do nothing
     /// </summary>
-    /// <param name="val">Integer for the added points.</param>
+    /// <param name="count">Integer for the added points.</param>
     public void AddPoints(int count)
     {
-        if(count >= 0)
-        {
-            _points += count;
-        }
+        if (count < 0) return;
+        _points += count;
     }
-
+    /// <summary>
+    /// Gets the amount of points the player has.
+    /// </summary>
+    /// <returns>An int the represents the amount of points.</returns>
     public int GetPoints()
     {
         return _points;
     }
+    
+    /// <summary>
+    /// Represents the lives the player has left.
+    /// </summary>
+    /// <returns>An int that represents the amount of lives the player has left.</returns>
+    public int GetLives()
+    {
+        return _lives;
+    }
+    /// <summary>
+    /// Decrements the players life by one. If the player has no lives left, do nothing.
+    /// </summary>
+    public void TakeLife()
+    {
+        if (_lives <= 0) return;
+        _lives--;
+    }
+    
     
     /// <summary>
     /// A factory method for instantiating a default PlayerEntity.
@@ -94,13 +108,9 @@ public class PlayerEntity : Entity
     /// <returns>A PlayerEntity instance.</returns>
     public static PlayerEntity Create()
     {
-        return new PlayerEntity(new DynamicShape(0.5f - 0.2f / 2f,
-                0.03f,
-                0.2f,
-                0.028f),
-            new Image(Path.Combine(Directory.GetCurrentDirectory(), "Assets",
-                "Images",
-                "Player.png")));
+        return new PlayerEntity(
+            new DynamicShape(ConstantsUtil.PlayerPosition, ConstantsUtil.PlayerExtent),
+            new Image(Path.Combine(Directory.GetCurrentDirectory(), "Assets", "Images", "Player.png"))
+        );
     }
-    
 }

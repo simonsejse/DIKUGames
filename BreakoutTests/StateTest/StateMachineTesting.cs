@@ -38,7 +38,7 @@ public class StateMachineTesting
     }
 
     [TestCase("Running", typeof(GameRunningState))]
-    [TestCase("Paused", typeof(PauseState))]
+    [TestCase("Paused", typeof(GamePauseState))]
     [TestCase("Menu", typeof(MainMenuState))]
     public void TestEventGameStates(string newState, Type state)
     {
@@ -53,7 +53,7 @@ public class StateMachineTesting
 
 
     [TestCase("Paused", typeof(MainMenuState))]
-    [TestCase("Running", typeof(PauseState))]
+    [TestCase("Running", typeof(GamePauseState))]
     [TestCase("Menu", typeof(GameRunningState))]
     public void TestNegationEventGameStates(string newState, Type state)
     {
