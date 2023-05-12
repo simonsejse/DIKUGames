@@ -10,7 +10,6 @@ namespace Breakout.Entities;
 /// </summary>
 public class BlockEntity : Entity
 {
-    #region Properties
     public int Value { get; set; }
     /// <summary>
     /// Gets or sets the health of the block.
@@ -20,9 +19,7 @@ public class BlockEntity : Entity
     public IBlockType BlockType { get; set; }
     public IBaseImage Image2 { get; set; }
     
-    #endregion
-    
-    #region Constructors
+
 
     /// <summary>
     /// Initializes a new instance of the BlockEntity class with the specified shape, image, value, and health.
@@ -45,10 +42,12 @@ public class BlockEntity : Entity
         StartHealth = Health;
         Image2 = image2;
     }
-    
-    #endregion
+    /// <summary>
+    /// Returns a boolean indicating whether the block health is below zero.
+    /// </summary>
+    /// <returns>A boolean indicating if the block has died.</returns>
+    public bool IsDead() => Health <= 0;
 
-    #region Methods
     /// <summary>
     /// Removes 1 point of health from the block entity
     /// </summary>
@@ -61,29 +60,29 @@ public class BlockEntity : Entity
         }
     }
 
-    public bool IsDead()
-    {
-        if (Health <= 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
     public void CollisionHandler()
     {
         BlockType.CollisionHandler(this);
     }
-    #endregion
 
+    /// <summary>
+    /// A factory method for instantiating a default BlockEntity
+    /// </summary>
+    /// <returns>A BlockEntity instance</returns>
+    /// <param name="pos">The position of the block.</param>
+    /// <param name="image">The image of the block.</param>
+    /// <param name="image2">The second image of the block.</param>
+    /// <param name="blockType">The type of the block.</param>
+    /// <returns></returns>
     public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType)
     {
+        
         return new BlockEntity(
-            new StationaryShape(pos, new Vec2F(0.08333333333f, 0.04f)),
+            new StationaryShape(pos, ConstantsUtil.BlockExtent),
             image,
             image2, 
             10, 
-            100,
+            1,
             blockType
         );
     }

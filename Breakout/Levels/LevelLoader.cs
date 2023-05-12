@@ -20,6 +20,8 @@ public class LevelLoader : ILevelLoader<BlockEntity>
     private readonly LevelStorage _levelStorage;
     private readonly IModelFactory<Level> _levelFactory;
 
+    public int NumberOfLevels => _levelStorage.LevelPaths.Count;
+    
     public LevelLoader()
     {
         _levelFactory = new LevelFactory();
@@ -47,13 +49,19 @@ public class LevelLoader : ILevelLoader<BlockEntity>
                 int columnLength = level.Map.Length;
                 float posY = offsetY + 90f/columnLength/100f * row;
                 
-                Vec2F pos = new Vec2F(posX, posY);
+                Vec2F pos = new(posX, posY);
         
                 string path = level.Legends.TryGetValue(key, out string? image) ? image : "error-block.png";
                 string path2 = path.Replace(".png", "-damaged.png");
-                BlockEntityFactory factory = new BlockEntityFactory(pos, new Image(Path.Combine("Assets", "Images", path)),
-                    new Image(Path.Combine("Assets", "Images", path2)));
-                BlockEntity blockEntity = factory.Create();
+                
+                var blockEntity = BlockEntity.Create(pos,
+                    new Image(Path.Combine("Assets",
+                        "Images",
+                        path)),
+                    new Image(Path.Combine("Assets",
+                        "Images",
+                        path2)), new HardenedBlockType());
+
                 blockEntities.AddEntity(blockEntity);
             }
         }

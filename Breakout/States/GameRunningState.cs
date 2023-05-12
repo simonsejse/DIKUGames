@@ -1,42 +1,41 @@
 using Breakout.Containers;
-using System.Drawing;
 using Breakout.Controller;
 using Breakout.Entities;
+using Breakout.Events;
 using Breakout.Factories;
 using Breakout.Handler;
 using Breakout.Levels;
-using DIKUArcade.Entities;
+using DIKUArcade.Events;
+using DIKUArcade.Events.Generic;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;
-using DIKUArcade.Graphics;
 
 namespace Breakout.States;
 
 public class GameRunningState : IGameState
 {
-    #region Properties and fields
     private static GameRunningState? _instance;
-    private PlayerEntity _playerEntity;
-    private BallEntity _ballEntity;
-    private EntityContainers _entityContainers;
-    private EntityContainer<BlockEntity> _blockEntities;
+    private readonly GameEventFactory _gameEventFactory;
     private readonly LevelLoader _levelLoader;
     private IKeyboardEventHandler _keyboardEventHandler;
-    #endregion
+    private readonly EntityManager _entityManager;
+    private int CurrentLevel { get; set; }
 
     public GameRunningState()
     {
-        _playerEntity = PlayerEntity.Create();
-        _keyboardEventHandler = new RunningStateKeyboardController(_playerEntity);
-        _entityContainers = new EntityContainers();
-        _levelLoader = new LevelLoader();
+        CurrentLevel = 0;
         
-        _blockEntities = _levelLoader.LoadLevel(0);
-         _ballEntity = BallEntity.Create(0.1f, new Vec2F(0.01f, 0.01f));
-        _entityContainers.BallEntities.AddEntity(_ballEntity);
+        _gameEventFactory = new GameEventFactory();
+        _levelLoader = new LevelLoader();
+        _entityManager = new EntityManager
+        {
+            BlockEntities = _levelLoader.LoadLevel(CurrentLevel)
+        };
+        _keyboardEventHandler = new RunningStateKeyboardController(_entityManager.PlayerEntity);
+        
+        _entityManager.AddBallEntity(BallEntity.Create(0.1f, new Vec2F(0.01f, 0.01f)));
     }
-
     
     public static GameRunningState GetInstance()
     {
@@ -45,38 +44,46 @@ public class GameRunningState : IGameState
     
     public void ResetState()
     {
-        _playerEntity = PlayerEntity.Create();
-        _keyboardEventHandler = new RunningStateKeyboardController(_playerEntity);
-        _entityContainers = new EntityContainers();
-        _blockEntities = _levelLoader.LoadLevel(0);
-        _ballEntity = BallEntity.Create(0.1f, new Vec2F(0.01f, 0.01f));
-        _entityContainers.BallEntities.AddEntity(_ballEntity);
+        _instance = null;
     }
 
     public void UpdateState()
     {
-       _playerEntity.Move();
-       _ballEntity.Move();
-       _ballEntity.CheckBlockCollisions(_ballEntity, _blockEntities, _playerEntity);
-       CollisionManager.CheckBallPlayerCollision(_ballEntity, _playerEntity);
+        _entityManager.Move();
+        CheckLevel();
     }
 
     public void RenderState()
     {
-        _playerEntity.RenderEntity();
-        _entityContainers.RenderEntities();
-        _blockEntities.RenderEntities();
+        _entityManager.RenderEntities();
     }
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
     {
-        if (action == KeyboardAction.KeyRelease)
-        {
+        if (action != KeyboardAction.KeyRelease) 
+            _keyboardEventHandler.HandleKeyPress(key);
+        else
             _keyboardEventHandler.HandleKeyRelease(key);
+    }
+
+    private void CheckLevel()
+    {
+        if (_entityManager.BlockEntities.CountEntities() > 0) return;
+        bool isNoMoreLevels = CurrentLevel == _levelLoader.NumberOfLevels - 1;
+        if (isNoMoreLevels)
+        {
+            GameEvent<GameEventType> toMainMenu = _gameEventFactory.CreateGameEventForAllProcessors(
+                GameEventType.GameStateEvent,
+                "CHANGE_STATE",
+                nameof(GameState.Menu));
+            BreakoutBus.GetBus().RegisterEvent(toMainMenu);
         }
         else
         {
-            _keyboardEventHandler.HandleKeyPress(key);
+            CurrentLevel++;
+            _entityManager.BlockEntities = _levelLoader.LoadLevel(CurrentLevel);
         }
     }
+
+    public int GetLevel() => CurrentLevel;
 }

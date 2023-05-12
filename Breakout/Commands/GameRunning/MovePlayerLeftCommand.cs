@@ -6,15 +6,12 @@ public class MovePlayerLeftCommand : IKeyboardCommand
 {
     private readonly PlayerEntity _playerEntity;
     private readonly bool _shouldMove;
-    private PlayerEntity? playerEntity;
-    private bool v;
 
     public MovePlayerLeftCommand(PlayerEntity playerEntity, bool shouldMove)
     {
         _playerEntity = playerEntity;
         _shouldMove = shouldMove;
     }
-
 
     public void Execute()
     {
