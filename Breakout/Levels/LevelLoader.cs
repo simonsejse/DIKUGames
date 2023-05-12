@@ -17,6 +17,12 @@ namespace Breakout.Levels;
 /// </summary>
 public class LevelLoader : ILevelLoader<BlockEntity>
 {
+    private Dictionary<char, IBlockType> _blockTypes = new()
+    {
+        { 'u', new UnbreakableBlockType() }
+        
+    };
+
     private readonly LevelStorage _levelStorage;
     private readonly IModelFactory<Level> _levelFactory;
 
@@ -32,7 +38,7 @@ public class LevelLoader : ILevelLoader<BlockEntity>
     {
         EntityContainer<BlockEntity> blockEntities = new();
         string filePath = _levelStorage.LevelPaths[levelNum];
-        FileReader.ReadFileFromPath(Path.Combine("Assets", "Levels", filePath), out var data);
+        FileReader.ReadFileFromPath(Path.Combine("Assets", "Levels", filePath), out string? data);
         var level = _levelFactory.Parse(data);
         for (int row = 0; row < level.Map.Length; row++)
         {
@@ -53,6 +59,20 @@ public class LevelLoader : ILevelLoader<BlockEntity>
         
                 string path = level.Legends.TryGetValue(key, out string? image) ? image : "error-block.png";
                 string path2 = path.Replace(".png", "-damaged.png");
+
+                IBlockType blockType = key switch
+                {
+                    _ when key == level.Meta.PowerUp =>
+                        new PowerUpBlockType()
+                    ,
+                    _ when key == level.Meta.Hardened =>
+                        new HardenedBlockType()
+                    ,
+                    _ when key == level.Meta.Unbreakable =>
+                        new UnbreakableBlockType()
+                    ,
+                    _ => new StandardBlockType()
+                };
                 
                 var blockEntity = BlockEntity.Create(pos,
                     new Image(Path.Combine("Assets",
@@ -60,7 +80,7 @@ public class LevelLoader : ILevelLoader<BlockEntity>
                         path)),
                     new Image(Path.Combine("Assets",
                         "Images",
-                        path2)), new HardenedBlockType());
+                        path2)), blockType);
 
                 blockEntities.AddEntity(blockEntity);
             }
@@ -68,4 +88,5 @@ public class LevelLoader : ILevelLoader<BlockEntity>
 
         return blockEntities;
     }
+
 }

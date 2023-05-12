@@ -1,4 +1,4 @@
-using Breakout.Entities;
+﻿using Breakout.Entities;
 using DIKUArcade.Math;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
@@ -8,7 +8,6 @@ namespace Breakout.Entities;
 
 public class BallEntity : Entity
 {
-
     // Field for ball's movement speed and direction
     private float _speed;
     private Vec2F _direction;
@@ -21,7 +20,6 @@ public class BallEntity : Entity
         _direction = direction;
         _speed = speed;
     }
-
     
     public void Move()
     {
@@ -81,42 +79,37 @@ public class BallEntity : Entity
             }
         }
         
-    if (deltaY < 0 && _direction.Y > 0)
-    {
-        _direction.X *= 1.0f;
-        _direction.Y *= -1.0f; 
-        
-    }
-    else if (deltaY > 0 && _direction.Y < 0)
-    {
-        _direction.Y *= -1.0f;
-    }
-    else
-    {
-        _direction.X *= -1.0f;
-    }
+        if (deltaY < 0 && _direction.Y > 0)
+        {
+            _direction.X *= 1.0f;
+            _direction.Y *= -1.0f; 
+            
+        }
+        else if (deltaY > 0 && _direction.Y < 0)
+        {
+            _direction.Y *= -1.0f;
+        }
+        else
+        {
+            _direction.X *= -1.0f;
+        }
 }
 
 
 
 
     
-    public void CheckBlockCollisions(EntityContainer<BlockEntity> blockEntities,
-        PlayerEntity playerEntity)
+    public void CheckBlockCollisions(EntityContainer<BlockEntity> blockEntities, PlayerEntity playerEntity)
     {
-        bool blockCollision = false;
 
         blockEntities.Iterate(block =>
         {
-            if (!blockCollision && DIKUArcade.Physics.CollisionDetection.Aabb(Shape.AsDynamicShape(), block.Shape).Collision)
+            if (!DIKUArcade.Physics.CollisionDetection.Aabb(Shape.AsDynamicShape(), block.Shape).Collision) return;
+            block.CollisionHandler();
+            BounceOffBlock(block);
+            if (block.IsDead())
             {
-                blockCollision = true;
-                block.CollisionHandler();
-                BounceOffBlock(block);
-                if (block.IsDead())
-                {
-                    playerEntity.AddPoints(block.Value);
-                }
+                playerEntity.AddPoints(block.Value);
             }
         });
     }

@@ -1,3 +1,5 @@
+using Breakout.Entities.BlockBehaviors;
+
 namespace Breakout.Entities.BlockTypes;
 
 /// <summary>
@@ -5,7 +7,8 @@ namespace Breakout.Entities.BlockTypes;
 /// </summary>
 public class UnbreakableBlockType : IBlockType
 {
-    #region Methods
+    public IBlockTypeBehavior GetBlockTypeBehavior() => new UnbreakableBlockTypeBehaviour();
+
     /// <summary>
     /// A method of handling collision between the block and the ball entity
     /// </summary>
@@ -14,5 +17,4 @@ public class UnbreakableBlockType : IBlockType
     {
         // do nothing upon collision
     }
-    #endregion
 }
