@@ -8,7 +8,7 @@ namespace Breakout.Entities;
 
 public class BallEntity : Entity
 {
-    #region Properties and fields
+
     // Field for ball's movement speed and direction
     private float _speed;
     private Vec2F _direction;
@@ -17,17 +17,15 @@ public class BallEntity : Entity
 
 
     
-    #endregion
+
     
-    #region Constructor
     // Constructor that intializes player's shape and image by using the base class constructor
     public BallEntity(Shape shape, IBaseImage image, Vec2F direction, float speed) : base(shape, image)
     {
         _direction = direction;
         _speed = speed;
     }
-    #endregion
-    #region Methods
+
     
     public void Move()
     {
@@ -122,7 +120,6 @@ public class BallEntity : Entity
                 if (block.IsDead())
                 {
                     playerEntity.AddPoints(block.Value);
-                    Console.WriteLine(playerEntity.GetPoints());
                 }
             }
         });
@@ -152,6 +149,21 @@ public class BallEntity : Entity
     {
         _direction = Vec2F.Normalize(_direction);
     }
-
-    #endregion
+    
+    /// <summary>
+    /// A factory method for instantiating a default BallEntity
+    /// </summary>
+    /// <param name="direction">The direction of the ball.</param>
+    /// <param name="speed">The speed of the ball.</param>
+    /// <returns>A BallEntity instance</returns>
+    public static BallEntity Create(float speed, Vec2F direction)
+    {
+        return new BallEntity(new DynamicShape(0.5f - 0.03f / 2,
+                0.03f + 0.03f,
+                0.03f,
+                0.03f),
+            new Image(Path.Combine("Assets",
+                "Images",
+                "Ball.png")), direction, speed);
+    }
 }

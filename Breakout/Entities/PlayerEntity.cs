@@ -87,4 +87,20 @@ public class PlayerEntity : Entity
     {
         return _points;
     }
+    
+    /// <summary>
+    /// A factory method for instantiating a default PlayerEntity.
+    /// </summary>
+    /// <returns>A PlayerEntity instance.</returns>
+    public static PlayerEntity Create()
+    {
+        return new PlayerEntity(new DynamicShape(0.5f - 0.2f / 2f,
+                0.03f,
+                0.2f,
+                0.028f),
+            new Image(Path.Combine(Directory.GetCurrentDirectory(), "Assets",
+                "Images",
+                "Player.png")));
+    }
+    
 }

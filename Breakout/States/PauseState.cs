@@ -25,8 +25,8 @@ public class PauseState : IGameState, IMenu
         _background = new BackgroundFactory("Assets", "Images", "SpaceBackground.png").Create();
         MenuButtons = new[]
         {
-            textFactory.Create("Start Game", new Vec2F(0.1f, 0.1f), new Vec2F(0.5f, 0.5f), Color.Crimson),
-            textFactory.Create("Quit", new Vec2F(0.1f, 0f), new Vec2F(0.5f, 0.5f), Color.White),
+            textFactory.Create("Continue", new Vec2F(0.1f, 0.1f), new Vec2F(0.5f, 0.5f), Color.Crimson),
+            textFactory.Create("Main Menu", new Vec2F(0.1f, 0f), new Vec2F(0.5f, 0.5f), Color.White),
         };
         _keyboardEventHandler = new PauseStateKeyboardController(this);
     }
@@ -35,8 +35,7 @@ public class PauseState : IGameState, IMenu
     {
         return _instance ??= new PauseState(new DefaultTextFactory());
     }
-
-
+    
 
     public void SetButtonColor(int index, Color color)
     {

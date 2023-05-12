@@ -1,7 +1,7 @@
-﻿using Breakout.Factories;
+﻿using Breakout.Entities;
 using DIKUArcade.GUI;
 
-namespace BreakoutTests;
+namespace BreakoutTests.EntitiesTest;
 
 [TestFixture]
 public class PlayerEntityTests
@@ -16,8 +16,7 @@ public class PlayerEntityTests
     [Test]
     public void TestPlayerFactoryCreation()
     {
-        var playerFactory = new PlayerEntityFactory();
-        var playerEntity = playerFactory.Create();
+        var playerEntity = PlayerEntity.Create();
 
         Assert.Multiple(() =>
         {

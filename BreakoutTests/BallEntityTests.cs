@@ -17,18 +17,17 @@ public class BallEntityTests
     [SetUp]
     public void Setup()
     {
-        ballEntity = new BallEntityFactory(0.1f, new Vec2F(0.01f, 0.01f)).Create();
+        ballEntity = BallEntity.Create(0.1f, new Vec2F(0.01f, 0.01f));
     }
 
-    
     [Test]
     public void TestMove()
     {
         var initPos = ballEntity.Shape.Position;
-        
+
+        Assert.That(ballEntity.Shape.Position, Is.EqualTo(initPos));
         ballEntity.Move();
-        
-        Assert.AreNotEqual(initPos, ballEntity.Shape.Position);
+        Assert.That(ballEntity.Shape.Position, Is.Not.EqualTo(initPos));
     }
 
   
