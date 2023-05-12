@@ -1,3 +1,5 @@
+using Breakout.Entities.BlockBehaviors;
+
 namespace Breakout.Entities.BlockTypes;
 
 /// <summary>
@@ -6,6 +8,9 @@ namespace Breakout.Entities.BlockTypes;
 public class StandardBlockType : IBlockType 
 {
     #region Methods
+
+    public IBlockTypeBehavior GetBlockTypeBehavior() => new StandardBlockTypeBehaviour();
+
     /// <summary>
     /// A method of handling collision between the block and the ball entity
     /// </summary>

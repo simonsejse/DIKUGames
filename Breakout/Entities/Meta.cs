@@ -3,20 +3,17 @@
 
 public class Meta
 {
-    #region Properties and fields
     public string? Name { get; set; }
     public int? Time { get;set; }
     public char? Hardened { get; set;}
     public char? PowerUp { get;set; }
     public char? Unbreakable { get;set; }
 
-    #endregion
     public Meta()
     {
         
     }
 
-    #region Constructor
     
     /// <summary>
     /// Constructor that takes several optional (?) parameters
@@ -36,5 +33,4 @@ public class Meta
         PowerUp = powerUp;
         Unbreakable = unbreakable;
     }
-    #endregion
 }

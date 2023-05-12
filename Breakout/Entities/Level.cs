@@ -2,7 +2,6 @@
 
 public class Level
 {
-    #region Properties and fields
     /// <summary>
     /// Map is a 2-dimensional char array accessible through a public getter and private setter
     /// </summary>
@@ -16,9 +15,6 @@ public class Level
     /// </summary>
     public Dictionary<char, string> Legends  { get; private set; }
     
-    #endregion
-    
-    #region Constructor
    /// <summary>
    /// Initializes a new instance of the Level-class with the specified map, meta, and legends
    /// </summary>
@@ -31,41 +27,4 @@ public class Level
         Meta = meta;
         Legends = legends;
     }
-    #endregion
-    
-    /*
-    #region Level builder
-
-    public class Builder
-    {
-        private char[][] _map;
-        private Meta _meta;
-        private Dictionary<char, string> _legends;
-
-        public Builder SetMap(char[][] map)
-        {
-            _map = map;
-            return this;
-        }
-    
-        public Builder SetMeta(Meta meta)
-        {
-            _meta = meta;
-            return this;
-        }
-    
-        public Builder SetLegends(Dictionary<char, string> legends)
-        {
-            _legends = legends;
-            return this;
-        }
-    
-        public Level Build()
-        {
-            return new Level(_map, _meta, _legends);
-        }   
-    }
-    #endregion
-    */
-   
 }

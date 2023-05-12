@@ -18,14 +18,14 @@ public class BlockEntity : Entity
     public int StartHealth { get; set; }
     public IBlockType BlockType { get; set; }
     public IBaseImage Image2 { get; set; }
-    
 
 
     /// <summary>
     /// Initializes a new instance of the BlockEntity class with the specified shape, image, value, and health.
     /// </summary>
     /// <param name="shape">The shape of the block.</param>
-    /// <param name="image">The image to use for the block.</param>
+    /// <param name="image">The image to use for the block. Will represent the non damaged block.</param>
+    /// <param name="image2">The second image to use for the block. Will represent the damaged block.</param>
     /// <param name="value">The value of the block.</param>
     /// <param name="health">The health of the block.</param>
     /// <param name="blockType">The type of the block.</param>
@@ -35,10 +35,7 @@ public class BlockEntity : Entity
         Value = value;
         Health = health;
         BlockType = blockType;
-        if (blockType is HardenedBlockType) 
-        {
-            Health = Health * 2;
-        }
+        Health = blockType.GetBlockTypeBehavior().ModifyHealth(health);
         StartHealth = Health;
         Image2 = image2;
     }
@@ -76,7 +73,6 @@ public class BlockEntity : Entity
     /// <returns></returns>
     public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType)
     {
-        
         return new BlockEntity(
             new StationaryShape(pos, ConstantsUtil.BlockExtent),
             image,
