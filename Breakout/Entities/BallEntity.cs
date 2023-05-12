@@ -10,10 +10,8 @@ namespace Breakout.Entities;
 
 public class BallEntity : Entity
 {
-    // Field for ball's movement speed and direction
     private float _speed;
     private Vec2F _direction;
-    // Maximum speed for ball entities
     private const float MaxSpeed = 0.25f;
 
     // Constructor that intializes player's shape and image by using the base class constructor
@@ -120,7 +118,6 @@ public class BallEntity : Entity
     public void Launch()
     {
         _direction = Vec2F.Normalize(_direction);
-        // ba
     }
 
     /// <summary>
