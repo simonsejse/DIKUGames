@@ -1,5 +1,9 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+<<<<<<< Updated upstream
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1016a4fd_002D2cbf_002D4390_002Dbcfb_002Db7700f9a67c2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestRendering" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+=======
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1016a4fd_002D2cbf_002D4390_002Dbcfb_002Db7700f9a67c2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestRendering" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+>>>>>>> Stashed changes
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.EntityContainerTest.TestRendering&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.StateMachineTesting&lt;/TestId&gt;&#xD;
@@ -21,6 +25,12 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4f05ba1f_002Ddfdf_002D4fca_002D9d68_002D80e48860221e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestLevel1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.LevelTests.TestLevel1&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=78494066_002Dbd33_002D4027_002Da3c3_002D450a6e95cbdc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="BallEntityTests #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.Commands.GameRunning.MovePlayerLeftCommandTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.Commands.GameRunning.PauseGameCommandTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=907e8c3c_002De8ab_002D4f8f_002Da82d_002D4643811c4d4a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestLevel1 #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
