@@ -6,9 +6,9 @@ using DIKUArcade.Math;
 
 namespace Breakout.Entities;
 
-public class PowerUp : Entity
+public class PowerUpEntity : Entity
 {
-    public PowerUp(Shape shape, IBaseImage image) : base(shape, image)
+    public PowerUpEntity(Shape shape, IBaseImage image) : base(shape, image)
     {
     }
     
@@ -21,9 +21,9 @@ public class PowerUp : Entity
     /// <param name="image2">The second image of the block.</param>
     /// <param name="blockType">The type of the block.</param>
     /// <returns></returns>
-    public static PowerUp Create(Vec2F pos, string image)
+    public static PowerUpEntity Create(Vec2F pos, string image)
     {
-        return new PowerUp(
+        return new PowerUpEntity(
             new StationaryShape(pos, ConstantsUtil.BlockExtent),
             new Image(Path.Combine("Assets", "Images", $"{image}.png"))
         );

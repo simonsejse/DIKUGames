@@ -65,7 +65,7 @@ public static class CollisionProcessor
         ballEntity.Shape.Move(ballEntity.GetDirection());
     }
 
-    public static bool CheckPowerUpPlayerCollision(PowerUp powerUp, PlayerEntity playerEntity)
+    public static bool CheckPowerUpPlayerCollision(PowerUpEntity powerUpEntity, PlayerEntity playerEntity)
     {
         //todo: check if powerup is colliding with player
         return false;

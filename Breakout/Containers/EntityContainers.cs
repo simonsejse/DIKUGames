@@ -11,7 +11,7 @@ public class EntityManager
     private readonly GameRunningState _state;
     public EntityContainer<BlockEntity> BlockEntities { get; set; }
     public EntityContainer<BallEntity> BallEntities { get; }
-    public EntityContainer<PowerUp> PowerUps { get; }
+    public EntityContainer<PowerUpEntity> PowerUps { get; }
     public PlayerEntity PlayerEntity { get; }
 
     public EntityManager(GameRunningState state)
@@ -20,7 +20,7 @@ public class EntityManager
         PlayerEntity = PlayerEntity.Create();
         BlockEntities = new EntityContainer<BlockEntity>();
         BallEntities = new EntityContainer<BallEntity>();
-        PowerUps = new EntityContainer<PowerUp>();
+        PowerUps = new EntityContainer<PowerUpEntity>();
     }
 
     public void RenderEntities()
