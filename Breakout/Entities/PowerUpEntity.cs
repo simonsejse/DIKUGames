@@ -10,7 +10,7 @@ public class PowerUpEntity : Entity
 {
     private PowerUpEntity(Shape shape, IBaseImage image) : base(shape, image)
     {
-        Shape.AsDynamicShape().Direction = new Vec2F(0.0f, -0.01f);
+        Shape.AsDynamicShape().Direction = new Vec2F(0f, -0.005f);
     }
     
     /// <summary>
@@ -25,13 +25,13 @@ public class PowerUpEntity : Entity
     public static PowerUpEntity Create(Vec2F pos, string image)
     {
         return new PowerUpEntity(
-            new StationaryShape(pos, ConstantsUtil.PowerUpExtent),
+            new DynamicShape(pos, ConstantsUtil.PowerUpExtent),
             new Image(Path.Combine("Assets", "Images", $"{image}.png"))
         );
     }
 
     public void Move()
     {
-        Shape.AsDynamicShape().Move();
+        Shape.Move();
     }
 }
