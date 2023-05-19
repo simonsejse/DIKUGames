@@ -11,9 +11,11 @@ public class ExtraLifePowerUp : IPowerUpType
         return new Image(Path.Combine("Assets", "Images", "LifePickUp.png"));
     }
 
-    public void DropPowerUp()
+    public void DropPowerUp(BlockEntity block)
     {
-        EntityManager.PowerUps.AddEntity(PowerUpEntity.Create(new Vec2F(0.5f, 0.5f), "LifePickUp"));
-            
+        float positionY = block.Shape.Position.Y;
+        float positionX = block.Shape.Position.X;
+        var position = new Vec2F(positionX, positionY);
+        EntityManager.PowerUps.AddEntity(PowerUpEntity.Create(position, "LifePickUp"));
     }
 }

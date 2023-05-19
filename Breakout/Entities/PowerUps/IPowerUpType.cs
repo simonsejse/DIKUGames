@@ -5,5 +5,5 @@ namespace Breakout.Entities.PowerUps;
 public interface IPowerUpType
 {
     IBaseImage GetImage();
-    void DropPowerUp();
+    void DropPowerUp(BlockEntity block);
 }
