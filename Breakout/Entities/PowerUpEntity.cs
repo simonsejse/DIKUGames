@@ -31,6 +31,6 @@ public class PowerUpEntity : Entity
 
     public void Move()
     {
-        //todo: gå nedad
+        Shape.MoveY(-0.1f);
     }
 }
