@@ -37,4 +37,7 @@ public static class ConstantsUtil
     
     public static readonly Vec2F BallDirection = new(0.01f, 0.01f);
     public const float BallSpeed = 0.1f;
+    
+    public static readonly Vec2F PowerUpExtent = new(0.05333333333f, 0.03f);
+
 }

@@ -24,7 +24,7 @@ public class PowerUpEntity : Entity
     public static PowerUpEntity Create(Vec2F pos, string image)
     {
         return new PowerUpEntity(
-            new StationaryShape(pos, ConstantsUtil.BlockExtent),
+            new StationaryShape(pos, ConstantsUtil.PowerUpExtent),
             new Image(Path.Combine("Assets", "Images", $"{image}.png"))
         );
     }
