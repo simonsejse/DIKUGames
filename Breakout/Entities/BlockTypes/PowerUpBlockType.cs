@@ -7,7 +7,8 @@ public class PowerUpBlockType : IBlockType
     public IBlockTypeBehavior GetBlockTypeBehavior() => new PowerUpBlockTypeBehaviour();
 
     public void HandleCollision(BlockEntity block)
-    {
+    { 
+        block.TakeDamage();
         block.PowerUpType.DropPowerUp(block);
     }
 }
