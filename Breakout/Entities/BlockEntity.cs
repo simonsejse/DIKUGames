@@ -38,6 +38,7 @@ public class BlockEntity : Entity
         Value = value;
         Health = health;
         BlockType = blockType;
+        PowerUpType = new ExtraLifePowerUp();
         Health = blockType.GetBlockTypeBehavior().ModifyHealth(health);
         StartHealth = Health;
         DamagedImage = damagedImage;
