@@ -10,6 +10,7 @@ public class PowerUpEntity : Entity
 {
     public PowerUpEntity(Shape shape, IBaseImage image) : base(shape, image)
     {
+        Shape.AsDynamicShape().Direction = new Vec2F(0.0f, -0.01f);
     }
     
     /// <summary>
@@ -31,6 +32,6 @@ public class PowerUpEntity : Entity
 
     public void Move()
     {
-        Shape.MoveY(-0.01f);
+        Shape.Move();
     }
 }
