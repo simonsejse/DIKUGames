@@ -8,7 +8,7 @@ namespace Breakout.Entities;
 
 public class PowerUpEntity : Entity
 {
-    public PowerUpEntity(Shape shape, IBaseImage image) : base(shape, image)
+    private PowerUpEntity(Shape shape, IBaseImage image) : base(shape, image)
     {
         Shape.AsDynamicShape().Direction = new Vec2F(0.0f, -0.01f);
     }
@@ -32,6 +32,6 @@ public class PowerUpEntity : Entity
 
     public void Move()
     {
-        Shape.Move();
+        Shape.AsDynamicShape().Move();
     }
 }
