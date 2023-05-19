@@ -1,6 +1,7 @@
 using DIKUArcade.Math;
 using DIKUArcade.Entities;
 using Breakout.Entities.BlockTypes;
+using Breakout.Entities.PowerUps;
 using Breakout.Utility;
 using DIKUArcade.Graphics;
 
@@ -17,8 +18,9 @@ public class BlockEntity : Entity
     /// </summary>
     public int Health { get; set; }
     public int StartHealth { get; set; }
-    public IBlockType BlockType { get; set; }
-    public IBaseImage Image2 { get; set; }
+    private IBlockType BlockType { get; set; }
+    public IPowerUpType PowerUpType { get; set; }
+    public IBaseImage DamagedImage { get; set; }
 
 
     /// <summary>
@@ -26,11 +28,11 @@ public class BlockEntity : Entity
     /// </summary>
     /// <param name="shape">The shape of the block.</param>
     /// <param name="image">The image to use for the block. Will represent the non damaged block.</param>
-    /// <param name="image2">The second image to use for the block. Will represent the damaged block.</param>
+    /// <param name="damagedImage">The second image to use for the block. Will represent the damaged block.</param>
     /// <param name="value">The value of the block.</param>
     /// <param name="health">The health of the block.</param>
     /// <param name="blockType">The type of the block.</param>
-    public BlockEntity(Shape shape, IBaseImage image, IBaseImage image2, int value, int health, IBlockType blockType) : 
+    public BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, IBlockType blockType) : 
         base(shape, image)
     {
         Value = value;
@@ -38,7 +40,7 @@ public class BlockEntity : Entity
         BlockType = blockType;
         Health = blockType.GetBlockTypeBehavior().ModifyHealth(health);
         StartHealth = Health;
-        Image2 = image2;
+        DamagedImage = damagedImage;
     }
     /// <summary>
     /// Returns a boolean indicating whether the block health is below zero.

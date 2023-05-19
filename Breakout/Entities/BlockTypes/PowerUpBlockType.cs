@@ -8,6 +8,6 @@ public class PowerUpBlockType : IBlockType
 
     public void HandleCollision(BlockEntity block)
     {
-        // not a part of the assignment (9G)
+        block.PowerUpType.ActivatePowerUp();
     }
 }

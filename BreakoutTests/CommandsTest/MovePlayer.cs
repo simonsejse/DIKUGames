@@ -2,7 +2,7 @@
 using Breakout.Entities;
 using DIKUArcade.GUI;
 
-namespace BreakoutTests.Commands.GameRunning
+namespace BreakoutTests.CommandsTest
 {
     [TestFixture]
     public class MovePlayerLeftCommandTests

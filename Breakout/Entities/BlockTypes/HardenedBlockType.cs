@@ -18,7 +18,7 @@ public class HardenedBlockType : IBlockType
     {
         block.TakeDamage();
         if (block.Health > block.StartHealth / 2) return;
-        if (block.Image.Equals(block.Image2)) return;
-        block.Image = block.Image2;
+        if (block.Image.Equals(block.DamagedImage)) return;
+        block.Image = block.DamagedImage;
     }
 }

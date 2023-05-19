@@ -30,7 +30,7 @@ public class BlockEntityTest
         Assert.That(blockEntity.StartHealth, Is.EqualTo(1));
         Assert.That(blockEntity.Value, Is.EqualTo(10));
         Assert.That(blockEntity.Image, Is.Not.Null);
-        Assert.That(blockEntity.Image2, Is.Not.Null);
+        Assert.That(blockEntity.DamagedImage, Is.Not.Null);
     }
 
     [Test]

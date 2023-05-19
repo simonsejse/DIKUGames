@@ -9,7 +9,7 @@ public class Application
     {
         var windowArgs = new WindowArgs
         {
-            Title = "Breakout v0.1", 
+            Title = "Breakout v1", 
             Width = 700, 
             Height = 700
         };
