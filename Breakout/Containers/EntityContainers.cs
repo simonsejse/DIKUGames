@@ -11,6 +11,7 @@ public class EntityManager
     private readonly GameRunningState _state;
     public EntityContainer<BlockEntity> BlockEntities { get; set; }
     public EntityContainer<BallEntity> BallEntities { get; }
+    public EntityContainer<PowerUp> PowerUps { get; }
     public PlayerEntity PlayerEntity { get; }
 
     public EntityManager(GameRunningState state)
@@ -19,6 +20,7 @@ public class EntityManager
         PlayerEntity = PlayerEntity.Create();
         BlockEntities = new EntityContainer<BlockEntity>();
         BallEntities = new EntityContainer<BallEntity>();
+        PowerUps = new EntityContainer<PowerUp>();
     }
 
     public void RenderEntities()
@@ -26,6 +28,7 @@ public class EntityManager
         BlockEntities.RenderEntities();
         BallEntities.RenderEntities();
         PlayerEntity.RenderEntity();
+        PowerUps.RenderEntities();
     }
 
     public void Move()
@@ -44,6 +47,19 @@ public class EntityManager
                     ConstantsUtil.BallSpeed, ConstantsUtil.BallDirection * new Vec2F(1f, -1f)));
             }
             ball.Move();
+        });
+        PowerUps.Iterate(powerUp =>
+        {
+            powerUp.Move();
+            if (CollisionProcessor.CheckPowerUpPlayerCollision(powerUp, PlayerEntity))
+            {
+                powerUp.DeleteEntity();
+            }
+            else
+            if (powerUp.Shape.Position.Y < 0)
+            {
+                powerUp.DeleteEntity();
+            }
         });
     }
 

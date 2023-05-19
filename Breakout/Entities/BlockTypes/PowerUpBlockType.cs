@@ -8,6 +8,6 @@ public class PowerUpBlockType : IBlockType
 
     public void HandleCollision(BlockEntity block)
     {
-        block.PowerUpType.ActivatePowerUp();
+        block.PowerUpType.DropPowerUp();
     }
 }

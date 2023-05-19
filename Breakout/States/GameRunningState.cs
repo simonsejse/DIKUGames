@@ -26,6 +26,7 @@ public class GameRunningState : IGameState
     private readonly LevelLoader _levelLoader;
     private readonly IKeyboardEventHandler _keyboardEventHandler;
     private readonly EntityManager _entityManager;
+    private readonly PowerUpHandler _powerUpHandler;
     
     private Text _scoreText = null!;
     private Text _levelText = null!;
@@ -39,7 +40,7 @@ public class GameRunningState : IGameState
     /// </summary>
     public GameRunningState()
     {
-        
+
         CurrentLevel = 0;
         
         _gameEventFactory = new GameEventFactory();
@@ -55,6 +56,8 @@ public class GameRunningState : IGameState
         
         _textFactory = new DefaultTextFactory();
         UpdateText();
+        
+        _powerUpHandler = new PowerUpHandler(_entityManager.PlayerEntity, _entityManager.BallEntities);
     }
     
     /// <summary>

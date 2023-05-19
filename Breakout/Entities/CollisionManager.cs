@@ -10,7 +10,7 @@ public static class CollisionProcessor
     {
         blockEntities.Iterate(block =>
         {
-            if (!DIKUArcade.Physics.CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), block.Shape).Collision) return;
+            if (!CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), block.Shape).Collision) return;
             block.HandleCollision();
             ball.BounceOffBlock(block);
             if (!block.IsDead()) return;
@@ -63,5 +63,11 @@ public static class CollisionProcessor
         }
                 
         ballEntity.Shape.Move(ballEntity.GetDirection());
+    }
+
+    public static bool CheckPowerUpPlayerCollision(PowerUp powerUp, PlayerEntity playerEntity)
+    {
+        //todo: check if powerup is colliding with player
+        return false;
     }
 }

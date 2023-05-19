@@ -102,6 +102,14 @@ public class PlayerEntity : Entity
         _lives--;
     }
 
+    /// <summary>
+    /// Increments players life by one.
+    /// </summary>
+    public void AddLife()
+    {
+        _lives++;
+    }
+    
     public bool GetMoveLeft()
     {
         return _moveLeft != 0f;
@@ -124,4 +132,5 @@ public class PlayerEntity : Entity
             new Image(Path.Combine(Directory.GetCurrentDirectory(), "Assets", "Images", "Player.png"))
         );
     }
+
 }

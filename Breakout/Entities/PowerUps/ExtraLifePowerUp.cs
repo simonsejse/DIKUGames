@@ -4,14 +4,14 @@ namespace Breakout.Entities.PowerUps;
 
 public class ExtraLifePowerUp : IPowerUpType
 {
-    
     public IBaseImage GetImage()
     {
         return new Image(Path.Combine("Assets", "Images", "LifePickUp.png"));
     }
 
-    public void ActivatePowerUp()
+    public void DropPowerUp()
     {
-        Console.WriteLine("Kæmpe penis i min mund!");
+        
+            
     }
 }
