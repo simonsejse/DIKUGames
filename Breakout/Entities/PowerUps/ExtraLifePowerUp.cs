@@ -14,8 +14,8 @@ public class ExtraLifePowerUp : IPowerUpType
 
     public void DropPowerUp(BlockEntity block)
     {
-        float positionY = block.Shape.Position.Y + ConstantsUtil.BlockExtent.Y / 2f;
-        float positionX = block.Shape.Position.X + ConstantsUtil.BlockExtent.X / 2f;
+        float positionY = block.Shape.Position.Y;
+        float positionX = block.Shape.Position.X;
 
         var position = new Vec2F(positionX, positionY);
         EntityManager.PowerUps.AddEntity(PowerUpEntity.Create(position, "LifePickUp"));
