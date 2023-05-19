@@ -11,7 +11,7 @@ public class Application
         {
             Title = "Breakout v1", 
             Width = 700, 
-            Height = 700
+            Height = 1200
         };
         
         var game = new Game(windowArgs);
