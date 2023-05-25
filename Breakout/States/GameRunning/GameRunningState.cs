@@ -1,4 +1,3 @@
-using System.Drawing;
 using Breakout.Containers;
 using Breakout.Controller;
 using Breakout.Entities;
@@ -11,35 +10,39 @@ using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
 using DIKUArcade.Graphics;
 using DIKUArcade.Input;
-using DIKUArcade.Math;
 using DIKUArcade.State;
 using DIKUArcade.Timers;
 
-namespace Breakout.States;
+namespace Breakout.States.GameRunning;
 
 /// <summary>
 /// Represents the game state when the game is running.
 /// </summary>
 public class GameRunningState : IGameState
 {
-
     private Level _currentLevel;
     private int CurrentLevel { get; set; }
     
-    private static GameRunningState? _instance;
-    private readonly GameEventFactory _gameEventFactory;
     private readonly LevelLoader _levelLoader;
+    private readonly IGameEventFactory<GameEventType> _gameEventFactory;
     private readonly IKeyboardEventHandler _keyboardEventHandler;
+    private readonly IWinCondition _winCondition;
     private readonly EntityManager _entityManager;
-    
-    
+    private readonly GameRunningStateUiManager _gameRunningStateUiManager = new();
     
     //TODO: Maybe delete
     private readonly PowerUpHandler _powerUpHandler;
     
-
-
-
+    private static GameRunningState? _instance;
+    /// <summary>
+    /// Gets the singleton instance of the <see cref="GameRunningState"/>.
+    /// </summary>
+    /// <returns>The singleton instance of the <see cref="GameRunningState"/>.</returns>
+    public static GameRunningState GetInstance()
+    {
+        return _instance ??= new GameRunningState();
+    }
+    
     /// <summary>
     /// Initializes a new instance of the <see cref="GameRunningState"/> class.
     /// </summary>
@@ -56,28 +59,15 @@ public class GameRunningState : IGameState
         };
         _keyboardEventHandler = new RunningStateKeyboardController(_entityManager.PlayerEntity);
 
-        var ballEntity = BallEntity.Create(ConstantsUtil.PlayerPosition + ConstantsUtil.PlayerExtent / 2, ConstantsUtil.BallExtent, ConstantsUtil.BallSpeed, ConstantsUtil.BallDirection);
+        var ballEntity = BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection);
         _entityManager.AddBallEntity(ballEntity);
+        UpdateText();
         
-        ITextFactory textFactory = new DefaultTextFactory();
-        int lives = _entityManager.PlayerEntity.GetLives();
-        _healthText = textFactory.Create($"{lives} {string.Concat(Enumerable.Repeat("❤", lives))}", ConstantsUtil.HealthPosition, ConstantsUtil.HealthExtent, Color.Red);
-        _scoreText = textFactory.Create($"Score: {_entityManager.PlayerEntity.GetPoints()}", ConstantsUtil.ScorePosition, ConstantsUtil.ScoreExtent, Color.White);
-        _levelText = textFactory.Create($"Level: {CurrentLevel}", ConstantsUtil.LevelPosition, ConstantsUtil.LevelExtent, Color.White);
-        _timerText = textFactory.Create(string.Empty, ConstantsUtil.TimerPosition, ConstantsUtil.TimerExtent, Color.White);
-
+        _winCondition = new BlockEntitiesWinCondition(_entityManager, _levelLoader);
         _powerUpHandler = new PowerUpHandler(_entityManager.PlayerEntity, _entityManager.BallEntities);
     }
 
-
-    /// <summary>
-    /// Gets the singleton instance of the <see cref="GameRunningState"/>.
-    /// </summary>
-    /// <returns>The singleton instance of the <see cref="GameRunningState"/>.</returns>
-    public static GameRunningState GetInstance()
-    {
-        return _instance ??= new GameRunningState();
-    }
+ 
     
     /// <summary>
     /// Resets the state by clearing the singleton instance.
@@ -88,25 +78,69 @@ public class GameRunningState : IGameState
     }
     
     /// <summary>
-    /// Updates the game state.
+    /// Handles all update logic for the game running state.
     /// </summary>
     public void UpdateState()
     {
         _entityManager.Move();
-        CheckLevel();
-        UpdateTimer();
+        _gameRunningStateUiManager.UpdateTimer(_currentLevel.Meta.Time);
+        HandleGameLogic();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void HandleGameLogic()
+    {
+        bool timeRanOut = _currentLevel.Meta.Time.HasValue && _currentLevel.Meta.Time <= StaticTimer.GetElapsedSeconds();
+        bool playerNoMoreLives = _entityManager.PlayerEntity.GetLives() == 0;
+        if (playerNoMoreLives || timeRanOut)
+        {
+            GameEvent<GameEventType> gameEvent = _gameEventFactory.CreateGameEvent(GameEventType.GameStateEvent, "CHANGE_STATE", nameof(GameState.Lost));
+            BreakoutBus.GetBus().RegisterEvent(gameEvent);
+            return;
+        }
+
+        if (_winCondition.HasWon(CurrentLevel))
+        {
+            GameEvent<GameEventType> gameEvent = _gameEventFactory.CreateGameEvent(GameEventType.GameStateEvent, "CHANGE_STATE", nameof(GameState.Won));
+            BreakoutBus.GetBus().RegisterEvent(gameEvent);
+            return;
+        }
+        
+        bool noMoreBalls = _entityManager.BallEntities.CountEntities() == 0;
+        if (noMoreBalls)
+        {
+            _entityManager.PlayerEntity.TakeLife();
+            _entityManager.AddBallEntity(BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection));
+            _gameRunningStateUiManager.UpdateHealth(_entityManager.PlayerEntity.GetLives());
+        }
+        
+        bool moreBlocksLeft = _entityManager.BlockEntities.CountEntities() > 0;
+        if (!moreBlocksLeft) LoadNextLevel();
     }
     
+    /// <summary>
+    /// Loads the next level into the game.
+    /// </summary>
+    private void LoadNextLevel()
+    {
+        if (_entityManager.BallEntities.CountEntities() > 0)
+            _entityManager.BallEntities.ClearContainer();
+        
+        CurrentLevel++;
+        _currentLevel = _levelLoader.LoadLevel(CurrentLevel);
+        _entityManager.BlockEntities = _levelLoader.ConstructBlockEntities(_currentLevel);
+        _gameRunningStateUiManager.UpdateLevel(CurrentLevel);
+    }
+
     /// <summary>
     /// Renders the game state.
     /// </summary>
     public void RenderState()
     {
         _entityManager.RenderEntities();
-        _healthText.RenderText();
-        _scoreText.RenderText();
-        _levelText.RenderText();
-        _timerText.RenderText();
+        _gameRunningStateUiManager.RenderText();
     }
 
     /// <summary>
@@ -121,35 +155,7 @@ public class GameRunningState : IGameState
         else
             _keyboardEventHandler.HandleKeyRelease(key);
     }
-    
-    /// <summary>
-    /// Checks if all the blocks in the current level have been destroyed.
-    /// If so, advances to the next level or transitions to the main menu if there are no more levels.
-    /// </summary>
-    private void CheckLevel()
-    {
-        if (_entityManager.BlockEntities.CountEntities() > 0) return;
-        bool isNoMoreLevels = CurrentLevel == _levelLoader.NumberOfLevels - 1;
-        if (isNoMoreLevels)
-        {
-            GameEvent<GameEventType> toMainMenu = _gameEventFactory.CreateGameEventForAllProcessors(
-                GameEventType.GameStateEvent,
-                "CHANGE_STATE",
-                nameof(GameState.Menu));
-            BreakoutBus.GetBus().RegisterEvent(toMainMenu);
-        }
-        else
-        {
-            CurrentLevel++;
-            _currentLevel = _levelLoader.LoadLevel(CurrentLevel);
-            _entityManager.BlockEntities = _levelLoader.ConstructBlockEntities(_currentLevel);
-            UpdateText();
-        }
-    }
-    
-    
-    
-    
+
     /// <summary>
     /// Updates the text elements displaying the player's health, score, and current level.
     /// TODO: This is not very good since it's instantiates a new text object every frame..^^ leading to performance issues.
@@ -158,15 +164,8 @@ public class GameRunningState : IGameState
     public void UpdateText()
     {
         int lives = _entityManager.PlayerEntity.GetLives();
-        _healthText.SetText($"{lives} {string.Concat(Enumerable.Repeat("❤", lives))}");
-        _scoreText.SetText($"Score: {_entityManager.PlayerEntity.GetPoints()}");
-        _levelText.SetText($"Level: {CurrentLevel}");
-    }
-
-    private void UpdateTimer()
-    {
-        int metaTime = _currentLevel.Meta.Time ?? -1;
-        string displayTime = metaTime != -1 ? metaTime.ToString() : "∞";
-        _timerText.SetText($"Timer: {StaticTimer.GetElapsedSeconds():0}s/{displayTime}s");
+        _gameRunningStateUiManager.UpdateHealth(lives);
+        _gameRunningStateUiManager.UpdateScore(_entityManager.PlayerEntity.GetPoints());
+        _gameRunningStateUiManager.UpdateLevel(CurrentLevel);
     }
 }

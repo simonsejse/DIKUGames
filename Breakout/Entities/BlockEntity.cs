@@ -76,7 +76,7 @@ public class BlockEntity : Entity
     public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType)
     {
         return new BlockEntity(
-            new StationaryShape(pos, ConstantsUtil.BlockExtent),
+            new StationaryShape(pos, PositionUtil.BlockExtent),
             image,
             image2, 
             10, 

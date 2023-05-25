@@ -19,7 +19,6 @@ public class PlayerEntity : Entity
     private int _points = 0;
     private int _lives;
     
-    
     // Constructor that intializes player's shape and image by using the base class constructor
     public PlayerEntity(Shape shape, IBaseImage image) : base(shape, image)
     {
@@ -93,6 +92,7 @@ public class PlayerEntity : Entity
     {
         return _lives;
     }
+    
     /// <summary>
     /// Decrements the players life by one. If the player has no lives left, do nothing.
     /// </summary>
@@ -128,7 +128,7 @@ public class PlayerEntity : Entity
     public static PlayerEntity Create()
     {
         return new PlayerEntity(
-            new DynamicShape(ConstantsUtil.PlayerPosition, ConstantsUtil.PlayerExtent),
+            new DynamicShape(PositionUtil.PlayerPosition, PositionUtil.PlayerExtent),
             new Image(Path.Combine(Directory.GetCurrentDirectory(), "Assets", "Images", "Player.png"))
         );
     }

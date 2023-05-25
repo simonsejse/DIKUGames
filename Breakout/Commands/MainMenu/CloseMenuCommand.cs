@@ -16,7 +16,7 @@ public class CloseMenuCommand : IKeyboardCommand
 
     public void Execute()
     {
-        GameEvent<GameEventType> closeEvent = _gameEventFactory.CreateGameEventForAllProcessors(
+        GameEvent<GameEventType> closeEvent = _gameEventFactory.CreateGameEvent(
             GameEventType.WindowEvent,
             "CLOSE_WINDOW");
             

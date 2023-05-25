@@ -5,7 +5,6 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Timers;
 
 namespace Breakout.States.GameRunning;
-
 public class GameRunningStateUiManager
 {
     private readonly Text _scoreText;
@@ -13,12 +12,12 @@ public class GameRunningStateUiManager
     private readonly Text _healthText;
     private readonly Text _timerText;
 
-    public GameRunningStateUiManager(ITextFactory textFactory)
+    public GameRunningStateUiManager()
     {
-        _healthText = textFactory.Create(string.Empty, ConstantsUtil.HealthPosition, ConstantsUtil.HealthExtent, Color.Red);
-        _scoreText = textFactory.Create(string.Empty, ConstantsUtil.ScorePosition, ConstantsUtil.ScoreExtent, Color.White);
-        _levelText = textFactory.Create(string.Empty, ConstantsUtil.LevelPosition, ConstantsUtil.LevelExtent, Color.White);
-        _timerText = textFactory.Create(string.Empty, ConstantsUtil.TimerPosition, ConstantsUtil.TimerExtent, Color.White);
+        _healthText = DefaultTextFactory.Create(string.Empty, PositionUtil.HealthPosition, PositionUtil.HealthExtent, Color.Red);
+        _scoreText = DefaultTextFactory.Create(string.Empty, PositionUtil.ScorePosition, PositionUtil.ScoreExtent, Color.White);
+        _levelText = DefaultTextFactory.Create(string.Empty, PositionUtil.LevelPosition, PositionUtil.LevelExtent, Color.White);
+        _timerText = DefaultTextFactory.Create(string.Empty, PositionUtil.TimerPosition, PositionUtil.TimerExtent, Color.White);
     }
 
     public void RenderText()
@@ -46,9 +45,7 @@ public class GameRunningStateUiManager
     
     public void UpdateTimer(int? time)
     {
-        if (!time.HasValue)
-            return;
-        string displayTime = time.Value.ToString();
-        _timerText.SetText($"Timer: {StaticTimer.GetElapsedSeconds():0}s/{displayTime}s");
+        string displayTime = time.HasValue ? $"{time}s" : "∞";
+        _timerText.SetText($"Timer: {StaticTimer.GetElapsedSeconds():0}s/{displayTime}");
     }
 }

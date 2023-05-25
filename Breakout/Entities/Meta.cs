@@ -3,17 +3,11 @@
 
 public class Meta
 {
-    public string? Name { get; set; }
-    public int? Time { get;set; }
-    public char? Hardened { get; set;}
-    public char? PowerUp { get;set; }
-    public char? Unbreakable { get;set; }
-
-    public Meta()
-    {
-        
-    }
-
+    public string? Name { get; }
+    public int? Time { get; }
+    public char? Hardened { get; }
+    public char? PowerUp { get; }
+    public char? Unbreakable { get; }
     
     /// <summary>
     /// Constructor that takes several optional (?) parameters

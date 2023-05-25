@@ -11,40 +11,21 @@ using DIKUArcade.State;
 
 namespace Breakout.States;
 
-public class GamePauseState : IGameState, IMenu
+public class GamePauseState : DefaultMenu, IGameState
 {
     private static GamePauseState? _instance;
-    private readonly Entity _background;
     private readonly IKeyboardPressHandler _keyboardEventHandler;
 
-    public int ActiveButton { get; set; }
-    public Text[] MenuButtons { get; }
-    
-    public GamePauseState(ITextFactory textFactory)
+    private GamePauseState() : base(MenuUtil.PausedMenuItems, MenuUtil.PausedBackground)
     {
-        ActiveButton = 0;
-        _background = new BackgroundFactory("Assets", "Images", "SpaceBackground.png").Create();
-        MenuButtons = new[]
-        {
-            textFactory.Create("Continue", ConstantsUtil.ContinueGamePosition, ConstantsUtil.ContinueGameExtent, Color.Crimson),
-            textFactory.Create("Main Menu", ConstantsUtil.ToMainMenuPosition, ConstantsUtil.ToMainMenuExtent, Color.White),
-        };
         _keyboardEventHandler = new PauseStateKeyboardController(this);
     }
     
     public static GamePauseState GetInstance()
     {
-        return _instance ??= new GamePauseState(new DefaultTextFactory());
+        return _instance ??= new GamePauseState();
     }
     
-
-    public void SetButtonColor(int index, Color color)
-    {
-        if (index < 0 || index > MenuButtons.Length)
-            return;
-        MenuButtons[index].SetColor(color);
-    }
-
     public void ResetState()
     {
         _instance = null;
@@ -56,8 +37,7 @@ public class GamePauseState : IGameState, IMenu
 
     public void RenderState()
     {
-        _background.RenderEntity();
-        foreach(var text in MenuButtons) text.RenderText();
+        base.RenderMenuItems();
     }
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)

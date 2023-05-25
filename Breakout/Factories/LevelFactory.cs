@@ -17,7 +17,6 @@ public class LevelFactory : IModelFactory<Level>
     /// <returns>A new instance of <see cref="Level"/> with the parsed data.</returns>
     public Level Parse(string data)
     {
-        //TODO: Change this to LINQ as well
         string mapStart = data.Split("Map:")[1];
         string mapEnd = mapStart.Split("Map/")[0];
 
@@ -38,8 +37,6 @@ public class LevelFactory : IModelFactory<Level>
             .Select(line => line.Trim())
             .Where(line => line.Length > 0)
             .ToDictionary(line => line.Split(":")[0].Trim(), line => line.Split(":")[1].Trim());
-        
-        //TODO: Perhaps change these "null" values to like default values instead and do some checking.
         
         string? name = metadata.TryGetValue("Name", out string? value) ? value : null;
         int? time = metadata.TryGetValue("Time", out value) ? int.Parse(value) : null;

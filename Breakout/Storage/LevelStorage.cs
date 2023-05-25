@@ -3,16 +3,22 @@ using Breakout.IO;
 
 namespace Breakout.Storage;
 
+/// <summary>
+/// Responsible for storing all file paths in the Assets/Levels directory.
+/// </summary>
 public class LevelStorage
 {
-    #region Fields
+    /// <summary>
+    /// Stores all file paths in the Assets/Levels directory.
+    /// </summary>
     public List<string> LevelPaths { get;  }
-    #endregion
     
-    #region Constructors
+    /// <summary>
+    /// Constructs a new LevelStorage object.
+    /// Adds all file paths in the Assets/Levels directory to the LevelPaths list.
+    /// </summary>
     public LevelStorage()
     {
         LevelPaths = DirectoryExplorer.GetDirectoryFilePaths(Path.Combine("Assets", "Levels"));
     }
-    #endregion
 }

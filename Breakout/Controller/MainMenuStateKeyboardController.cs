@@ -2,23 +2,17 @@ using Breakout.Commands;
 using Breakout.Commands.MainMenu;
 using Breakout.Factories;
 using Breakout.Handler;
-using Breakout.States;
 using DIKUArcade.Input;
 
 namespace Breakout.Controller;
 
-public class MainMenuStateKeyboardController : IKeyboardPressHandler
+public class MainMenuStateKeyboardController : DefaultKeyboardPressHandler
 {
-    public Dictionary<HashSet<KeyboardKey>, IKeyboardCommand> PressKeyboardActions { get; }
-
-    public MainMenuStateKeyboardController(IMenu state)
+    public MainMenuStateKeyboardController(DefaultMenu state) : base(new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
     {
-        PressKeyboardActions = new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
-        {
-            { SetFactory.Create(KeyboardKey.Escape), new CloseMenuCommand() },
-            { SetFactory.Create(KeyboardKey.Up, KeyboardKey.W), new ShiftMenuUpCommand(state) },
-            { SetFactory.Create(KeyboardKey.Down, KeyboardKey.S), new ShiftMenuDownCommand(state) },
-            { SetFactory.Create(KeyboardKey.Enter), new MainMenuEnterCommand(state, new GameEventFactory()) },
-        };
-    }
+        { SetFactory.Create(KeyboardKey.Escape), new CloseMenuCommand() },
+        { SetFactory.Create(KeyboardKey.Up, KeyboardKey.W), new ShiftMenuUpCommand(state) },
+        { SetFactory.Create(KeyboardKey.Down, KeyboardKey.S), new ShiftMenuDownCommand(state) },
+        { SetFactory.Create(KeyboardKey.Enter), new MainMenuEnterCommand(state, new GameEventFactory()) },
+    }) { }
 }

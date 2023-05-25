@@ -1,4 +1,5 @@
 using Breakout.States;
+using Breakout.States.GameRunning;
 using DIKUArcade.Entities;
 using DIKUArcade.Physics;
 
@@ -64,6 +65,8 @@ public static class CollisionProcessor
                 
         ballEntity.Shape.Move(ballEntity.GetDirection());
     }
+    
+    
 
     public static bool CheckPowerUpPlayerCollision(PowerUpEntity powerUpEntity, PlayerEntity playerEntity)
     {

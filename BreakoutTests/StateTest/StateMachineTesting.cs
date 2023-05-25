@@ -2,6 +2,7 @@
 using Breakout.Events;
 using Breakout.Factories;
 using Breakout.States;
+using Breakout.States.GameRunning;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
 using DIKUArcade.GUI;
@@ -42,7 +43,7 @@ public class StateMachineTesting
     [TestCase("Menu", typeof(MainMenuState))]
     public void TestEventGameStates(string newState, Type state)
     {
-        GameEvent<GameEventType> gameEvent = _gameEventFactory.CreateGameEventForAllProcessors(GameEventType.GameStateEvent, "CHANGE_STATE", newState);
+        GameEvent<GameEventType> gameEvent = _gameEventFactory.CreateGameEvent(GameEventType.GameStateEvent, "CHANGE_STATE", newState);
        
         BreakoutBus.GetBus().RegisterEvent(gameEvent);
 
@@ -57,7 +58,7 @@ public class StateMachineTesting
     [TestCase("Menu", typeof(GameRunningState))]
     public void TestNegationEventGameStates(string newState, Type state)
     {
-        GameEvent<GameEventType> gameEvent = _gameEventFactory.CreateGameEventForAllProcessors(GameEventType.GameStateEvent, "CHANGE_STATE", newState);
+        GameEvent<GameEventType> gameEvent = _gameEventFactory.CreateGameEvent(GameEventType.GameStateEvent, "CHANGE_STATE", newState);
         
         BreakoutBus.GetBus().RegisterEvent(gameEvent);
         BreakoutBus.GetBus().ProcessEventsSequentially();

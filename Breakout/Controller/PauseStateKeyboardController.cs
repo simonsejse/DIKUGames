@@ -7,21 +7,12 @@ using DIKUArcade.Input;
 
 namespace Breakout.Controller;
 
-public class PauseStateKeyboardController : IKeyboardPressHandler
+public class PauseStateKeyboardController : DefaultKeyboardPressHandler
 {
-    public Dictionary<HashSet<KeyboardKey>, IKeyboardCommand> PressKeyboardActions { get; }
- 
-    public PauseStateKeyboardController(IMenu menu)
+    public PauseStateKeyboardController(DefaultMenu menu) : base(new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
     {
-        var shiftMenuUpCommand = new ShiftMenuUpCommand(menu);
-        var shiftMenuDownCommand = new ShiftMenuDownCommand(menu);
-        var pauseEnterCommand = new PauseEnterCommand(menu, new GameEventFactory());
-        PressKeyboardActions = new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
-        {
-            { SetFactory.Create(KeyboardKey.Up, KeyboardKey.W), shiftMenuUpCommand },
-            { SetFactory.Create(KeyboardKey.Down, KeyboardKey.S), shiftMenuDownCommand },
-            { SetFactory.Create(KeyboardKey.Enter), pauseEnterCommand},
-        };
-    }
-    
+        { SetFactory.Create(KeyboardKey.Up, KeyboardKey.W), new ShiftMenuUpCommand(menu) },
+        { SetFactory.Create(KeyboardKey.Down, KeyboardKey.S), new ShiftMenuDownCommand(menu) },
+        { SetFactory.Create(KeyboardKey.Enter), new PauseEnterCommand(menu, new GameEventFactory())},
+    }) { }
 }

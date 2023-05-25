@@ -1,13 +1,36 @@
-﻿using DIKUArcade.Input;
+﻿using Breakout.Commands;
+using Breakout.Controller;
+using Breakout.Factories;
+using Breakout.Handler;
+using Breakout.Utility;
+using DIKUArcade.Input;
 using DIKUArcade.State;
 
-namespace Breakout.States;
+namespace Breakout.States.GameLost;
 
-public class GameLostState : IGameState
+public class GameLostState : DefaultMenu,  IGameState
 {
-    public void ResetState()
+    private static GameLostState? _instance;
+
+    private readonly IKeyboardPressHandler _keyboardPressHandler = new LostGameKeyboardController();
+    /// <summary>
+    /// Gets the singleton instance of the <see cref="GameLostState"/>.
+    /// </summary>
+    /// <returns>The singleton instance of the <see cref="GameLostState"/>.</returns>
+    public static GameLostState GetInstance()
+    {
+        return _instance ??= new GameLostState();
+    }
+    
+    
+    private GameLostState() : base(MenuUtil.LostMenuItems, MenuUtil.LostBackground)
     {
         
+    }
+    
+    public void ResetState()
+    {
+        _instance = null;
     }
 
     public void UpdateState()
@@ -17,11 +40,12 @@ public class GameLostState : IGameState
 
     public void RenderState()
     {
-        
+        base.RenderMenuItems();
     }
 
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
     {
-        
+        if (action == KeyboardAction.KeyRelease) return;
+        _keyboardPressHandler.HandleKeyPress(key);   
     }
 }

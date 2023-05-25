@@ -28,9 +28,8 @@ public class BallEntity : Entity
         {
             _direction = Vec2F.Normalize(_direction) * _speed;
         }
-
-        Vec2F movement = _direction * _speed;
-
+        
+    
         Shape.AsDynamicShape().Direction = _direction;
         Shape.Move();
         
@@ -61,39 +60,52 @@ public class BallEntity : Entity
 
         float deltaX = ballCenterX - blockCenterX;
         float deltaY = ballCenterY - blockCenterY;
-
-        if (Math.Abs(deltaX) < 0.5f && Math.Abs(deltaY) < 0.5f)
+        
+        if (deltaX > 0 && deltaY > 0)
         {
-            float minY = targetY - blockHeight - 0.03f;
-            float maxY = targetY + blockHeight + 0.03f;
-            
-            if (Shape.Position.Y >= minY && Shape.Position.Y <= maxY)
+            if (deltaX > deltaY)
             {
-                float targetX = (Shape.Position.Y - targetY) * (2 / blockHeight);
-                
-                if (Math.Abs(Shape.Position.X - targetX) < 0.03f)
-                {
-                    _direction.X *= -1.0f;
-                    _direction.Y *= -1.0f;
-                    return;
-                }
+                _direction.X *= -1;
+            }
+            else
+            {
+                _direction.Y *= -1;
             }
         }
-        
-        if (deltaY < 0 && _direction.Y > 0)
+        else if (deltaX > 0 && deltaY < 0)
         {
-            _direction.X *= 1.0f;
-            _direction.Y *= -1.0f; 
-            
+            if (deltaX > -deltaY)
+            {
+                _direction.X *= -1;
+            }
+            else
+            {
+                _direction.Y *= -1;
+            }
         }
-        else if (deltaY > 0 && _direction.Y < 0)
+        else if (deltaX < 0 && deltaY > 0)
         {
-            _direction.Y *= -1.0f;
+            if (-deltaX > deltaY)
+            {
+                _direction.X *= -1;
+            }
+            else
+            {
+                _direction.Y *= -1;
+            }
         }
-        else
+        else if (deltaX < 0 && deltaY < 0)
         {
-            _direction.X *= -1.0f;
+            if (-deltaX > -deltaY)
+            {
+                _direction.X *= -1;
+            }
+            else
+            {
+                _direction.Y *= -1;
+            }
         }
+      
     }
     
     public void ChangeDirection(float deltaX, float deltaY)

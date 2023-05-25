@@ -1,5 +1,6 @@
 ﻿using Breakout.Entities;
 using Breakout.States;
+using Breakout.States.GameRunning;
 using Breakout.Utility;
 using DIKUArcade.Entities;
 using DIKUArcade.Math;
@@ -40,10 +41,6 @@ public class EntityManager
             if (ball.OutOfBounds())
             {
                 ball.DeleteEntity(); //Iterate lets us mutate the container while iterating
-                PlayerEntity.TakeLife();
-                _state.UpdateText();
-                AddBallEntity(BallEntity.Create(PlayerEntity.Shape.Position + PlayerEntity.Shape.Extent / 2, ConstantsUtil.BallExtent,
-                    ConstantsUtil.BallSpeed, ConstantsUtil.BallDirection * new Vec2F(1f, -1f)));
             }
             ball.Move();
         });
@@ -66,10 +63,4 @@ public class EntityManager
     {
         BallEntities.AddEntity(ballEntity);
     }
-    
-    public void AddBlockEntity(BlockEntity blockEntity)
-    {
-        BlockEntities.AddEntity(blockEntity);
-    }
-    
 }

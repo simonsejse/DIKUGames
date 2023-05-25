@@ -4,6 +4,7 @@ using Breakout.Factories;
 using Breakout.IO;
 using Breakout.Entities;
 using Breakout.States;
+using Breakout.States.GameRunning;
 using DIKUArcade.GUI;
 using DIKUArcade.Math;
 

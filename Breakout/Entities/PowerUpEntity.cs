@@ -25,7 +25,7 @@ public class PowerUpEntity : Entity
     public static PowerUpEntity Create(Vec2F pos, string image)
     {
         return new PowerUpEntity(
-            new DynamicShape(pos, ConstantsUtil.PowerUpExtent),
+            new DynamicShape(pos, PositionUtil.PowerUpExtent),
             new Image(Path.Combine("Assets", "Images", $"{image}.png"))
         );
     }

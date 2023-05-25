@@ -4,15 +4,16 @@ using Breakout.Handler;
 using Breakout.States;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
+using DIKUArcade.Timers;
 
 namespace Breakout.Commands.Paused;
 
 public class PauseEnterCommand : IKeyboardCommand
 {
-    private readonly IMenu _menu;
+    private readonly DefaultMenu _menu;
     private readonly GameEventFactory _gameEventFactory;
 
-    public PauseEnterCommand(IMenu menu, GameEventFactory gameEventFactory)
+    public PauseEnterCommand(DefaultMenu menu, GameEventFactory gameEventFactory)
     {
         _menu = menu;
         _gameEventFactory = gameEventFactory;
@@ -20,15 +21,25 @@ public class PauseEnterCommand : IKeyboardCommand
 
     public void Execute()
     {
-        GameEvent<GameEventType> @event = _menu.ActiveButton switch
+        GameEvent<GameEventType> @event;
+        switch (_menu.GetActiveMenuItem())
         {
-            0 => _gameEventFactory.CreateGameEventForAllProcessors(GameEventType.GameStateEvent,
-                "CHANGE_STATE",
-                Enum.GetName(GameState.Running) ?? "Running"),
-            _ => _gameEventFactory.CreateGameEventForAllProcessors(GameEventType.GameStateEvent,
-                "CHANGE_STATE", 
-                Enum.GetName(GameState.Menu) ?? "Menu"),
-        };
+            case 0:
+                StaticTimer.ResumeTimer();
+                @event = _gameEventFactory.CreateGameEvent(GameEventType.GameStateEvent, "CHANGE_STATE",
+                    Enum.GetName(GameState.Running) ?? "Running");
+                break;
+            case 1:
+                @event = _gameEventFactory.CreateGameEvent(GameEventType.GameStateEvent, "CHANGE_STATE",
+                    Enum.GetName(GameState.Menu) ?? "Menu");
+                break;
+            default: 
+                @event = _gameEventFactory.CreateGameEvent(
+                    GameEventType.WindowEvent,
+                    "CLOSE_WINDOW");
+                break;
+        }
+
         BreakoutBus.GetBus().RegisterEvent(@event);
     }
 }
