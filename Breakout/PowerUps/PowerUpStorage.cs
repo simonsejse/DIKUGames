@@ -9,6 +9,9 @@ public static class PowerUpStorage
     static PowerUpStorage()
     {
         PowerUpType.Add(new ExtraLifePowerUp());
+        PowerUpType.Add(new WidePowerUp());
+        PowerUpType.Add(new BigBallPowerUp());
+        PowerUpType.Add((new SplitBallPowerUp()));
     }
     
     public static IPowerUpType GetRandomPowerUp()

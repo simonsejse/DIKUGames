@@ -109,6 +109,12 @@ public class PlayerEntity : Entity
     {
         _lives++;
     }
+
+    public void AddWidePU()
+    {
+        float newWidth = Shape.Extent.X * 1.5f;
+        Shape.Extent = new Vec2F(newWidth, Shape.Extent.Y);
+    }
     
     public bool GetMoveLeft()
     {
