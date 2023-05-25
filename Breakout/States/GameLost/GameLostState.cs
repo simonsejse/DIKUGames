@@ -12,7 +12,7 @@ public class GameLostState : DefaultMenu,  IGameState
 {
     private static GameLostState? _instance;
 
-    private readonly IKeyboardPressHandler _keyboardPressHandler = new LostGameKeyboardController();
+    private readonly IKeyboardPressHandler _keyboardPressHandler;
     /// <summary>
     /// Gets the singleton instance of the <see cref="GameLostState"/>.
     /// </summary>
@@ -25,7 +25,7 @@ public class GameLostState : DefaultMenu,  IGameState
     
     private GameLostState() : base(MenuUtil.LostMenuItems, MenuUtil.LostBackground)
     {
-        
+        _keyboardPressHandler = new LostGameKeyboardController(this);
     }
     
     public void ResetState()

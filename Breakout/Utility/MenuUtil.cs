@@ -26,8 +26,8 @@ public static class MenuUtil
         new BackgroundFactory("Assets", "Images", "shipit_titlescreen.png").Create();
     public static readonly Text[] LostMenuItems =
     {
-        DefaultTextFactory.Create("You lost!", PositionUtil.LostGamePosition, PositionUtil.LostGameExtent, Color.White),
-        DefaultTextFactory.Create("Press ENTER to return to main menu", PositionUtil.LostGamePressEnterPosition, PositionUtil.LostGamePressEnterExtent, Color.White),
+        DefaultTextFactory.Create("Main Menu", PositionUtil.LostGamePosition, PositionUtil.LostGameExtent, Color.Crimson),
+        DefaultTextFactory.Create("Quit", PositionUtil.LostGamePressEnterPosition, PositionUtil.LostGamePressEnterExtent, Color.White),
     };
 
     public static readonly Entity MainMenuBackground = new BackgroundFactory("Assets", "Images", "shipit_titlescreen.png").Create();
