@@ -4,6 +4,7 @@ using Breakout.Utility;
 using DIKUArcade.Math;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
+using DIKUArcade.Physics;
 
 
 namespace Breakout.Entities;
@@ -57,11 +58,10 @@ public class BallEntity : Entity
     public void BounceOffBlock(BlockEntity block)
     {
         float ballCenterX = Shape.Position.X + Shape.Extent.X / 2;
-        float ballCenterY = Shape.Position.Y + Shape.Extent.Y / 2;
+        float ballCenterY = Shape.Position.Y;
         float blockCenterX = block.Shape.Position.X + block.Shape.Extent.X / 2;
-        float blockCenterY = block.Shape.Position.Y + block.Shape.Extent.Y / 2;
-        float blockHeight = 0.08333333333f / 2;
-        float targetY = 0.689999964f;
+        float blockCenterY = block.Shape.Position.Y;
+
 
         float deltaX = ballCenterX - blockCenterX;
         float deltaY = ballCenterY - blockCenterY;
@@ -70,11 +70,13 @@ public class BallEntity : Entity
         {
             if (deltaX > deltaY)
             {
-                _direction.X *= -1;
+                _direction.X *= 1;
+                Console.WriteLine("1");
             }
             else
             {
                 _direction.Y *= -1;
+                Console.WriteLine("2");
             }
         }
         else if (deltaX > 0 && deltaY < 0)
@@ -82,10 +84,12 @@ public class BallEntity : Entity
             if (deltaX > -deltaY)
             {
                 _direction.X *= -1;
+                Console.WriteLine("3");
             }
             else
             {
                 _direction.Y *= -1;
+                Console.WriteLine("4");
             }
         }
         else if (deltaX < 0 && deltaY > 0)
@@ -93,10 +97,12 @@ public class BallEntity : Entity
             if (-deltaX > deltaY)
             {
                 _direction.X *= -1;
+                Console.WriteLine("5");
             }
             else
             {
                 _direction.Y *= -1;
+                Console.WriteLine("6");
             }
         }
         else if (deltaX < 0 && deltaY < 0)
@@ -104,13 +110,14 @@ public class BallEntity : Entity
             if (-deltaX > -deltaY)
             {
                 _direction.X *= -1;
+                Console.WriteLine("7");
             }
             else
             {
                 _direction.Y *= -1;
+                Console.WriteLine("8");
             }
         }
-      
     }
     
     public void ChangeDirection(float deltaX, float deltaY)
