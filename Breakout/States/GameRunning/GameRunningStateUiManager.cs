@@ -45,7 +45,8 @@ public class GameRunningStateUiManager
     
     public void UpdateTimer(int? time)
     {
-        string displayTime = time.HasValue ? $"{time}s" : "∞";
-        _timerText.SetText($"Timer: {StaticTimer.GetElapsedSeconds():0}s/{displayTime}");
+        if (!time.HasValue)
+            return;
+        _timerText.SetText($"Timer: {StaticTimer.GetElapsedSeconds():0}s/{time.ToString()}");
     }
 }

@@ -27,7 +27,7 @@ public class GameRunningState : IGameState
     private readonly IGameEventFactory<GameEventType> _gameEventFactory;
     private readonly IKeyboardEventHandler _keyboardEventHandler;
     private readonly IWinCondition _winCondition;
-    private readonly EntityManager _entityManager;
+    public readonly EntityManager EntityManager;
     private readonly GameRunningStateUiManager _gameRunningStateUiManager = new();
     
     //TODO: Maybe delete
@@ -53,18 +53,18 @@ public class GameRunningState : IGameState
         _gameEventFactory = new GameEventFactory();
         _levelLoader = new LevelLoader();
         _currentLevel = _levelLoader.LoadLevel(CurrentLevel);
-        _entityManager = new EntityManager(this)
+        EntityManager = new EntityManager(this)
         {
             BlockEntities = _levelLoader.ConstructBlockEntities(_currentLevel)
         };
-        _keyboardEventHandler = new RunningStateKeyboardController(_entityManager.PlayerEntity);
+        _keyboardEventHandler = new RunningStateKeyboardController(EntityManager.PlayerEntity);
 
         var ballEntity = BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection);
-        _entityManager.AddBallEntity(ballEntity);
+        EntityManager.AddBallEntity(ballEntity);
         UpdateText();
         
-        _winCondition = new BlockEntitiesWinCondition(_entityManager, _levelLoader);
-        _powerUpHandler = new PowerUpHandler(_entityManager.PlayerEntity, _entityManager.BallEntities);
+        _winCondition = new BlockEntitiesWinCondition(EntityManager, _levelLoader);
+        _powerUpHandler = new PowerUpHandler(EntityManager.PlayerEntity, EntityManager.BallEntities);
     }
 
  
@@ -82,18 +82,18 @@ public class GameRunningState : IGameState
     /// </summary>
     public void UpdateState()
     {
-        _entityManager.Move();
+        EntityManager.Move();
         _gameRunningStateUiManager.UpdateTimer(_currentLevel.Meta.Time);
         HandleGameLogic();
     }
-
+    
     /// <summary>
-    /// 
+    /// Handles game winning and losing logic.
     /// </summary>
     private void HandleGameLogic()
     {
         bool timeRanOut = _currentLevel.Meta.Time.HasValue && _currentLevel.Meta.Time <= StaticTimer.GetElapsedSeconds();
-        bool playerNoMoreLives = _entityManager.PlayerEntity.GetLives() == 0;
+        bool playerNoMoreLives = EntityManager.PlayerEntity.GetLives() == 0;
         if (playerNoMoreLives || timeRanOut)
         {
             GameEvent<GameEventType> gameEvent = _gameEventFactory.CreateGameEvent(GameEventType.GameStateEvent, "CHANGE_STATE", nameof(GameState.Lost));
@@ -108,15 +108,15 @@ public class GameRunningState : IGameState
             return;
         }
         
-        bool noMoreBalls = _entityManager.BallEntities.CountEntities() == 0;
+        bool noMoreBalls = EntityManager.BallEntities.CountEntities() == 0;
         if (noMoreBalls)
         {
-            _entityManager.PlayerEntity.TakeLife();
-            _entityManager.AddBallEntity(BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection));
-            _gameRunningStateUiManager.UpdateHealth(_entityManager.PlayerEntity.GetLives());
+            EntityManager.PlayerEntity.TakeLife();
+            EntityManager.AddBallEntity(BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection));
+            _gameRunningStateUiManager.UpdateHealth(EntityManager.PlayerEntity.GetLives());
         }
         
-        bool moreBlocksLeft = _entityManager.BlockEntities.CountEntities() > 0;
+        bool moreBlocksLeft = EntityManager.BlockEntities.CountEntities() > 0;
         if (!moreBlocksLeft) LoadNextLevel();
     }
     
@@ -125,12 +125,12 @@ public class GameRunningState : IGameState
     /// </summary>
     private void LoadNextLevel()
     {
-        if (_entityManager.BallEntities.CountEntities() > 0)
-            _entityManager.BallEntities.ClearContainer();
+        if (EntityManager.BallEntities.CountEntities() > 0)
+            EntityManager.BallEntities.ClearContainer();
         
         CurrentLevel++;
         _currentLevel = _levelLoader.LoadLevel(CurrentLevel);
-        _entityManager.BlockEntities = _levelLoader.ConstructBlockEntities(_currentLevel);
+        EntityManager.BlockEntities = _levelLoader.ConstructBlockEntities(_currentLevel);
         _gameRunningStateUiManager.UpdateLevel(CurrentLevel);
     }
 
@@ -139,7 +139,7 @@ public class GameRunningState : IGameState
     /// </summary>
     public void RenderState()
     {
-        _entityManager.RenderEntities();
+        EntityManager.RenderEntities();
         _gameRunningStateUiManager.RenderText();
     }
 
@@ -163,9 +163,9 @@ public class GameRunningState : IGameState
     /// </summary>
     public void UpdateText()
     {
-        int lives = _entityManager.PlayerEntity.GetLives();
+        int lives = EntityManager.PlayerEntity.GetLives();
         _gameRunningStateUiManager.UpdateHealth(lives);
-        _gameRunningStateUiManager.UpdateScore(_entityManager.PlayerEntity.GetPoints());
+        _gameRunningStateUiManager.UpdateScore(EntityManager.PlayerEntity.GetPoints());
         _gameRunningStateUiManager.UpdateLevel(CurrentLevel);
     }
 }

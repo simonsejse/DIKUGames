@@ -1,6 +1,4 @@
-﻿using Breakout.Commands;
-using Breakout.Controller;
-using Breakout.Factories;
+﻿using Breakout.Controller;
 using Breakout.Handler;
 using Breakout.Utility;
 using DIKUArcade.Input;

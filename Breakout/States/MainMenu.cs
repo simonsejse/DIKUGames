@@ -1,12 +1,7 @@
-using System.Drawing;
 using Breakout.Controller;
-using Breakout.Factories;
 using Breakout.Handler;
 using Breakout.Utility;
-using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
 using DIKUArcade.Input;
-using DIKUArcade.Math;
 using DIKUArcade.State;
 
 namespace Breakout.States;

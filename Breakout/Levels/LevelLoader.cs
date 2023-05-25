@@ -1,7 +1,9 @@
 ﻿using Breakout.Entities;
 using Breakout.Entities.BlockTypes;
+using Breakout.Entities.PowerUps;
 using Breakout.Factories;
 using Breakout.IO;
+using Breakout.PowerUps;
 using Breakout.Storage;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
@@ -57,9 +59,9 @@ public class LevelLoader
 
                 Vec2F pos = new(posX, posY);
 
-                string path = level.Legends.TryGetValue(key, out string? image) ? image : "error-block.png";
-                string path2 = path.Replace(".png", "-damaged.png");
-
+                string imgPath = level.Legends.TryGetValue(key, out string? image) ? image : "error-block.png";
+                string imgDmgPath = imgPath.Replace(".png", "-damaged.png");
+                
                 IBlockType blockType = key switch
                 {
                     _ when key == level.Meta.PowerUp =>
@@ -70,14 +72,22 @@ public class LevelLoader
                         new UnbreakableBlockType(),
                     _ => new StandardBlockType()
                 };
-
+                
+                var powerUpType = key switch
+                {
+                    _ when key == level.Meta.PowerUp => PowerUpStorage.GetRandomPowerUp(),
+                    _ => null
+                };
+                
                 var blockEntity = BlockEntity.Create(pos,
                     new Image(Path.Combine("Assets",
                         "Images",
-                        path)),
+                        imgPath)),
                     new Image(Path.Combine("Assets",
                         "Images",
-                        path2)), blockType);
+                        imgDmgPath)), 
+                    blockType, 
+                    powerUpType);
 
                 blockEntities.AddEntity(blockEntity);
             }

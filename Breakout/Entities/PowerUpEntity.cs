@@ -1,4 +1,5 @@
-﻿using Breakout.Entities.BlockTypes;
+﻿using Breakout.Entities.PowerUps;
+using Breakout.PowerUps;
 using Breakout.Utility;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
@@ -8,11 +9,14 @@ namespace Breakout.Entities;
 
 public class PowerUpEntity : Entity
 {
-    private PowerUpEntity(Shape shape, IBaseImage image) : base(shape, image)
+    private IPowerUpActivator _powerUpActivator;
+    
+    private PowerUpEntity(Shape shape, IBaseImage image, IPowerUpActivator powerUpActivator) : base(shape, image)
     {
+        _powerUpActivator = powerUpActivator;
         Shape.AsDynamicShape().Direction = new Vec2F(0f, -0.005f);
     }
-    
+
     /// <summary>
     /// A factory method for instantiating a default BlockEntity
     /// </summary>
@@ -21,17 +25,24 @@ public class PowerUpEntity : Entity
     /// <param name="image">The image of the block.</param>
     /// <param name="image2">The second image of the block.</param>
     /// <param name="blockType">The type of the block.</param>
+    /// <param name="powerUpActivator"></param>
     /// <returns></returns>
-    public static PowerUpEntity Create(Vec2F pos, string image)
+    public static PowerUpEntity Create(Vec2F pos, string image, IPowerUpActivator powerUpActivator)
     {
         return new PowerUpEntity(
             new DynamicShape(pos, PositionUtil.PowerUpExtent),
-            new Image(Path.Combine("Assets", "Images", $"{image}.png"))
+            new Image(Path.Combine("Assets", "Images", $"{image}.png")),
+            powerUpActivator
         );
     }
 
     public void Move()
     {
         Shape.Move();
+    }
+
+    public void ActivatePowerUp()
+    {
+        _powerUpActivator.ActivatePowerUp();
     }
 }

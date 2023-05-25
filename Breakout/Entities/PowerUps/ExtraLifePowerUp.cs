@@ -1,4 +1,6 @@
 ﻿using Breakout.Containers;
+using Breakout.PowerUps;
+using Breakout.States.GameRunning;
 using Breakout.Utility;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
@@ -18,6 +20,7 @@ public class ExtraLifePowerUp : IPowerUpType
         float positionY = block.Shape.Position.Y + block.Shape.Extent.Y / 2 - PositionUtil.PowerUpExtent.Y / 2;
 
         var position = new Vec2F(positionX, positionY);
-        EntityManager.PowerUps.AddEntity(PowerUpEntity.Create(position, "LifePickUp"));
+        var powerUp = PowerUpEntity.Create(position, "LifePickUp", new HealthPowerUpActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity));
+        GameRunningState.GetInstance().EntityManager.PowerUpEntities.AddEntity(powerUp);
     }
 }

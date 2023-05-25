@@ -1,9 +1,6 @@
 ﻿using Breakout.Entities;
-using Breakout.States;
 using Breakout.States.GameRunning;
-using Breakout.Utility;
 using DIKUArcade.Entities;
-using DIKUArcade.Math;
 
 namespace Breakout.Containers;
 
@@ -12,7 +9,7 @@ public class EntityManager
     private readonly GameRunningState _state;
     public EntityContainer<BlockEntity> BlockEntities { get; set; }
     public EntityContainer<BallEntity> BallEntities { get; }
-    public static EntityContainer<PowerUpEntity> PowerUps { get; } = new();
+    public EntityContainer<PowerUpEntity> PowerUpEntities { get; } = new();
     public PlayerEntity PlayerEntity { get; }
 
     public EntityManager(GameRunningState state)
@@ -28,7 +25,7 @@ public class EntityManager
         BlockEntities.RenderEntities();
         BallEntities.RenderEntities();
         PlayerEntity.RenderEntity();
-        PowerUps.RenderEntities();
+        PowerUpEntities.RenderEntities();
     }
 
     public void Move()
@@ -38,17 +35,19 @@ public class EntityManager
         {
             CollisionProcessor.CheckBlockCollisions(BlockEntities, ball, PlayerEntity, _state);
             CollisionProcessor.CheckBallPlayerCollision(ball, PlayerEntity);
+            ball.Move();
             if (ball.OutOfBounds())
             {
                 ball.DeleteEntity(); //Iterate lets us mutate the container while iterating
             }
-            ball.Move();
         });
-        PowerUps.Iterate(powerUp =>
+        PowerUpEntities.Iterate(powerUp =>
         {
+            bool checkPowerUpPlayerCollision = CollisionProcessor.CheckPowerUpPlayerCollision(powerUp, PlayerEntity);
             powerUp.Move();
-            if (CollisionProcessor.CheckPowerUpPlayerCollision(powerUp, PlayerEntity))
+            if (checkPowerUpPlayerCollision)
             {
+                powerUp.ActivatePowerUp();
                 powerUp.DeleteEntity();
             }
             else
@@ -63,4 +62,5 @@ public class EntityManager
     {
         BallEntities.AddEntity(ballEntity);
     }
+
 }

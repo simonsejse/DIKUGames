@@ -4,11 +4,11 @@ namespace Breakout.Entities.BlockTypes;
 
 public class PowerUpBlockType : IBlockType
 {
-    public IBlockTypeBehavior GetBlockTypeBehavior() => new PowerUpBlockTypeBehaviour();
+    public IBlockTypeBehavior GetBlockTypeBehavior() => new StandardBlockTypeBehaviour();
 
     public void HandleCollision(BlockEntity block)
     { 
         block.TakeDamage();
-        block.PowerUpType.DropPowerUp(block);
+        block?.PowerUpType?.DropPowerUp(block);
     }
 }
