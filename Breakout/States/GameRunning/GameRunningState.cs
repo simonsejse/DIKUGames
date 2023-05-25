@@ -6,12 +6,15 @@ using Breakout.Factories;
 using Breakout.Handler;
 using Breakout.Levels;
 using Breakout.Utility;
+using DIKUArcade.Entities;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
 using DIKUArcade.Graphics;
 using DIKUArcade.Input;
+using DIKUArcade.Math;
 using DIKUArcade.State;
 using DIKUArcade.Timers;
+using OpenTK.Platform.Windows;
 
 namespace Breakout.States.GameRunning;
 
@@ -59,7 +62,7 @@ public class GameRunningState : IGameState
         };
         _keyboardEventHandler = new RunningStateKeyboardController(EntityManager.PlayerEntity);
 
-        var ballEntity = BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection);
+        var ballEntity = BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection, true);
         EntityManager.AddBallEntity(ballEntity);
         UpdateText();
         
@@ -83,6 +86,16 @@ public class GameRunningState : IGameState
     public void UpdateState()
     {
         EntityManager.Move();
+        EntityManager.BallEntities.Iterate(ball =>
+        {
+            if (!ball.IsBallStuck) return;
+            
+            var playerShape = EntityManager.PlayerEntity.Shape;
+            float positionX = playerShape.Position.X + playerShape.Extent.X / 2 - ball.Shape.Extent.X / 2;
+            float positionY = playerShape.Position.Y + playerShape.Extent.Y / 2 + ball.Shape.Extent.Y / 2;
+            ball.Shape.Position = new Vec2F(positionX, positionY);
+        });
+        
         _gameRunningStateUiManager.UpdateTimer(_currentLevel.Meta.Time);
         HandleGameLogic();
     }
@@ -112,7 +125,7 @@ public class GameRunningState : IGameState
         if (noMoreBalls)
         {
             EntityManager.PlayerEntity.TakeLife();
-            EntityManager.AddBallEntity(BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection));
+            EntityManager.AddBallEntity(BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection, true));
             _gameRunningStateUiManager.UpdateHealth(EntityManager.PlayerEntity.GetLives());
         }
         
@@ -150,6 +163,15 @@ public class GameRunningState : IGameState
     /// <param name="key">The keyboard key that triggered the event.</param>
     public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
     {
+        if (key == KeyboardKey.L)
+        {
+            EntityManager.BallEntities.Iterate(ball =>
+            {
+                if (!ball.IsBallStuck) return;
+                ball.IsBallStuck = false;
+                ball.Launch();
+            });
+        }
         if (action != KeyboardAction.KeyRelease) 
             _keyboardEventHandler.HandleKeyPress(key);
         else

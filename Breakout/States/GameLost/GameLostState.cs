@@ -6,7 +6,7 @@ using DIKUArcade.State;
 
 namespace Breakout.States.GameLost;
 
-public class GameLostState : DefaultMenu,  IGameState
+public class GameLostState : DefaultMenu, IGameState
 {
     private static GameLostState? _instance;
 
@@ -19,7 +19,6 @@ public class GameLostState : DefaultMenu,  IGameState
     {
         return _instance ??= new GameLostState();
     }
-    
     
     private GameLostState() : base(MenuUtil.LostMenuItems, MenuUtil.LostBackground)
     {

@@ -41,7 +41,7 @@ public static class PositionUtil
     public static readonly Vec2F TimerExtent = new(0.2f, 0.2f);
     
     public static readonly Vec2F BallDirection = new(0.01f, 0.01f);
-    public const float BallSpeed = 0.1f;
+    public const float BallSpeed = 0.01f;
     
     public static readonly Vec2F PowerUpExtent = new(0.04f, 0.04f);
     

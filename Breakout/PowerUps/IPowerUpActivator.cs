@@ -3,4 +3,5 @@
 public interface IPowerUpActivator
 {
     void ActivatePowerUp();
+
 }

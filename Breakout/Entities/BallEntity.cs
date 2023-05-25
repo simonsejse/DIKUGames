@@ -10,19 +10,24 @@ namespace Breakout.Entities;
 
 public class BallEntity : Entity
 {
+    public bool IsBallStuck { get; set; }
     private float _speed;
     private Vec2F _direction;
     private const float MaxSpeed = 0.25f;
 
     // Constructor that intializes player's shape and image by using the base class constructor
-    public BallEntity(Shape shape, IBaseImage image, Vec2F direction, float speed) : base(shape, image)
+    public BallEntity(Shape shape, IBaseImage image, Vec2F direction, float speed, bool isBallStuck) : base(shape, image)
     {
         _direction = direction;
         _speed = speed;
+        this.IsBallStuck = isBallStuck;
     }
     
     public void Move()
     {
+        if (IsBallStuck)
+            return;
+        
         // Limit speed of the ball
         if (_direction.Length() > MaxSpeed)
         {
@@ -139,12 +144,13 @@ public class BallEntity : Entity
     /// <param name="extent">The extent of the ball.</param>
     /// <param name="speed">The speed of the ball.</param>
     /// <param name="direction">The direction of the ball.</param>
+    /// <param name="isBallStuck"></param>
     /// <returns>A BallEntity instance</returns>
-    public static BallEntity Create(Vec2F pos, Vec2F extent, float speed, Vec2F direction)
+    public static BallEntity Create(Vec2F pos, Vec2F extent, float speed, Vec2F direction, bool isBallStuck)
     {
         return new BallEntity(
             new DynamicShape(pos, extent),
-            new Image(Path.Combine("Assets", "Images", "Ball.png")), direction, speed);
+            new Image(Path.Combine("Assets", "Images", "Ball.png")), direction, speed, isBallStuck);
     }
     
 }

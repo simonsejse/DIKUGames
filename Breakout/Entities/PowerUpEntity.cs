@@ -9,7 +9,7 @@ namespace Breakout.Entities;
 
 public class PowerUpEntity : Entity
 {
-    private IPowerUpActivator _powerUpActivator;
+    private readonly IPowerUpActivator _powerUpActivator;
     
     private PowerUpEntity(Shape shape, IBaseImage image, IPowerUpActivator powerUpActivator) : base(shape, image)
     {
