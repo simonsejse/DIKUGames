@@ -13,6 +13,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;
+using DIKUArcade.Timers;
 
 namespace Breakout.States;
 
@@ -21,45 +22,54 @@ namespace Breakout.States;
 /// </summary>
 public class GameRunningState : IGameState
 {
+
+    private Level _currentLevel;
+    private int CurrentLevel { get; set; }
+    
     private static GameRunningState? _instance;
     private readonly GameEventFactory _gameEventFactory;
     private readonly LevelLoader _levelLoader;
     private readonly IKeyboardEventHandler _keyboardEventHandler;
     private readonly EntityManager _entityManager;
+    
+    
+    
+    //TODO: Maybe delete
     private readonly PowerUpHandler _powerUpHandler;
     
-    private Text _scoreText = null!;
-    private Text _levelText = null!;
-    private Text _healthText = null!;
-    private readonly ITextFactory _textFactory;
 
-    private int CurrentLevel { get; set; }
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GameRunningState"/> class.
     /// </summary>
     public GameRunningState()
     {
-
         CurrentLevel = 0;
         
         _gameEventFactory = new GameEventFactory();
         _levelLoader = new LevelLoader();
+        _currentLevel = _levelLoader.LoadLevel(CurrentLevel);
         _entityManager = new EntityManager(this)
         {
-            BlockEntities = _levelLoader.LoadLevel(CurrentLevel)
+            BlockEntities = _levelLoader.ConstructBlockEntities(_currentLevel)
         };
         _keyboardEventHandler = new RunningStateKeyboardController(_entityManager.PlayerEntity);
 
         var ballEntity = BallEntity.Create(ConstantsUtil.PlayerPosition + ConstantsUtil.PlayerExtent / 2, ConstantsUtil.BallExtent, ConstantsUtil.BallSpeed, ConstantsUtil.BallDirection);
         _entityManager.AddBallEntity(ballEntity);
         
-        _textFactory = new DefaultTextFactory();
-        UpdateText();
-        
+        ITextFactory textFactory = new DefaultTextFactory();
+        int lives = _entityManager.PlayerEntity.GetLives();
+        _healthText = textFactory.Create($"{lives} {string.Concat(Enumerable.Repeat("❤", lives))}", ConstantsUtil.HealthPosition, ConstantsUtil.HealthExtent, Color.Red);
+        _scoreText = textFactory.Create($"Score: {_entityManager.PlayerEntity.GetPoints()}", ConstantsUtil.ScorePosition, ConstantsUtil.ScoreExtent, Color.White);
+        _levelText = textFactory.Create($"Level: {CurrentLevel}", ConstantsUtil.LevelPosition, ConstantsUtil.LevelExtent, Color.White);
+        _timerText = textFactory.Create(string.Empty, ConstantsUtil.TimerPosition, ConstantsUtil.TimerExtent, Color.White);
+
         _powerUpHandler = new PowerUpHandler(_entityManager.PlayerEntity, _entityManager.BallEntities);
     }
-    
+
+
     /// <summary>
     /// Gets the singleton instance of the <see cref="GameRunningState"/>.
     /// </summary>
@@ -84,6 +94,7 @@ public class GameRunningState : IGameState
     {
         _entityManager.Move();
         CheckLevel();
+        UpdateTimer();
     }
     
     /// <summary>
@@ -91,10 +102,11 @@ public class GameRunningState : IGameState
     /// </summary>
     public void RenderState()
     {
+        _entityManager.RenderEntities();
         _healthText.RenderText();
         _scoreText.RenderText();
         _levelText.RenderText();
-        _entityManager.RenderEntities();
+        _timerText.RenderText();
     }
 
     /// <summary>
@@ -129,19 +141,32 @@ public class GameRunningState : IGameState
         else
         {
             CurrentLevel++;
-            _entityManager.BlockEntities = _levelLoader.LoadLevel(CurrentLevel);
+            _currentLevel = _levelLoader.LoadLevel(CurrentLevel);
+            _entityManager.BlockEntities = _levelLoader.ConstructBlockEntities(_currentLevel);
             UpdateText();
         }
     }
     
+    
+    
+    
     /// <summary>
     /// Updates the text elements displaying the player's health, score, and current level.
+    /// TODO: This is not very good since it's instantiates a new text object every frame..^^ leading to performance issues.
+    /// TODO: Instead we should invoke <see cref="Text"/> method <see cref="Text.SetText"/> to update the text.
     /// </summary>
     public void UpdateText()
     {
         int lives = _entityManager.PlayerEntity.GetLives();
-        _healthText = _textFactory.Create($"{lives} {string.Concat(Enumerable.Repeat("❤", lives))}", ConstantsUtil.HealthPosition, ConstantsUtil.HealthExtent, Color.Red);
-        _scoreText = _textFactory.Create($"Score: {_entityManager.PlayerEntity.GetPoints()}", ConstantsUtil.ScorePosition, ConstantsUtil.ScoreExtent, Color.White);
-        _levelText = _textFactory.Create($"Level: {CurrentLevel}", ConstantsUtil.LevelPosition, ConstantsUtil.LevelExtent, Color.White);
+        _healthText.SetText($"{lives} {string.Concat(Enumerable.Repeat("❤", lives))}");
+        _scoreText.SetText($"Score: {_entityManager.PlayerEntity.GetPoints()}");
+        _levelText.SetText($"Level: {CurrentLevel}");
+    }
+
+    private void UpdateTimer()
+    {
+        int metaTime = _currentLevel.Meta.Time ?? -1;
+        string displayTime = metaTime != -1 ? metaTime.ToString() : "∞";
+        _timerText.SetText($"Timer: {StaticTimer.GetElapsedSeconds():0}s/{displayTime}s");
     }
 }

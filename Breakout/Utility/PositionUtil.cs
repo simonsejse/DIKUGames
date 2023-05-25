@@ -34,6 +34,8 @@ public static class ConstantsUtil
     public static readonly Vec2F LevelPosition = new(0.01f, -0.02f);
     public static readonly Vec2F LevelExtent = new(0.2f, 0.2f);
     
+    public static readonly Vec2F TimerPosition = new(.01f, -0.05f);
+    public static readonly Vec2F TimerExtent = new(0.2f, 0.2f);
     
     public static readonly Vec2F BallDirection = new(0.01f, 0.01f);
     public const float BallSpeed = 0.1f;
