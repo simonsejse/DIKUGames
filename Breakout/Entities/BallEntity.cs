@@ -55,68 +55,22 @@ public class BallEntity : Entity
         return Shape.Position.Y + Shape.Extent.Y < 0;
     }
     
-    public void BounceOffBlock(BlockEntity block)
+    public void BounceOffBlock(CollisionDirection collisionDir)
     {
-        float ballCenterX = Shape.Position.X + Shape.Extent.X / 2;
-        float ballCenterY = Shape.Position.Y;
-        float blockCenterX = block.Shape.Position.X + block.Shape.Extent.X / 2;
-        float blockCenterY = block.Shape.Position.Y;
-
-
-        float deltaX = ballCenterX - blockCenterX;
-        float deltaY = ballCenterY - blockCenterY;
-        
-        if (deltaX > 0 && deltaY > 0)
+        switch (collisionDir)
         {
-            if (deltaX > deltaY)
-            {
-                _direction.X *= 1;
-                Console.WriteLine("1");
-            }
-            else
-            {
+            case CollisionDirection.CollisionDirUp:
                 _direction.Y *= -1;
-                Console.WriteLine("2");
-            }
-        }
-        else if (deltaX > 0 && deltaY < 0)
-        {
-            if (deltaX > -deltaY)
-            {
+                break;
+            case CollisionDirection.CollisionDirDown:
+                _direction.Y *= -1;
+                break;
+            case CollisionDirection.CollisionDirLeft:
                 _direction.X *= -1;
-                Console.WriteLine("3");
-            }
-            else
-            {
-                _direction.Y *= -1;
-                Console.WriteLine("4");
-            }
-        }
-        else if (deltaX < 0 && deltaY > 0)
-        {
-            if (-deltaX > deltaY)
-            {
+                break;
+            case CollisionDirection.CollisionDirRight:
                 _direction.X *= -1;
-                Console.WriteLine("5");
-            }
-            else
-            {
-                _direction.Y *= -1;
-                Console.WriteLine("6");
-            }
-        }
-        else if (deltaX < 0 && deltaY < 0)
-        {
-            if (-deltaX > -deltaY)
-            {
-                _direction.X *= -1;
-                Console.WriteLine("7");
-            }
-            else
-            {
-                _direction.Y *= -1;
-                Console.WriteLine("8");
-            }
+                break;
         }
     }
     

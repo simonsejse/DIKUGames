@@ -10,36 +10,32 @@ public static class CollisionProcessor
 {
     public static void CheckBlockCollisions(EntityContainer<BlockEntity> blockEntities, BallEntity ballEntity, PlayerEntity playerEntity, GameRunningState state)
     {
-        float previousX = float.NaN;  // Variable to store the previous X position
-        float previousY = float.NaN;  // Variable to store the previous Y position
+        CollisionDirection collisionDir = CollisionDirection.CollisionDirUnchecked;
     
         blockEntities.Iterate(block =>
         {
-            if (!CollisionDetection.Aabb(ballEntity.Shape.AsDynamicShape(), block.Shape).Collision)
+            CollisionDirection currentCollisionDir =
+                CollisionDetection.Aabb(ballEntity.Shape.AsDynamicShape(), block.Shape).CollisionDir;
+            if (currentCollisionDir == CollisionDirection.CollisionDirUnchecked)
                 return;
-        
-            float ballCenterX = ballEntity.Shape.Position.X + (ballEntity.Shape.Extent.X / 2);
+            
             block.HandleCollision();
-        
-            /* BURDE ikke tillade at to blocke lige opad hinanden kan blive slettet på samme tid, men fungerer ikke
-             if (!float.IsNaN(previousX) && (block.Shape.Position.X == previousX || block.Shape.Position.Y == previousY))
-            {
-                Console.WriteLine("Double BounceOffblock skip " + block.Shape.Position);
+            
+            ballEntity.BounceOffBlock(currentCollisionDir);
+            
+            if (!block.IsDead())
                 return;
-            }*/
-
-            //else
-                ballEntity.BounceOffBlock(block);
-                if (!block.IsDead())
-                    return;
-                playerEntity.AddPoints(block.Value);
-                state.UpdateText();
+            
+            playerEntity.AddPoints(block.Value);
+            state.UpdateText();
             
 
             Console.WriteLine(block.Shape.Position);
 
-            previousX = block.Shape.Position.X;  // Update the previous X position
-            previousY = block.Shape.Position.Y;  // Update the previous Y position
+            if (collisionDir == CollisionDirection.CollisionDirUnchecked)
+                collisionDir = currentCollisionDir;
+
+
         });
     }
 
@@ -52,7 +48,7 @@ public static class CollisionProcessor
         float impactAreaX = playerEntity.Shape.Position.X + (playerEntity.Shape.Extent.X / 2);
         float dImpact = ballCenterX - impactAreaX;
 
-        float maxImpact = 0.134f; // Maximum impact distance from the center
+        float maxImpact = 0.143f; // Maximum impact distance from the center
         float angle = dImpact / maxImpact * 90f; // Calculate the angle based on the impact position
 
         // Convert angle to radians
