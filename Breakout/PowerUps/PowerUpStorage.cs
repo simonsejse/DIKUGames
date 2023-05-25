@@ -12,6 +12,8 @@ public static class PowerUpStorage
         PowerUpType.Add(new WidePowerUp());
         PowerUpType.Add(new BigBallPowerUp());
         PowerUpType.Add((new SplitBallPowerUp()));
+        PowerUpType.Add(new LoseLifeHazard());
+        PowerUpType.Add(new SlimJimHazard());
     }
     
     public static IPowerUpType GetRandomPowerUp()

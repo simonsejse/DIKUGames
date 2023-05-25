@@ -109,10 +109,20 @@ public class PlayerEntity : Entity
     {
         _lives++;
     }
+    
+    public void LoseLife()
+    {
+        _lives--;
+    }
 
     public void AddWidePU()
     {
         float newWidth = Shape.Extent.X * 1.5f;
+        Shape.Extent = new Vec2F(newWidth, Shape.Extent.Y);
+    }
+    public void AddSlimJimHZ()
+    {
+        float newWidth = Shape.Extent.X * 0.75f;
         Shape.Extent = new Vec2F(newWidth, Shape.Extent.Y);
     }
     
