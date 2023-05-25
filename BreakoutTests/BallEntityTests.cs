@@ -18,7 +18,7 @@ public class BallEntityTests
     [SetUp]
     public void Setup()
     {
-        ballEntity = BallEntity.Create(ConstantsUtil.BallPosition, ConstantsUtil.BallExtent, ConstantsUtil.BallSpeed, ConstantsUtil.BallDirection);
+        ballEntity = BallEntity.Create(PositionUtil.BallPosition, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection);
     }
 
     [Test]

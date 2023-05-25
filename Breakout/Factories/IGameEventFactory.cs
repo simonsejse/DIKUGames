@@ -5,6 +5,6 @@ namespace Breakout.Factories;
 
 public interface IGameEventFactory<TEvent> where TEvent : Enum
 {
-    GameEvent<TEvent> CreateGameEventForAllProcessors(GameEventType type, string message, string stringArg1 = "");
+    GameEvent<TEvent> CreateGameEvent(GameEventType type, string message, string stringArg1 = "");
     GameEvent<TEvent> CreateGameEventForSpecificProcessors<T>(GameEventType type, T to, string message) where T : IGameEventProcessor<TEvent>;
 }

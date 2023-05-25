@@ -1,4 +1,5 @@
 using Breakout.States;
+using Breakout.States.GameRunning;
 using DIKUArcade.Entities;
 using DIKUArcade.Physics;
 
@@ -21,7 +22,7 @@ public static class CollisionProcessor
     }
     public static void CheckBallPlayerCollision(BallEntity ballEntity, PlayerEntity playerEntity)
     {
-        if (!CollisionDetection.Aabb(ballEntity.Shape.AsDynamicShape(), playerEntity.Shape.AsDynamicShape())
+        if (!CollisionDetection.Aabb(ballEntity.Shape.AsDynamicShape(), playerEntity.Shape)
                 .Collision) return;
         
         var ballCenter = ballEntity.Shape.Position + (ballEntity.Shape.Extent * 0.5f);
@@ -64,10 +65,11 @@ public static class CollisionProcessor
                 
         ballEntity.Shape.Move(ballEntity.GetDirection());
     }
+    
+    
 
     public static bool CheckPowerUpPlayerCollision(PowerUpEntity powerUpEntity, PlayerEntity playerEntity)
     {
-        //todo: check if powerup is colliding with player
-        return false;
+        return CollisionDetection.Aabb(powerUpEntity.Shape.AsDynamicShape(), playerEntity.Shape).Collision;
     }
 }

@@ -1,4 +1,7 @@
 using Breakout.Events;
+using Breakout.States.GameLost;
+using Breakout.States.GameRunning;
+using Breakout.States.GameWon;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
 using DIKUArcade.State;
@@ -16,7 +19,9 @@ public class StateMachine : IGameEventProcessor<GameEventType>
     {
         { GameState.Menu, MainMenuState.GetInstance },
         { GameState.Running, GameRunningState.GetInstance },
-        { GameState.Paused, GamePauseState.GetInstance }
+        { GameState.Paused, GamePauseState.GetInstance },
+        { GameState.Lost, GameLostState.GetInstance },
+        { GameState.Won, GameWonState.GetInstance }
     };
 
     
@@ -73,10 +78,7 @@ public class StateMachine : IGameEventProcessor<GameEventType>
 
     private void ResetAllStates()
     {
-        foreach (Func<IGameState> state in States.Values)
-        {
-            state().ResetState();
-        }
+        foreach (Func<IGameState> state in States.Values) state().ResetState();
     }
 }
 

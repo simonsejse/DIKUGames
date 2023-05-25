@@ -3,6 +3,7 @@ using Breakout.Factories;
 using Breakout.States;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
+using DIKUArcade.Timers;
 
 namespace Breakout.Commands.GameRunning;
 
@@ -17,11 +18,11 @@ public class PauseGameCommand : IKeyboardCommand
 
     public void Execute()
     {
-        GameEvent<GameEventType> pauseEvent = _gameEventFactory.CreateGameEventForAllProcessors(
+        StaticTimer.PauseTimer();
+        GameEvent<GameEventType> pauseEvent = _gameEventFactory.CreateGameEvent(
             GameEventType.GameStateEvent,
             "CHANGE_STATE",
             Enum.GetName(GameState.Paused) ?? "Paused");
-        
         BreakoutBus.GetBus().RegisterEvent(pauseEvent);
     }
 }

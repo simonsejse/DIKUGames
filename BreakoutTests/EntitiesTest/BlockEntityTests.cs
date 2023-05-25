@@ -4,6 +4,7 @@ using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 using Breakout.Entities.BlockTypes;
+using Breakout.Entities.PowerUps;
 
 namespace BreakoutTests.EntitiesTest;
 
@@ -24,7 +25,8 @@ public class BlockEntityTest
             new Vec2F(0.5f, 0.5f),
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
-            new StandardBlockType()
+            new StandardBlockType(), 
+            new ExtraLifePowerUp()
         );
         Assert.That(blockEntity.Health, Is.EqualTo(1));
         Assert.That(blockEntity.StartHealth, Is.EqualTo(1));
@@ -40,7 +42,9 @@ public class BlockEntityTest
             new Vec2F(0.5f, 0.5f),
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
-            new HardenedBlockType()
+            new HardenedBlockType(),
+            new ExtraLifePowerUp()
+
         );
         Assert.That(blockEntity.Health, Is.EqualTo(2));
         blockEntity.TakeDamage();
@@ -59,7 +63,8 @@ public class BlockEntityTest
             new Vec2F(0.5f, 0.5f),
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
-            new HardenedBlockType()
+            new HardenedBlockType(),
+            new ExtraLifePowerUp()
         );
         Assert.That(blockEntity.Health, Is.EqualTo(2));
         Assert.That(blockEntity.StartHealth, Is.EqualTo(2));
@@ -72,7 +77,8 @@ public class BlockEntityTest
             new Vec2F(0.5f, 0.5f),
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
-            new UnbreakableBlockType()
+            new UnbreakableBlockType(),
+            new ExtraLifePowerUp()
         );
         Assert.That(blockEntity.Health, Is.EqualTo(-1));
         blockEntity.HandleCollision();

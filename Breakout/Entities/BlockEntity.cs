@@ -19,8 +19,8 @@ public class BlockEntity : Entity
     public int Health { get; set; }
     public int StartHealth { get; set; }
     private IBlockType BlockType { get; set; }
-    public IPowerUpType PowerUpType { get; set; }
     public IBaseImage DamagedImage { get; set; }
+    public IPowerUpType? PowerUpType { get; set; }
 
 
     /// <summary>
@@ -32,13 +32,14 @@ public class BlockEntity : Entity
     /// <param name="value">The value of the block.</param>
     /// <param name="health">The health of the block.</param>
     /// <param name="blockType">The type of the block.</param>
-    public BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, IBlockType blockType) : 
+    /// <param name="powerUpType">The power-up type of the block.</param>
+    private BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, IBlockType blockType, IPowerUpType? powerUpType) : 
         base(shape, image)
     {
         Value = value;
         Health = health;
         BlockType = blockType;
-        PowerUpType = new ExtraLifePowerUp();
+        PowerUpType = powerUpType;
         Health = blockType.GetBlockTypeBehavior().ModifyHealth(health);
         StartHealth = Health;
         DamagedImage = damagedImage;
@@ -62,7 +63,7 @@ public class BlockEntity : Entity
     }
 
     public void HandleCollision() => BlockType.HandleCollision(this);
-    
+
 
     /// <summary>
     /// A factory method for instantiating a default BlockEntity
@@ -72,16 +73,18 @@ public class BlockEntity : Entity
     /// <param name="image">The image of the block.</param>
     /// <param name="image2">The second image of the block.</param>
     /// <param name="blockType">The type of the block.</param>
+    /// <param name="powerUpType"></param>
     /// <returns></returns>
-    public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType)
+    public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType, IPowerUpType? powerUpType)
     {
         return new BlockEntity(
-            new StationaryShape(pos, ConstantsUtil.BlockExtent),
+            new StationaryShape(pos, PositionUtil.BlockExtent),
             image,
             image2, 
             10, 
             1,
-            blockType
+            blockType,
+            powerUpType
         );
     }
 }

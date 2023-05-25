@@ -7,21 +7,15 @@ namespace Breakout.Commands.MainMenu;
 
 public class ShiftMenuDownCommand : IKeyboardCommand
 {
-    private readonly IMenu _state;
+    private readonly IMenu _menu;
 
-    public ShiftMenuDownCommand(IMenu state)
+    public ShiftMenuDownCommand(IMenu menu)
     {
-        _state = state;
+        _menu = menu;
     }
 
     public void Execute()
     {
-        int activeButton = _state.ActiveButton;
-        Text[] menuButtons = _state.MenuButtons;
-        
-        if (activeButton + 1 >= menuButtons.Length) return;
-        menuButtons[activeButton].SetColor(Color.White);
-        activeButton = ++_state.ActiveButton;
-        menuButtons[activeButton].SetColor(Color.Crimson);
+        _menu.ShiftMenuDown();
     }
 }

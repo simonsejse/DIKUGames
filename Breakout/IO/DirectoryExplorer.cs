@@ -3,7 +3,7 @@
 namespace Breakout.IO;
 
 /// <summary>
-/// Utility class TODO: Add XML documentation
+/// 
 /// </summary>
 public static class DirectoryExplorer
 {

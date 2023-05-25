@@ -1,24 +1,18 @@
-using System.Drawing;
 using Breakout.Handler;
 
 namespace Breakout.Commands.MainMenu;
 
 public class ShiftMenuUpCommand : IKeyboardCommand
 {
-    private readonly IMenu _state;
+    private readonly IMenu _menu;
 
-    public ShiftMenuUpCommand(IMenu state)
+    public ShiftMenuUpCommand(IMenu menu)
     {
-        _state = state;
+        _menu = menu;
     }
 
     public void Execute()
     {
-        int activeButton = _state.ActiveButton;
-        if (activeButton <= 0) return;
-
-        _state.SetButtonColor(activeButton, Color.White);
-        activeButton = --_state.ActiveButton;
-        _state.SetButtonColor(activeButton, Color.Crimson);
+        _menu.ShiftMenuUp();
     }
 }
