@@ -47,6 +47,6 @@ public class GameRunningStateUiManager
     {
         if (!time.HasValue)
             return;
-        _timerText.SetText($"Timer: {StaticTimer.GetElapsedSeconds():0}s/{time.ToString()}");
+        _timerText.SetText($"Time left: {StaticTimer.GetElapsedSeconds()-time:0}s");
     }
 }
