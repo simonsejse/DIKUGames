@@ -48,7 +48,7 @@ public static class CollisionProcessor
         float impactAreaX = playerEntity.Shape.Position.X + (playerEntity.Shape.Extent.X / 2);
         float dImpact = ballCenterX - impactAreaX;
 
-        float maxImpact = 0.145f; // Maximum impact distance from the center
+        float maxImpact = 0.15f; // Maximum impact distance from the center
         float angle = dImpact / maxImpact * 90f; // Calculate the angle based on the impact position
 
         // Convert angle to radians
