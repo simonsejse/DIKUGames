@@ -44,7 +44,7 @@ public class BallEntity : Entity
     /// Don't change accessibility, should be private to the outside!
     /// </summary>
     /// <param name="ball">The ball entity object.</param>
-    private BallEntity(BallEntity ball) : base(ball.Shape, ball.Image)
+    private BallEntity(BallEntity ball) : base(new DynamicShape(ball.Shape.Position.Copy(), ball.Shape.Extent.Copy()), ball.Image)
     {
         _direction = ball._direction;
         _speed = ball._speed;
@@ -181,6 +181,6 @@ public class BallEntity : Entity
     /// <returns>A new instance of the BallEntity that is a copy of the current instance.</returns>
     public BallEntity Clone()
     {
-        return new BallEntity(this);
+        return new BallEntity(this);;
     }
 }

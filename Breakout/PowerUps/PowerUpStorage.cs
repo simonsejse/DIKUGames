@@ -18,12 +18,12 @@ public static class PowerUpStorage
     /// </summary>
     static PowerUpStorage()
     {
-        //PowerUps.Add(new ExtraLifePowerUp());
-        //PowerUps.Add(new WidePowerUp());
-        //PowerUps.Add(new BigBallPowerUp());
+        PowerUps.Add(new ExtraLifePowerUp());
+        PowerUps.Add(new WidePowerUp());
+        PowerUps.Add(new BigBallPowerUp());
         PowerUps.Add((new SplitBallPowerUp()));
-        //PowerUps.Add(new LoseLifeHazard());
-        //PowerUps.Add(new SlimJimHazard());
+        PowerUps.Add(new LoseLifeHazard());
+        PowerUps.Add(new SlimJimHazard());
     }
     
     /// <summary>
