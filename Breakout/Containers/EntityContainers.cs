@@ -49,6 +49,7 @@ public class EntityManager
             if (checkPowerUpPlayerCollision)
             {
                 powerUp.ActivatePowerUp();
+                _state.UpdateText();
                 powerUp.DeleteEntity();
             }
             else
