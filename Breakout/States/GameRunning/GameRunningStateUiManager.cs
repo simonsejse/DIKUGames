@@ -5,13 +5,13 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Timers;
 
 namespace Breakout.States.GameRunning;
-public class GameRunningStateUiManager
+public class GameRunningStateUiManager 
 {
     private readonly Text _scoreText;
     private readonly Text _levelText;
     private readonly Text _healthText;
     private readonly Text _timerText;
-
+    
     public GameRunningStateUiManager()
     {
         _healthText = DefaultTextFactory.Create(string.Empty, PositionUtil.HealthPosition, PositionUtil.HealthExtent, Color.Red);

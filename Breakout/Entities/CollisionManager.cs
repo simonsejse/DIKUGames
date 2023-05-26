@@ -29,13 +29,8 @@ public static class CollisionProcessor
             playerEntity.AddPoints(block.Value);
             state.UpdateText();
             
-
-            Console.WriteLine(block.Shape.Position);
-
             if (collisionDir == CollisionDirection.CollisionDirUnchecked)
                 collisionDir = currentCollisionDir;
-
-
         });
     }
 
@@ -54,27 +49,30 @@ public static class CollisionProcessor
         // Convert angle to radians
         float angleInRadians = angle * (float)Math.PI / 180f;
 
-        if (dImpact > 0)
+        switch (dImpact)
         {
-            // Calculate the new direction based on the angle
-            float newX = ballEntity.GetDirection().X * (float)Math.Cos(angleInRadians) - ballEntity.GetDirection().Y * (float)Math.Sin(angleInRadians);
-            float newY = ballEntity.GetDirection().X * (float)Math.Sin(angleInRadians) + ballEntity.GetDirection().Y * (float)Math.Cos(angleInRadians);
+            case > 0:
+            {
+                // Calculate the new direction based on the angle
+                float newX = ballEntity.GetDirection().X * (float)Math.Cos(angleInRadians) - ballEntity.GetDirection().Y * (float)Math.Sin(angleInRadians);
+                float newY = ballEntity.GetDirection().X * (float)Math.Sin(angleInRadians) + ballEntity.GetDirection().Y * (float)Math.Cos(angleInRadians);
 
-            ballEntity.ChangeDirection(newX, -newY);
-        }
-    
-        if (dImpact < 0)
-        {
-            // Calculate the new direction based on the angle
-            float newX = ballEntity.GetDirection().X * (float)Math.Cos(angleInRadians) - ballEntity.GetDirection().Y * (float)Math.Sin(angleInRadians);
-            float newY = ballEntity.GetDirection().X * (float)Math.Sin(angleInRadians) + ballEntity.GetDirection().Y * (float)Math.Cos(angleInRadians);
+                ballEntity.ChangeDirection(newX, -newY);
+                break;
+            }
+            case < 0:
+            {
+                // Calculate the new direction based on the angle
+                float newX = ballEntity.GetDirection().X * (float)Math.Cos(angleInRadians) - ballEntity.GetDirection().Y * (float)Math.Sin(angleInRadians);
+                float newY = ballEntity.GetDirection().X * (float)Math.Sin(angleInRadians) + ballEntity.GetDirection().Y * (float)Math.Cos(angleInRadians);
 
-            ballEntity.ChangeDirection(newX, -newY);
+                ballEntity.ChangeDirection(newX, -newY);
+                break;
+            }
         }
 
         ballEntity.Shape.Move(ballEntity.GetDirection());
     }
-
 
     public static bool CheckPowerUpPlayerCollision(PowerUpEntity powerUpEntity, PlayerEntity playerEntity)
     {

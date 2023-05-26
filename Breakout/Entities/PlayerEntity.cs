@@ -18,6 +18,7 @@ public class PlayerEntity : Entity
     private const float MovementSpeed = 0.02f;
     private int _points = 0;
     private int _lives;
+    private int _rockets;
     
     // Constructor that intializes player's shape and image by using the base class constructor
     public PlayerEntity(Shape shape, IBaseImage image) : base(shape, image)
@@ -75,6 +76,7 @@ public class PlayerEntity : Entity
         if (count < 0) return;
         _points += count;
     }
+    
     /// <summary>
     /// Gets the amount of points the player has.
     /// </summary>
@@ -108,6 +110,14 @@ public class PlayerEntity : Entity
     public void AddLife()
     {
         _lives++;
+    }
+    
+    /// <summary>
+    /// Decrements the players life by one. If the player has no lives left, do nothing.
+    /// </summary>
+    public int GetRockets()
+    {
+        return _rockets;
     }
 
     /// <summary>
