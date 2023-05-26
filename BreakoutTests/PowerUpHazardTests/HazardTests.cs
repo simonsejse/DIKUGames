@@ -1,13 +1,8 @@
-using System.Data;
-using Breakout.Factories;
-using Breakout.IO;
 using Breakout.Entities;
-using Breakout.Utility;
 using DIKUArcade.GUI;
-using DIKUArcade.Math;
 using Breakout.PowerUps;
 using Breakout.Hazard;
-using Breakout.Entities.PowerUps;
+using Breakout.Hazard.Activators;
 
 namespace BreakoutTests.PowerUpHazardTests;
 
@@ -43,7 +38,7 @@ public class HazardTests
     {
         PlayerEntity player = PlayerEntity.Create();
         IPowerUp extraLifePowerUp = new LoseLifeHazard();
-        IPowerUpActivator activator = new LoseLifeHZActivator(player);
+        IPowerUpActivator activator = new LoseLifeHzActivator(player);
         Assert.That(player.GetLives(), Is.EqualTo(3));
         activator.Activate();
         Assert.That(player.GetLives(), Is.LessThan(3));
