@@ -9,6 +9,6 @@ public class PowerUpBlockType : IBlockType
     public void HandleCollision(BlockEntity block)
     { 
         block.TakeDamage();
-        block?.PowerUpType?.DropPowerUp(block);
+        block.DropPowerUp();
     }
 }

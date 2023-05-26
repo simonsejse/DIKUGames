@@ -1,25 +1,39 @@
 ﻿using Breakout.Entities.PowerUps;
+using Breakout.Hazard;
 
 namespace Breakout.PowerUps;
 
+/// <summary>
+/// Static class that stores all the power up types.
+/// </summary>
 public static class PowerUpStorage
 {
-    private static readonly List<IPowerUpType> PowerUpType = new();
+    /// <summary>
+    /// A collection of all the power up types.
+    /// </summary>
+    private static readonly List<IPowerUp> PowerUps = new();
     
+    /// <summary>
+    /// Static constructor that adds all the power up types to the collection.
+    /// </summary>
     static PowerUpStorage()
     {
-        PowerUpType.Add(new ExtraLifePowerUp());
-        PowerUpType.Add(new WidePowerUp());
-        PowerUpType.Add(new BigBallPowerUp());
-        PowerUpType.Add((new SplitBallPowerUp()));
-        PowerUpType.Add(new LoseLifeHazard());
-        PowerUpType.Add(new SlimJimHazard());
+        //PowerUps.Add(new ExtraLifePowerUp());
+        //PowerUps.Add(new WidePowerUp());
+        //PowerUps.Add(new BigBallPowerUp());
+        PowerUps.Add((new SplitBallPowerUp()));
+        //PowerUps.Add(new LoseLifeHazard());
+        //PowerUps.Add(new SlimJimHazard());
     }
     
-    public static IPowerUpType GetRandomPowerUp()
+    /// <summary>
+    /// Returns a random power up.
+    /// </summary>
+    /// <returns>A random power up.</returns>
+    public static IPowerUp GetRandomPowerUp()
     {
         var random = new Random();
-        int randomIndex = random.Next(0, PowerUpType.Count);
-        return PowerUpType[randomIndex];
+        int randomIndex = random.Next(0, PowerUps.Count);
+        return PowerUps[randomIndex];
     }
 }

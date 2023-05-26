@@ -18,7 +18,8 @@ public class BallEntityTests
     [SetUp]
     public void Setup()
     {
-        ballEntity = BallEntity.Create(PositionUtil.BallPosition, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection);
+        Window.CreateOpenGLContext();
+        ballEntity = BallEntity.Create(PositionUtil.BallPosition, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection, false);
     }
 
     [Test]
@@ -29,6 +30,19 @@ public class BallEntityTests
         Assert.That(ballEntity.Shape.Position, Is.EqualTo(initPos));
         ballEntity.Move();
         Assert.That(ballEntity.Shape.Position, Is.Not.EqualTo(initPos));
+    }
+
+    
+    [Test]
+    public void TestMoveStuck()
+    {
+        ballEntity = BallEntity.Create(PositionUtil.BallPosition, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection, true);
+
+        var initPos = ballEntity.Shape.Position;
+
+        Assert.That(ballEntity.Shape.Position, Is.EqualTo(initPos));
+        ballEntity.Move();
+        Assert.That(ballEntity.Shape.Position, Is.EqualTo(initPos));
     }
 
   

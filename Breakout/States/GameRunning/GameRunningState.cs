@@ -140,6 +140,8 @@ public class GameRunningState : IGameState
     {
         if (EntityManager.BallEntities.CountEntities() > 0)
             EntityManager.BallEntities.ClearContainer();
+        if (EntityManager.PowerUpEntities.CountEntities() > 0)
+            EntityManager.PowerUpEntities.ClearContainer();
         
         CurrentLevel++;
         _currentLevel = _levelLoader.LoadLevel(CurrentLevel);

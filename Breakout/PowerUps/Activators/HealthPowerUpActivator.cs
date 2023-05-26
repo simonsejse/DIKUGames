@@ -1,6 +1,6 @@
-﻿using Breakout.PowerUps;
+﻿using Breakout.Entities;
 
-namespace Breakout.Entities.PowerUps;
+namespace Breakout.PowerUps.Activators;
 
 public class HealthPowerUpActivator : IPowerUpActivator
 {
@@ -11,7 +11,7 @@ public class HealthPowerUpActivator : IPowerUpActivator
         _playerEntity = playerEntity;
     }
     
-    public void ActivatePowerUp()
+    public void Activate()
     {
         _playerEntity.AddLife();
     }

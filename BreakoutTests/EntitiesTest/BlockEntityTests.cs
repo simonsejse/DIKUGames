@@ -5,6 +5,7 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 using Breakout.Entities.BlockTypes;
 using Breakout.Entities.PowerUps;
+using Breakout.PowerUps;
 
 namespace BreakoutTests.EntitiesTest;
 

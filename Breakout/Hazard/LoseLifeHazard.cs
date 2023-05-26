@@ -1,0 +1,18 @@
+﻿using Breakout.Entities.PowerUps;
+using Breakout.PowerUps;
+using Breakout.States.GameRunning;
+using DIKUArcade.Graphics;
+
+namespace Breakout.Hazard;
+
+public class LoseLifeHazard : IPowerUp
+{
+    public IBaseImage GetImage()
+    {
+        return new Image(Path.Combine("Assets", "Images", "LoseLife.png"));
+    }
+
+    public IPowerUpActivator Activator() =>
+        new LoseLifeHZActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
+
+}

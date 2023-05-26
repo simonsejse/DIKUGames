@@ -2,6 +2,9 @@ using DIKUArcade.Math;
 using DIKUArcade.Entities;
 using Breakout.Entities.BlockTypes;
 using Breakout.Entities.PowerUps;
+using Breakout.PowerUps;
+using Breakout.PowerUps.Activators;
+using Breakout.States.GameRunning;
 using Breakout.Utility;
 using DIKUArcade.Graphics;
 
@@ -12,6 +15,7 @@ namespace Breakout.Entities;
 /// </summary>
 public class BlockEntity : Entity
 {
+    private IPowerUp? _powerUp;
     public int Value { get; set; }
     /// <summary>
     /// Gets or sets the health of the block.
@@ -20,7 +24,7 @@ public class BlockEntity : Entity
     public int StartHealth { get; set; }
     private IBlockType BlockType { get; set; }
     public IBaseImage DamagedImage { get; set; }
-    public IPowerUpType? PowerUpType { get; set; }
+
 
 
     /// <summary>
@@ -32,14 +36,14 @@ public class BlockEntity : Entity
     /// <param name="value">The value of the block.</param>
     /// <param name="health">The health of the block.</param>
     /// <param name="blockType">The type of the block.</param>
-    /// <param name="powerUpType">The power-up type of the block.</param>
-    private BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, IBlockType blockType, IPowerUpType? powerUpType) : 
+    /// <param name="powerUp">The power-up type of the block.</param>
+    private BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, IBlockType blockType, IPowerUp? powerUp) : 
         base(shape, image)
     {
         Value = value;
         Health = health;
         BlockType = blockType;
-        PowerUpType = powerUpType;
+        _powerUp = powerUp;
         Health = blockType.GetBlockTypeBehavior().ModifyHealth(health);
         StartHealth = Health;
         DamagedImage = damagedImage;
@@ -64,6 +68,23 @@ public class BlockEntity : Entity
 
     public void HandleCollision() => BlockType.HandleCollision(this);
 
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="block"></param>
+    public void DropPowerUp()
+    {
+        if (_powerUp == null) return;
+        float positionX = Shape.Position.X + Shape.Extent.X / 2 - PositionUtil.PowerUpExtent.X / 2;
+        float positionY = Shape.Position.Y + Shape.Extent.Y / 2 - PositionUtil.PowerUpExtent.Y / 2;
+
+        var position = new Vec2F(positionX, positionY);
+        
+        var powerUp = PowerUpEntity.Create(position, _powerUp.GetImage(), _powerUp.Activator());
+        GameRunningState.GetInstance().EntityManager.PowerUpEntities.AddEntity(powerUp);
+    }
+    
 
     /// <summary>
     /// A factory method for instantiating a default BlockEntity
@@ -75,7 +96,7 @@ public class BlockEntity : Entity
     /// <param name="blockType">The type of the block.</param>
     /// <param name="powerUpType"></param>
     /// <returns></returns>
-    public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType, IPowerUpType? powerUpType)
+    public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType, IPowerUp? powerUpType)
     {
         return new BlockEntity(
             new StationaryShape(pos, PositionUtil.BlockExtent),

@@ -73,7 +73,7 @@ public class LevelLoader
                     _ => new StandardBlockType()
                 };
                 
-                var powerUpType = key switch
+                var powerUp = key switch
                 {
                     _ when key == level.Meta.PowerUp => PowerUpStorage.GetRandomPowerUp(),
                     _ => null
@@ -87,7 +87,7 @@ public class LevelLoader
                         "Images",
                         imgDmgPath)), 
                     blockType, 
-                    powerUpType);
+                    powerUp);
 
                 blockEntities.AddEntity(blockEntity);
             }

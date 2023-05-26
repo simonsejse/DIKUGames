@@ -15,7 +15,7 @@ public class PlayerEntity : Entity
     // Field for player's movement and its movement speed
     private float _moveRight = 0.0f;
     private float _moveLeft = 0.0f;
-    private const float MovementSpeed = 0.05f;
+    private const float MovementSpeed = 0.02f;
     private int _points = 0;
     private int _lives;
     
@@ -109,23 +109,16 @@ public class PlayerEntity : Entity
     {
         _lives++;
     }
-    
-    public void LoseLife()
+
+    /// <summary>
+    /// Multiplies the player's extent by a factor.
+    /// </summary>
+    /// <param name="factor">Represents the factor scalar</param>
+    public void MultiplyExtent(Vec2F factor)
     {
-        _lives--;
+        Shape.Extent *= factor;
     }
 
-    public void AddWidePU()
-    {
-        float newWidth = Shape.Extent.X * 1.5f;
-        Shape.Extent = new Vec2F(newWidth, Shape.Extent.Y);
-    }
-    public void AddSlimJimHZ()
-    {
-        float newWidth = Shape.Extent.X * 0.75f;
-        Shape.Extent = new Vec2F(newWidth, Shape.Extent.Y);
-    }
-    
     public bool GetMoveLeft()
     {
         return _moveLeft != 0f;

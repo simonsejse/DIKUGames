@@ -2,17 +2,17 @@
 
 namespace Breakout.Entities.PowerUps;
 
-public class SlimJimHZActivator : IPowerUpActivator
+public class LoseLifeHZActivator : IPowerUpActivator
 {
     private readonly PlayerEntity _playerEntity;
 
-    public SlimJimHZActivator(PlayerEntity playerEntity)
+    public LoseLifeHZActivator(PlayerEntity playerEntity)
     {
         _playerEntity = playerEntity;
     }
     
-    public void ActivatePowerUp()
+    public void Activate()
     {
-        _playerEntity.AddSlimJimHZ();
+        _playerEntity.TakeLife();
     }
 }

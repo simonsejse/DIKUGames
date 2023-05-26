@@ -27,11 +27,11 @@ public class PowerUpEntity : Entity
     /// <param name="blockType">The type of the block.</param>
     /// <param name="powerUpActivator"></param>
     /// <returns></returns>
-    public static PowerUpEntity Create(Vec2F pos, string image, IPowerUpActivator powerUpActivator)
+    public static PowerUpEntity Create(Vec2F pos, IBaseImage image, IPowerUpActivator powerUpActivator)
     {
         return new PowerUpEntity(
             new DynamicShape(pos, PositionUtil.PowerUpExtent),
-            new Image(Path.Combine("Assets", "Images", $"{image}.png")),
+            image,
             powerUpActivator
         );
     }
@@ -43,6 +43,6 @@ public class PowerUpEntity : Entity
 
     public void ActivatePowerUp()
     {
-        _powerUpActivator.ActivatePowerUp();
+        _powerUpActivator.Activate();
     }
 }

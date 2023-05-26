@@ -1,6 +1,7 @@
 ﻿using System.Dynamic;
 using Breakout.Entities;
 using Breakout.Entities.PowerUps;
+using Breakout.PowerUps;
 using DIKUArcade.Entities;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;

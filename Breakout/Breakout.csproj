@@ -12,4 +12,8 @@
     <ProjectReference Include="..\DIKUArcade\DIKUArcade\DIKUArcade.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\PowerUps\" />
+  </ItemGroup>
+
 </Project>
