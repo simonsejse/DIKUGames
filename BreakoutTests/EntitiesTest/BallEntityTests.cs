@@ -6,7 +6,7 @@ using Breakout.Utility;
 using DIKUArcade.GUI;
 using DIKUArcade.Math;
 
-namespace BreakoutTests;
+namespace BreakoutTests.BreakoutTests;
 
 /// <summary>
 /// We have mainly used the Test-Driven Development Approach for these tests
@@ -19,7 +19,7 @@ public class BallEntityTests
     public void Setup()
     {
         Window.CreateOpenGLContext();
-        ballEntity = BallEntity.Create(PositionUtil.BallPosition, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection, false);
+        ballEntity = BallEntity.Create(PositionUtil.BallPosition, PositionUtil.BallExtent, PositionUtil.BallDirection, false);
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class BallEntityTests
     [Test]
     public void TestMoveStuck()
     {
-        ballEntity = BallEntity.Create(PositionUtil.BallPosition, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection, true);
+        ballEntity = BallEntity.Create(PositionUtil.BallPosition, PositionUtil.BallExtent, PositionUtil.BallDirection, true);
 
         var initPos = ballEntity.Shape.Position;
 
