@@ -27,6 +27,7 @@ Map/
 
 Meta:
 Name: Columns
+PowerUp: 2
 Meta/
 
 Legend:

@@ -71,9 +71,9 @@ public class BallEntity : Entity
         
         if (Shape.Position.Y + Shape.Extent.Y > 1)
         {
-            _direction.Y *= -1.0f; 
+            _direction.Y *= -1.0f;
         }
-        if (Shape.Position.X - Shape.Extent.X < -0.03f || Shape.Position.X + Shape.Extent.X > 1)
+        if (Shape.Position.X - Shape.Extent.X < -Shape.Extent.X || Shape.Position.X + Shape.Extent.X > 1)
         {
             _direction.X *= -1.0f; 
         }
