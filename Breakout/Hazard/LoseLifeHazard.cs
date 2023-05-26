@@ -1,5 +1,5 @@
-﻿using Breakout.Entities.PowerUps;
-using Breakout.PowerUps;
+﻿using Breakout.PowerUps;
+using Breakout.PowerUps.Activators;
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 
@@ -13,6 +13,6 @@ public class LoseLifeHazard : IPowerUp
     }
 
     public IPowerUpActivator Activator() =>
-        new LoseLifeHZActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
+        new LoseLifeHzActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
 
 }

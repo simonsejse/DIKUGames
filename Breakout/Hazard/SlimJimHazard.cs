@@ -1,5 +1,5 @@
-﻿using Breakout.Entities.PowerUps;
-using Breakout.PowerUps;
+﻿using Breakout.PowerUps;
+using Breakout.PowerUps.Activators;
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 
@@ -13,5 +13,5 @@ public class SlimJimHazard : IPowerUp
     }
 
     public IPowerUpActivator Activator() =>
-        new SlimJimHZActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
+        new SlimJimHzActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
 }

@@ -1,5 +1,4 @@
-﻿using Breakout.Entities.PowerUps;
-using Breakout.Events;
+﻿using Breakout.Events;
 using Breakout.PowerUps;
 using Breakout.Utility;
 using DIKUArcade.Entities;
@@ -44,10 +43,9 @@ public class PowerUpEntity : Entity
 
     public void ActivatePowerUp()
     {
-        
-        
+        //TODO: the PowerupActivator can return an enum like "HealthUp" or "WidePaddle" or "FastBall" or "SlowBall" and then we can use activate
+        //TODO: BreakoutBus.GetBus().RegisterEvent(null);
+        //TODO: Ask Boris
         _powerUpActivator.Activate();
-        //TODO: the powerupactivator can return an enum like "HealthUp" or "WidePaddle" or "FastBall" or "SlowBall" and then we can use activate
-        //BreakoutBus.GetBus().RegisterEvent(null);
     }
 }
