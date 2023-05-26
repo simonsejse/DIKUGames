@@ -28,7 +28,8 @@ public class Game : DIKUGame, IGameEventProcessor<GameEventType>
     {
         GameEventType.InputEvent, 
         GameEventType.GameStateEvent,
-        GameEventType.WindowEvent
+        GameEventType.WindowEvent,
+        GameEventType.StatusEvent,
     };
 
     /// <summary>

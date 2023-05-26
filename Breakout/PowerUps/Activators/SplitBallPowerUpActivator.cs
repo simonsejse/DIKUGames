@@ -1,7 +1,5 @@
 ﻿using Breakout.Containers;
 using Breakout.Entities;
-using Breakout.Utility;
-using DIKUArcade.Entities;
 using DIKUArcade.Math;
 
 namespace Breakout.PowerUps.Activators;
@@ -24,8 +22,10 @@ public class SplitBallPowerUpActivator : IPowerUpActivator
             
             var ballEntity1 = ball.Clone();
             ballEntity1.SetDirection(new Vec2F(GenerateRandomAngle(), GenerateRandomAngle()));
+            
             var ballEntity2 = ball.Clone();
             ballEntity2.SetDirection(new Vec2F(GenerateRandomAngle(), GenerateRandomAngle()));
+            
             var ballEntity3 = ball.Clone();
             ballEntity3.SetDirection(new Vec2F(GenerateRandomAngle(), GenerateRandomAngle()));
             
