@@ -29,9 +29,6 @@ public static class CollisionProcessor
             playerEntity.AddPoints(block.Value);
             state.UpdateText();
             
-
-            Console.WriteLine(block.Shape.Position);
-
             if (collisionDir == CollisionDirection.CollisionDirUnchecked)
                 collisionDir = currentCollisionDir;
 
