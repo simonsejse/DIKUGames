@@ -38,7 +38,19 @@ public class BallEntity : Entity
         _speed = speed;
         this.IsBallStuck = isBallStuck;
     }
-    
+
+    /// <summary>
+    /// Constructor for the Clone pattern method.
+    /// Don't change accessibility, should be private to the outside!
+    /// </summary>
+    /// <param name="ball">The ball entity object.</param>
+    private BallEntity(BallEntity ball) : base(ball.Shape, ball.Image)
+    {
+        _direction = ball._direction;
+        _speed = ball._speed;
+        this.IsBallStuck = ball.IsBallStuck;
+    }
+
     /// <summary>
     /// Moves the ball based on its current direction and speed.
     /// </summary>
@@ -147,7 +159,6 @@ public class BallEntity : Entity
         Shape.Extent *= factor;
     }
 
-    
     /// <summary>
     /// Factory method for creating new instances of the BallEntity class.
     /// </summary>
@@ -157,17 +168,19 @@ public class BallEntity : Entity
     /// <param name="direction">The direction of the ball entity.</param>
     /// <param name="isBallStuck">A value indicating whether the ball is stuck.</param>
     /// <returns>A BallEntity instance.</returns>
-    public static BallEntity Create(Vec2F pos, Vec2F extent, float speed, Vec2F direction, bool isBallStuck)
+    public static BallEntity Create(Vec2F pos, Vec2F extent, Vec2F direction, bool isBallStuck)
     {
         return new BallEntity(
             new DynamicShape(pos, extent),
-            new Image(Path.Combine("Assets", "Images", "Ball.png")), direction, speed, isBallStuck);
+            new Image(Path.Combine("Assets", "Images", "Ball.png")), direction, PositionUtil.BallSpeed, isBallStuck);
     }
 
-    public static BallEntity Clone()
+    /// <summary>
+    /// Uses clone pattern to create a new instance of the BallEntity that is an exact copy of the current instance.
+    /// </summary>
+    /// <returns>A new instance of the BallEntity that is a copy of the current instance.</returns>
+    public BallEntity Clone()
     {
-        
+        return new BallEntity(this);
     }
-    
-    
 }

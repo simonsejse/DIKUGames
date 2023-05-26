@@ -1,4 +1,5 @@
-﻿using Breakout.States.GameRunning;
+﻿using Breakout.PowerUps.Activators;
+using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 
 namespace Breakout.PowerUps;

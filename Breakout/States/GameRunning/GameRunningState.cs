@@ -6,7 +6,6 @@ using Breakout.Factories;
 using Breakout.Handler;
 using Breakout.Levels;
 using Breakout.Utility;
-using DIKUArcade.Entities;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
 using DIKUArcade.Graphics;
@@ -14,7 +13,6 @@ using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;
 using DIKUArcade.Timers;
-using OpenTK.Platform.Windows;
 
 namespace Breakout.States.GameRunning;
 
@@ -62,7 +60,7 @@ public class GameRunningState : IGameState
         };
         _keyboardEventHandler = new RunningStateKeyboardController(EntityManager.PlayerEntity);
 
-        var ballEntity = BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection, true);
+        var ballEntity = BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallDirection, true);
         EntityManager.AddBallEntity(ballEntity);
         UpdateText();
         
@@ -125,7 +123,7 @@ public class GameRunningState : IGameState
         if (noMoreBalls)
         {
             EntityManager.PlayerEntity.TakeLife();
-            EntityManager.AddBallEntity(BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallSpeed, PositionUtil.BallDirection, true));
+            EntityManager.AddBallEntity(BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent,  PositionUtil.BallDirection, true));
             _gameRunningStateUiManager.UpdateHealth(EntityManager.PlayerEntity.GetLives());
         }
         
