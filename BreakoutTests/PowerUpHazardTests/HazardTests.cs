@@ -49,7 +49,7 @@ public class HazardTests
     {
         PlayerEntity player = PlayerEntity.Create();
         IPowerUp extraLifePowerUp = new SlimJimHazard();
-        IPowerUpActivator activator = new SlimJimHZActivator(player);
+        IPowerUpActivator activator = new SlimJimHzActivator(player);
         Assert.That(player.Shape.Extent.X, Is.EqualTo(0.2f));
         Assert.That(player.Shape.Extent.Y, Is.EqualTo(0.028f));
         activator.Activate();
