@@ -24,15 +24,12 @@ public class GameRunningState : IGameState
     private Level _currentLevel;
     private int CurrentLevel { get; set; }
     
-    private readonly LevelLoader _levelLoader;
     private readonly IGameEventFactory<GameEventType> _gameEventFactory;
     private readonly IKeyboardEventHandler _keyboardEventHandler;
     private readonly IWinCondition _winCondition;
+    private readonly LevelLoader _levelLoader;
     public readonly EntityManager EntityManager;
     private readonly GameRunningStateUiManager _gameRunningStateUiManager = new();
-    
-    //TODO: Maybe delete
-    private readonly PowerUpHandler _powerUpHandler;
     
     private static GameRunningState? _instance;
     /// <summary>
@@ -50,10 +47,10 @@ public class GameRunningState : IGameState
     public GameRunningState()
     {
         CurrentLevel = 0;
-        
-        _gameEventFactory = new GameEventFactory();
         _levelLoader = new LevelLoader();
         _currentLevel = _levelLoader.LoadLevel(CurrentLevel);
+
+        _gameEventFactory = new GameEventFactory();
         EntityManager = new EntityManager(this)
         {
             BlockEntities = _levelLoader.ConstructBlockEntities(_currentLevel)
@@ -65,10 +62,7 @@ public class GameRunningState : IGameState
         UpdateText();
         
         _winCondition = new BlockEntitiesWinCondition(EntityManager, _levelLoader);
-        _powerUpHandler = new PowerUpHandler(EntityManager.PlayerEntity, EntityManager.BallEntities);
     }
-
- 
     
     /// <summary>
     /// Resets the state by clearing the singleton instance.
@@ -105,6 +99,7 @@ public class GameRunningState : IGameState
     {
         bool timeRanOut = _currentLevel.Meta.Time.HasValue && _currentLevel.Meta.Time <= StaticTimer.GetElapsedSeconds();
         bool playerNoMoreLives = EntityManager.PlayerEntity.GetLives() == 0;
+        
         if (playerNoMoreLives || timeRanOut)
         {
             GameEvent<GameEventType> gameEvent = _gameEventFactory.CreateGameEvent(GameEventType.GameStateEvent, "CHANGE_STATE", nameof(GameState.Lost));
@@ -123,7 +118,7 @@ public class GameRunningState : IGameState
         if (noMoreBalls)
         {
             EntityManager.PlayerEntity.TakeLife();
-            EntityManager.AddBallEntity(BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent,  PositionUtil.BallDirection, true));
+            EntityManager.AddBallEntity(BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallDirection, true));
             _gameRunningStateUiManager.UpdateHealth(EntityManager.PlayerEntity.GetLives());
         }
         
@@ -145,6 +140,7 @@ public class GameRunningState : IGameState
         _currentLevel = _levelLoader.LoadLevel(CurrentLevel);
         EntityManager.BlockEntities = _levelLoader.ConstructBlockEntities(_currentLevel);
         _gameRunningStateUiManager.UpdateLevel(CurrentLevel);
+        StaticTimer.RestartTimer();
     }
 
     /// <summary>

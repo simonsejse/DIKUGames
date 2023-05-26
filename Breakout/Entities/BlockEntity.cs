@@ -1,11 +1,12 @@
 using DIKUArcade.Math;
 using DIKUArcade.Entities;
 using Breakout.Entities.BlockTypes;
-using Breakout.Entities.PowerUps;
+using Breakout.Factories;
 using Breakout.PowerUps;
 using Breakout.PowerUps.Activators;
 using Breakout.States.GameRunning;
 using Breakout.Utility;
+using DIKUArcade.Events;
 using DIKUArcade.Graphics;
 
 namespace Breakout.Entities;
@@ -15,7 +16,7 @@ namespace Breakout.Entities;
 /// </summary>
 public class BlockEntity : Entity
 {
-    private IPowerUp? _powerUp;
+    private readonly IPowerUp? _powerUp;
     public int Value { get; set; }
     /// <summary>
     /// Gets or sets the health of the block.
@@ -24,8 +25,6 @@ public class BlockEntity : Entity
     public int StartHealth { get; set; }
     private IBlockType BlockType { get; set; }
     public IBaseImage DamagedImage { get; set; }
-
-
 
     /// <summary>
     /// Initializes a new instance of the BlockEntity class with the specified shape, image, value, and health.

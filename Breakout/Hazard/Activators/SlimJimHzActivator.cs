@@ -1,18 +1,19 @@
-﻿using Breakout.PowerUps;
+﻿using Breakout.Entities;
+using Breakout.PowerUps;
 using DIKUArcade.Math;
 
-namespace Breakout.Entities.PowerUps;
+namespace Breakout.Hazard.Activators;
 
-public class SlimJimHZActivator : IPowerUpActivator
+public class SlimJimHzActivator : IPowerUpActivator
 {
     private const float ScaleFactor = 0.75f;
     private readonly PlayerEntity _playerEntity;
 
-    public SlimJimHZActivator(PlayerEntity playerEntity)
+    public SlimJimHzActivator(PlayerEntity playerEntity)
     {
         _playerEntity = playerEntity;
     }
-    
+
     public void Activate()
     {
         _playerEntity.MultiplyExtent(new Vec2F(ScaleFactor, ScaleFactor));

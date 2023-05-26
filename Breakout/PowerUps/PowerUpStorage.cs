@@ -1,5 +1,4 @@
-﻿using Breakout.Entities.PowerUps;
-using Breakout.Hazard;
+﻿using Breakout.Hazard;
 
 namespace Breakout.PowerUps;
 
@@ -21,7 +20,7 @@ public static class PowerUpStorage
         PowerUps.Add(new ExtraLifePowerUp());
         PowerUps.Add(new WidePowerUp());
         PowerUps.Add(new BigBallPowerUp());
-        PowerUps.Add((new SplitBallPowerUp()));
+        PowerUps.Add(new SplitBallPowerUp());
         PowerUps.Add(new LoseLifeHazard());
         PowerUps.Add(new SlimJimHazard());
     }

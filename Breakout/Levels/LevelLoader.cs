@@ -1,6 +1,5 @@
 ﻿using Breakout.Entities;
 using Breakout.Entities.BlockTypes;
-using Breakout.Entities.PowerUps;
 using Breakout.Factories;
 using Breakout.IO;
 using Breakout.PowerUps;
