@@ -21,7 +21,7 @@ namespace BreakoutTests.CommandsTest
             
             command.Execute();
             
-            Assert.AreEqual(shouldMove, playerEntity.GetMoveLeft());
+            Assert.That(shouldMove == playerEntity.GetMoveLeft());
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace BreakoutTests.CommandsTest
             
             command.Execute();
             
-            Assert.AreEqual(shouldMove, playerEntity.GetMoveLeft());
+            Assert.That(shouldMove == playerEntity.GetMoveLeft());
         }
         
         [Test]
@@ -45,7 +45,7 @@ namespace BreakoutTests.CommandsTest
             
             command.Execute();
             
-            Assert.AreEqual(shouldMove, playerEntity.GetMoveLeft());
+            Assert.That(shouldMove == playerEntity.GetMoveLeft());
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace BreakoutTests.CommandsTest
             
             command.Execute();
             
-            Assert.AreEqual(shouldMove, playerEntity.GetMoveRight());
+            Assert.That(shouldMove == playerEntity.GetMoveRight());
         }
     }
 }
