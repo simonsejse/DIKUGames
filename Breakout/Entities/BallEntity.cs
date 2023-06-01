@@ -59,7 +59,6 @@ public class BallEntity : Entity
         if (IsBallStuck)
             return;
         
-        // Limit speed of the ball
         if (_direction.Length() > MaxSpeed)
         {
             _direction = Vec2F.Normalize(_direction) * _speed;
@@ -73,9 +72,14 @@ public class BallEntity : Entity
         {
             _direction.Y *= -1.0f;
         }
-        if (Shape.Position.X - Shape.Extent.X < -Shape.Extent.X || Shape.Position.X + Shape.Extent.X > 1)
+
+        if (Shape.Position.X - Shape.Extent.X < -Shape.Extent.X)
         {
-            _direction.X *= -1.0f; 
+            _direction.X = Math.Abs(_direction.X);
+        }
+        else if (Shape.Position.X + Shape.Extent.X > 1)
+        {
+            _direction.X = -Math.Abs(_direction.X);
         }
     }
 
@@ -89,10 +93,14 @@ public class BallEntity : Entity
     }
     
     /// <summary>
-    /// Checks if the ball is out of bounds.
+    /// Reverses the direction of the ball entity based on the collision direction determined by the collision detection algorithm.
+    /// This method handles the bouncing behavior of the ball when it collides with other objects in the game.
+    /// The ball's direction vector is modified accordingly to simulate the bouncing effect.
     /// </summary>
-    /// <returns>True if the ball is out of bounds; otherwise, false.</returns>
-    public void BounceOffBlock(CollisionDirection collisionDir)
+    /// <param name="collisionDir">The collision direction determined by the CollisionDetection.Aabb</param>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the collision direction is invalid or unsupported.</exception>
+
+    public void BallBounceOff(CollisionDirection collisionDir)
     {
         switch (collisionDir)
         {
@@ -114,7 +122,8 @@ public class BallEntity : Entity
                 throw new ArgumentOutOfRangeException(nameof(collisionDir), collisionDir, null);
         }
     }
-    
+
+
     /// <summary>
     /// Changes the direction of the ball entity.
     /// </summary>

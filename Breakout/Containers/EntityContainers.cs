@@ -29,19 +29,40 @@ public class EntityManager
         PowerUpEntities.RenderEntities();
     }
 
+    /// <summary>
+    /// Moves the player, balls, and power-ups, and performs collision checks and updates.
+    /// </summary>
+
     public void Move()
     {
         PlayerEntity.Move();
+
+        var ballsToDelete = new List<BallEntity>();
         BallEntities.Iterate(ball =>
         {
             CollisionProcessor.CheckBlockCollisions(BlockEntities, ball, PlayerEntity, _state);
             CollisionProcessor.CheckBallPlayerCollision(ball, PlayerEntity);
+            CollisionProcessor.CheckBallCollisions(ball,BallEntities);
             ball.Move();
             if (ball.OutOfBounds())
             {
-                ball.DeleteEntity(); //Iterate lets us mutate the container while iterating
+                ballsToDelete.Add(ball); // Add to the deletion list
             }
+            
         });
+
+        foreach (var ball in ballsToDelete)
+        {
+            BallEntities.Iterate(entity =>
+            {
+                if (entity == ball)
+                {
+                    entity.DeleteEntity();
+                    PlayerEntity.TakeLife();
+                }
+            });
+        }
+        
         PowerUpEntities.Iterate(powerUp =>
         {
             bool checkPowerUpPlayerCollision = CollisionProcessor.CheckPowerUpPlayerCollision(powerUp, PlayerEntity);
@@ -60,6 +81,10 @@ public class EntityManager
         });
     }
 
+    /// <summary>
+    /// Adds a ball entity to the ball entity container.
+    /// </summary>
+    /// <param name="ballEntity">The ball entity to be added.</param>
     public void AddBallEntity(BallEntity ballEntity)
     {
         BallEntities.AddEntity(ballEntity);
