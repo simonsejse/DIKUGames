@@ -50,5 +50,7 @@ public class DefaultMenu : IMenu
     }
 
     public int GetActiveMenuItem() => ActiveButton;
-    
+
+    public int GetSelectedLevelIndex() => GetActiveMenuItem();
+
 }

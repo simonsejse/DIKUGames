@@ -5,7 +5,7 @@ namespace Breakout.Utility;
 public static class PositionUtil
 {
     
-    public static readonly Vec2F StartGamePosition = new(0.1f, 0.1f);
+    public static readonly Vec2F StartGamePosition = new(0.1f, 0.2f);
     public static readonly Vec2F StartGameExtent = new(0.5f, 0.5f);
 
     public static readonly Vec2F ContinueGamePosition = new(0.1f, 0.1f);
@@ -16,6 +16,9 @@ public static class PositionUtil
     
     public static readonly Vec2F PausedMenuQuitItemPosition =  new(0.1f, -0.1f);
     public static readonly Vec2F PausedMenuQuitItemExtent = new(0.5f, 0.5f);
+    
+    public static readonly Vec2F LevelSelectGamePosition =new(0.1f, 0.1f);
+    public static readonly Vec2F LevelSelectGameExtent = new(0.5f, 0.5f);
     
     public static readonly Vec2F QuitGamePosition =new(0.1f, 0f);
     public static readonly Vec2F QuitGameExtent = new(0.5f, 0.5f);
@@ -48,6 +51,13 @@ public static class PositionUtil
     
     public static readonly Vec2F PowerUpExtent = new(0.04f, 0.04f);
     
+    //Level select menu
+    public static readonly Vec2F Level1Position =new(0.1f, 0.1f);
+
+    public static readonly Vec2F Level2Position =new(0.1f, 0.1f);
+
+    public static readonly Vec2F Level3Position =new(0.1f, 0.1f);
+
     //Lost game state
     public static readonly Vec2F LostGamePosition = new(0.3f, 0.1f);
     public static readonly Vec2F LostGameExtent = new(0.5f, 0.5f);

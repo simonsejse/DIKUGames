@@ -33,7 +33,16 @@ public static class MenuUtil
     public static readonly Entity MainMenuBackground = new BackgroundFactory("Assets", "Images", "shipit_titlescreen.png").Create();
     public static readonly Text[] MainMenuItems = {
         DefaultTextFactory.Create("Start Game",PositionUtil.StartGamePosition, PositionUtil.StartGameExtent, Color.Crimson),
+        DefaultTextFactory.Create("Level Selection", PositionUtil.LevelSelectGamePosition, PositionUtil.LevelSelectGameExtent, Color.White),
         DefaultTextFactory.Create("Quit", PositionUtil.QuitGamePosition, PositionUtil.QuitGameExtent, Color.White),
+    };
+
+    public static readonly Entity LevelSelectionBackground =
+        new BackgroundFactory("Assets", "Images", "shipit_titlescreen.png").Create();
+    public static readonly Text[] LevelSelectionMenuItems = {   
+        DefaultTextFactory.Create("Level 1", PositionUtil.Level1Position, PositionUtil.LevelExtent, Color.White),
+        DefaultTextFactory.Create("Level 2", PositionUtil.Level2Position, PositionUtil.LevelExtent, Color.White),
+        DefaultTextFactory.Create("Level 3", PositionUtil.Level3Position, PositionUtil.LevelExtent, Color.White),
     };
 
 

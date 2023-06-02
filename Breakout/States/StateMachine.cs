@@ -21,7 +21,8 @@ public class StateMachine : IGameEventProcessor<GameEventType>
         { GameState.Running, GameRunningState.GetInstance },
         { GameState.Paused, GamePauseState.GetInstance },
         { GameState.Lost, GameLostState.GetInstance },
-        { GameState.Won, GameWonState.GetInstance }
+        { GameState.Won, GameWonState.GetInstance },
+        { GameState.LevelSelection, LevelSelectionState.GetInstance }
     };
 
     
@@ -49,12 +50,21 @@ public class StateMachine : IGameEventProcessor<GameEventType>
     /// Switches to the specified game state.
     /// </summary>
     /// <param name="stateType">The type of game state to switch to.</param>
-    private void SwitchState(GameState stateType)
+    private void SwitchState(GameState stateType, int levelIndex = 0)
     {
         if (!States.ContainsKey(stateType))
             throw new ArgumentException("State does not exist!", nameof(stateType));
-
-        ActiveState = States[stateType]();
+        
+        if (stateType == GameState.LevelSelection)
+        {
+            LevelSelectionState levelSelectionState = (LevelSelectionState)States[stateType]();
+            levelSelectionState.SetLevelIndex(levelIndex);
+            ActiveState = levelSelectionState;
+        }
+        else
+        {
+            ActiveState = States[stateType]();
+        }
     }
         
     public void ProcessEvent(GameEvent<GameEventType> gameEvent)
@@ -68,6 +78,7 @@ public class StateMachine : IGameEventProcessor<GameEventType>
         {
             case "CHANGE_STATE":
                 SwitchState(_stateTransformer.TransformStringToState(arg1));
+                Console.WriteLine("Ay");
                 break;
             case "NEW_GAME":
                 ResetAllStates();
