@@ -18,8 +18,8 @@ public class BallEntity : Entity
     /// Gets or sets a value indicating whether the ball is stuck.
     /// </summary>
     public bool IsBallStuck { get; set; }
-    
-    
+
+    private bool markedForDeletion;
     private float _speed;
     private Vec2F _direction;
     private const float MaxSpeed = 0.25f;
@@ -90,6 +90,16 @@ public class BallEntity : Entity
     public bool OutOfBounds()
     {
         return Shape.Position.Y + Shape.Extent.Y < 0;
+    }
+
+    public void MarkForDeletion()
+    {
+        markedForDeletion = true;
+    }
+
+    public bool IsMarkedForDeletion()
+    {
+        return markedForDeletion;
     }
     
     /// <summary>

@@ -36,8 +36,7 @@ public class EntityManager
     public void Move()
     {
         PlayerEntity.Move();
-
-        var ballsToDelete = new List<BallEntity>();
+        
         BallEntities.Iterate(ball =>
         {
             CollisionProcessor.CheckBlockCollisions(BlockEntities, ball, PlayerEntity, _state);
@@ -46,22 +45,18 @@ public class EntityManager
             ball.Move();
             if (ball.OutOfBounds())
             {
-                ballsToDelete.Add(ball); // Add to the deletion list
+                ball.MarkForDeletion();
             }
             
         });
-
-        foreach (var ball in ballsToDelete)
+        
+        BallEntities.Iterate(ball =>
         {
-            BallEntities.Iterate(entity =>
+            if (ball.IsMarkedForDeletion())
             {
-                if (entity == ball)
-                {
-                    entity.DeleteEntity();
-                    PlayerEntity.TakeLife();
-                }
-            });
-        }
+                ball.DeleteEntity();
+            }
+        });
         
         PowerUpEntities.Iterate(powerUp =>
         {
