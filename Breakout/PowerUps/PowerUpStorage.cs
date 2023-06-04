@@ -23,6 +23,7 @@ public static class PowerUpStorage
         PowerUps.Add(new SplitBallPowerUp());
         PowerUps.Add(new LoseLifeHazard());
         PowerUps.Add(new SlimJimHazard());
+        PowerUps.Add(new PlayerSpeedPowerUp());
     }
     
     /// <summary>

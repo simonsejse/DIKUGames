@@ -15,10 +15,10 @@ public class PlayerEntity : Entity
     // Field for player's movement and its movement speed
     private float _moveRight = 0.0f;
     private float _moveLeft = 0.0f;
-    private const float MovementSpeed = 0.02f;
+    private float _movementSpeed = 0.02f;
     private int _points = 0;
     private int _lives;
-    private int _rockets;
+    private int _rockets; 
     
     // Constructor that intializes player's shape and image by using the base class constructor
     public PlayerEntity(Shape shape, IBaseImage image) : base(shape, image)
@@ -54,7 +54,7 @@ public class PlayerEntity : Entity
     /// <param name="val">A boolean value indicating whether the player should move left.</param>
     public void SetMoveLeft(bool val)
     {
-        _moveLeft = val ? _moveLeft - MovementSpeed : 0f;
+        _moveLeft = val ? _moveLeft - _movementSpeed : 0f;
         UpdateDirection();
     }
     /// <summary>
@@ -63,7 +63,7 @@ public class PlayerEntity : Entity
     /// <param name="val">A boolean value indicating whether the player should move right.</param>
     public void SetMoveRight(bool val)
     {
-        _moveRight = val ? _moveRight + MovementSpeed : 0f;
+        _moveRight = val ? _moveRight + _movementSpeed : 0f;
         UpdateDirection();
     }
 
@@ -110,6 +110,16 @@ public class PlayerEntity : Entity
     public void AddLife()
     {
         _lives++;
+    }
+
+    public void SetPlayerMovementSpeed(float speed)
+    {
+        _movementSpeed = speed;
+    }
+    
+    public float GetPlayerMovementSpeed()
+    {
+        return _movementSpeed;
     }
     
     /// <summary>
