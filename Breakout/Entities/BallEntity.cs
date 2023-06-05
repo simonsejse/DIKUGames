@@ -5,6 +5,7 @@ using DIKUArcade.Math;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Physics;
+using Breakout.DIKUArcadeExtensions;
 
 
 namespace Breakout.Entities;
@@ -18,6 +19,7 @@ public class BallEntity : Entity
     /// Gets or sets a value indicating whether the ball is stuck.
     /// </summary>
     public bool IsBallStuck { get; set; }
+    public bool HardBallMode { get; set; } = false;
 
     private bool markedForDeletion;
     private CollisionDirection collisionDirection;
@@ -203,6 +205,23 @@ public class BallEntity : Entity
     public BallEntity Clone()
     {
         return new BallEntity(this);;
+    }
+    
+    public BallEntity HardBall()
+    {
+        BallEntity clone = new BallEntity(this);
+        clone.ChangeImageFile("ball2.png");
+        return clone;
+    }
+    
+    
+    /// <summary>
+    /// Changes the image file path of the ball entity.
+    /// </summary>
+    /// <param name="imageFile">The new image file path.</param>
+    public void ChangeImageFile(string imageFile)
+    {
+        Image = new Image(Path.Combine("Assets", "Images", imageFile));
     }
 
     public CollisionDirection GetCollisionDirection()

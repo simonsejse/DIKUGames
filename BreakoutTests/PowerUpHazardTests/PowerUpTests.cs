@@ -164,6 +164,7 @@ public class PowerUpTests
                       powerUp is WidePowerUp ||
                       powerUp is BigBallPowerUp ||
                       powerUp is SplitBallPowerUp ||
+                      powerUp is HardBallPowerUp ||
                       powerUp is PlayerSpeedPowerUp, Is.True);
     }
     
