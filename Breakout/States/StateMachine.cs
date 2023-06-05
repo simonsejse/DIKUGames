@@ -81,5 +81,3 @@ public class StateMachine : IGameEventProcessor<GameEventType>
         foreach (Func<IGameState> state in States.Values) state().ResetState();
     }
 }
-
-

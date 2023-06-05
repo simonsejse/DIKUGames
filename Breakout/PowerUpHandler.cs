@@ -9,7 +9,9 @@ using DIKUArcade.Events.Generic;
 
 namespace Breakout;
 
-//TODO: Other alternative power up implementation, not currently used
+/// <summary>
+/// Handles power-up events and activates corresponding power-up activators.
+/// </summary>
 public class PowerUpHandler : IGameEventProcessor<GameEventType>
 {
     private readonly PlayerEntity _playerEntity;
@@ -18,6 +20,11 @@ public class PowerUpHandler : IGameEventProcessor<GameEventType>
     
     private readonly Dictionary<PowerUpType, IPowerUpActivator> _powerUpActivators;
     
+    /// <summary>
+    /// Initializes a new instance of the PowerUpHandler class.
+    /// </summary>
+    /// <param name="playerEntity">The player entity.</param>
+    /// <param name="ballEntity">The ball entity container.</param>
     public PowerUpHandler(PlayerEntity playerEntity, EntityContainer<BallEntity> ballEntity)
     {
         _playerEntity = playerEntity;
