@@ -39,6 +39,9 @@ public static class PositionUtil
     
     public static readonly Vec2F TimerPosition = new(.01f, -0.05f);
     public static readonly Vec2F TimerExtent = new(0.2f, 0.2f);
+
+    public static readonly Vec2F LaunchPosition = new(0.425f, 0.05f);
+    public static readonly Vec2F LaunchExtent = new(0.15f, 0.15f);
     
     public static readonly Vec2F RocketsPosition = new(.01f, -0.10f);
     public static readonly Vec2F RocketsExtent = new(0.2f, 0.2f);

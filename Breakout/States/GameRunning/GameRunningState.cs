@@ -118,6 +118,7 @@ public class GameRunningState : IGameState
         if (noMoreBalls)
         {
             EntityManager.PlayerEntity.TakeLife();
+            _gameRunningStateUiManager.ToggleLaunch();
             EntityManager.AddBallEntity(BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallDirection, true));
             _gameRunningStateUiManager.UpdateHealth(EntityManager.PlayerEntity.GetLives());
         }
@@ -164,6 +165,7 @@ public class GameRunningState : IGameState
             EntityManager.BallEntities.Iterate(ball =>
             {
                 if (!ball.IsBallStuck) return;
+                _gameRunningStateUiManager.ToggleLaunch();
                 ball.IsBallStuck = false;
                 ball.Launch();
             });
