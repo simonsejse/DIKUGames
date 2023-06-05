@@ -18,7 +18,7 @@ public class PowerUpHandler : IGameEventProcessor<GameEventType>
     private readonly EntityContainer<BallEntity> _ballEntity;
     
     
-    private readonly Dictionary<PowerUpType, IPowerUpActivator> _powerUpActivators;
+    private readonly Dictionary<PowerUpType, IGameModifierActivator> _powerUpActivators;
     
     /// <summary>
     /// Initializes a new instance of the PowerUpHandler class.
@@ -29,9 +29,9 @@ public class PowerUpHandler : IGameEventProcessor<GameEventType>
     {
         _playerEntity = playerEntity;
         _ballEntity = ballEntity;
-        _powerUpActivators = new Dictionary<PowerUpType, IPowerUpActivator>
+        _powerUpActivators = new Dictionary<PowerUpType, IGameModifierActivator>
         {
-            { PowerUpType.ExtraLifePowerUp, new HealthPowerUpActivator(_playerEntity)}
+            { PowerUpType.ExtraLifePowerUp, new HealthGameModifierActivator(_playerEntity)}
         };
     }
 

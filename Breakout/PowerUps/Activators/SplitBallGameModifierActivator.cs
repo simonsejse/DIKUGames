@@ -7,7 +7,7 @@ namespace Breakout.PowerUps.Activators;
 /// <summary>
 /// Represents an activator for the Split Ball power-up.
 /// </summary>
-public class SplitBallPowerUpActivator : IPowerUpActivator
+public class SplitBallGameModifierActivator : IGameModifierActivator
 {
     private readonly EntityManager _entityManager;
 
@@ -15,7 +15,7 @@ public class SplitBallPowerUpActivator : IPowerUpActivator
     /// Initializes a new instance of the SplitBallPowerUpActivator class.
     /// </summary>
     /// <param name="entityManager">The EntityManager instance.</param>
-    public SplitBallPowerUpActivator(EntityManager entityManager)
+    public SplitBallGameModifierActivator(EntityManager entityManager)
     {
         _entityManager = entityManager;
     }

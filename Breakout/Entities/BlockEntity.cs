@@ -16,7 +16,7 @@ namespace Breakout.Entities;
 /// </summary>
 public class BlockEntity : Entity
 {
-    private readonly IPowerUp? _powerUp;
+    private readonly IGameModifier? _powerUp;
     public int Value { get; set; }
     /// <summary>
     /// Gets or sets the health of the block.
@@ -36,7 +36,7 @@ public class BlockEntity : Entity
     /// <param name="health">The health of the block.</param>
     /// <param name="blockType">The type of the block.</param>
     /// <param name="powerUp">The power-up type of the block.</param>
-    private BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, IBlockType blockType, IPowerUp? powerUp) : 
+    private BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, IBlockType blockType, IGameModifier? powerUp) : 
         base(shape, image)
     {
         Value = value;
@@ -95,7 +95,7 @@ public class BlockEntity : Entity
     /// <param name="blockType">The type of the block.</param>
     /// <param name="powerUpType"></param>
     /// <returns></returns>
-    public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType, IPowerUp? powerUpType)
+    public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType, IGameModifier? powerUpType)
     {
         return new BlockEntity(
             new StationaryShape(pos, PositionUtil.BlockExtent),

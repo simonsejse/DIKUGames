@@ -9,11 +9,11 @@ namespace Breakout.Entities;
 
 public class PowerUpEntity : Entity
 {
-    private readonly IPowerUpActivator _powerUpActivator;
+    private readonly IGameModifierActivator _gameModifierActivator;
     
-    private PowerUpEntity(Shape shape, IBaseImage image, IPowerUpActivator powerUpActivator) : base(shape, image)
+    private PowerUpEntity(Shape shape, IBaseImage image, IGameModifierActivator gameModifierActivator) : base(shape, image)
     {
-        _powerUpActivator = powerUpActivator;
+        _gameModifierActivator = gameModifierActivator;
         Shape.AsDynamicShape().Direction = new Vec2F(0f, -0.005f);
     }
 
@@ -25,14 +25,14 @@ public class PowerUpEntity : Entity
     /// <param name="image">The image of the block.</param>
     /// <param name="image2">The second image of the block.</param>
     /// <param name="blockType">The type of the block.</param>
-    /// <param name="powerUpActivator"></param>
+    /// <param name="gameModifierActivator"></param>
     /// <returns></returns>
-    public static PowerUpEntity Create(Vec2F pos, IBaseImage image, IPowerUpActivator powerUpActivator)
+    public static PowerUpEntity Create(Vec2F pos, IBaseImage image, IGameModifierActivator gameModifierActivator)
     {
         return new PowerUpEntity(
             new DynamicShape(pos, PositionUtil.PowerUpExtent),
             image,
-            powerUpActivator
+            gameModifierActivator
         );
     }
 
@@ -46,6 +46,6 @@ public class PowerUpEntity : Entity
         //TODO: the PowerupActivator can return an enum like "HealthUp" or "WidePaddle" or "FastBall" or "SlowBall" and then we can use activate
         //TODO: BreakoutBus.GetBus().RegisterEvent(null);
         //TODO: Ask Boris
-        _powerUpActivator.Activate();
+        _gameModifierActivator.Activate();
     }
 }

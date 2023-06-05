@@ -5,7 +5,7 @@ namespace Breakout.PowerUps.Activators;
 /// <summary>
 /// Represents an activator for the Player Speed power-up.
 /// </summary>
-public class PlayerSpeedPowerUpActivator : IPowerUpActivator
+public class PlayerSpeedGameModifierActivator : IGameModifierActivator
 {
     private readonly PlayerEntity _playerEntity;
     private const float ScaleFactor = 2.0f;
@@ -14,7 +14,7 @@ public class PlayerSpeedPowerUpActivator : IPowerUpActivator
     /// Initializes a new instance of the PlayerSpeedPowerUpActivator class.
     /// </summary>
     /// <param name="playerEntity">The PlayerEntity instance.</param>
-    public PlayerSpeedPowerUpActivator(PlayerEntity playerEntity)
+    public PlayerSpeedGameModifierActivator(PlayerEntity playerEntity)
     {
         _playerEntity = playerEntity;
     }

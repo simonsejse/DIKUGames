@@ -11,7 +11,7 @@ namespace BreakoutTests.PowerUpHazardTests;
 /// </summary>
 public class HazardTests
 {
-    private readonly List<IPowerUp> Hazards = new List<IPowerUp>()
+    private readonly List<IGameModifier> Hazards = new List<IGameModifier>()
     {
         new LoseLifeHazard(),
         new SlimJimHazard()
@@ -26,7 +26,7 @@ public class HazardTests
     [Test]
     public void TestPowerUp()
     {
-        foreach(IPowerUp hazard in Hazards) 
+        foreach(IGameModifier hazard in Hazards) 
         {
             Assert.That(hazard.GetImage(), Is.Not.Null);
             Assert.That(hazard.Activator(), Is.Not.Null);
@@ -37,8 +37,8 @@ public class HazardTests
     public void LoseLifeHazard()
     {
         PlayerEntity player = PlayerEntity.Create();
-        IPowerUp extraLifePowerUp = new LoseLifeHazard();
-        IPowerUpActivator activator = new LoseLifeHzActivator(player);
+        IGameModifier extraLifeGameModifier = new LoseLifeHazard();
+        IGameModifierActivator activator = new LoseLifeHzActivator(player);
         Assert.That(player.GetLives(), Is.EqualTo(3));
         activator.Activate();
         Assert.That(player.GetLives(), Is.LessThan(3));
@@ -48,8 +48,8 @@ public class HazardTests
     public void SlimJimHazard()
     {
         PlayerEntity player = PlayerEntity.Create();
-        IPowerUp extraLifePowerUp = new SlimJimHazard();
-        IPowerUpActivator activator = new SlimJimHzActivator(player);
+        IGameModifier extraLifeGameModifier = new SlimJimHazard();
+        IGameModifierActivator activator = new SlimJimHzActivator(player);
         Assert.That(player.Shape.Extent.X, Is.EqualTo(0.2f));
         Assert.That(player.Shape.Extent.Y, Is.EqualTo(0.028f));
         activator.Activate();

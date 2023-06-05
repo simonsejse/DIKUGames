@@ -7,7 +7,7 @@ namespace Breakout.PowerUps;
 /// <summary>
 /// Represents the Big Ball Power-Up.
 /// </summary>
-public class BigBallPowerUp : IPowerUp
+public class BigBallGameModifier : IGameModifier
 {
     /// <summary>
     /// Gets the image associated with the Big Ball Power-Up.
@@ -21,6 +21,6 @@ public class BigBallPowerUp : IPowerUp
     /// Gets the activator for the Big Ball Power-Up.
     /// </summary>
     /// <returns>The activator for the Big Ball Power-Up.</returns>
-    public IPowerUpActivator Activator() =>
-        new BigBallPowerUpActivator(GameRunningState.GetInstance().EntityManager);
+    public IGameModifierActivator Activator() =>
+        new BigBallGameModifierActivator(GameRunningState.GetInstance().EntityManager);
 }

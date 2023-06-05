@@ -10,27 +10,27 @@ public static class PowerUpStorage
     /// <summary>
     /// A collection of all the power up types.
     /// </summary>
-    private static readonly List<IPowerUp> PowerUps = new();
+    private static readonly List<IGameModifier> PowerUps = new();
     
     /// <summary>
     /// Static constructor that adds all the power up types to the collection.
     /// </summary>
     static PowerUpStorage()
     {
-        PowerUps.Add(new ExtraLifePowerUp());
-        PowerUps.Add(new WidePowerUp());
-        PowerUps.Add(new BigBallPowerUp());
-        PowerUps.Add(new SplitBallPowerUp());
+        PowerUps.Add(new ExtraLifeGameModifier());
+        PowerUps.Add(new WideGameModifier());
+        PowerUps.Add(new BigBallGameModifier());
+        PowerUps.Add(new SplitBallGameModifier());
         PowerUps.Add(new LoseLifeHazard());
         PowerUps.Add(new SlimJimHazard());
-        PowerUps.Add(new PlayerSpeedPowerUp());
+        PowerUps.Add(new PlayerSpeedGameModifier());
     }
     
     /// <summary>
     /// Returns a random power up.
     /// </summary>
     /// <returns>A random power up.</returns>
-    public static IPowerUp GetRandomPowerUp()
+    public static IGameModifier GetRandomPowerUp()
     {
         var random = new Random();
         int randomIndex = random.Next(0, PowerUps.Count);

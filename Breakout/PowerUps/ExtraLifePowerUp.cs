@@ -7,7 +7,7 @@ namespace Breakout.PowerUps;
 /// <summary>
 /// Represents the Extra Life Power-Up.
 /// </summary>
-public class ExtraLifePowerUp : IPowerUp
+public class ExtraLifeGameModifier : IGameModifier
 {
     /// <summary>
     /// Gets the image associated with the Extra Life Power-Up.
@@ -20,6 +20,6 @@ public class ExtraLifePowerUp : IPowerUp
     /// Gets the activator for the Extra Life Power-Up.
     /// </summary>
     /// <returns>The activator for the Extra Life Power-Up.</returns>
-    public IPowerUpActivator Activator() => 
-        new HealthPowerUpActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
+    public IGameModifierActivator Activator() => 
+        new HealthGameModifierActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
 }

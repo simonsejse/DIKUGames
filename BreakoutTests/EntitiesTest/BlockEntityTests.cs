@@ -26,7 +26,7 @@ public class BlockEntityTest
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
             new StandardBlockType(), 
-            new ExtraLifePowerUp()
+            new ExtraLifeGameModifier()
         );
         Assert.That(blockEntity.Health, Is.EqualTo(1));
         Assert.That(blockEntity.StartHealth, Is.EqualTo(1));
@@ -43,7 +43,7 @@ public class BlockEntityTest
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
             new HardenedBlockType(),
-            new ExtraLifePowerUp()
+            new ExtraLifeGameModifier()
 
         );
         Assert.That(blockEntity.Health, Is.EqualTo(2));
@@ -64,7 +64,7 @@ public class BlockEntityTest
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
             new HardenedBlockType(),
-            new ExtraLifePowerUp()
+            new ExtraLifeGameModifier()
         );
         Assert.That(blockEntity.Health, Is.EqualTo(2));
         Assert.That(blockEntity.StartHealth, Is.EqualTo(2));
@@ -78,7 +78,7 @@ public class BlockEntityTest
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
             new UnbreakableBlockType(),
-            new ExtraLifePowerUp()
+            new ExtraLifeGameModifier()
         );
         Assert.That(blockEntity.Health, Is.EqualTo(-1));
         blockEntity.HandleCollision();

@@ -9,7 +9,7 @@ namespace Breakout.Hazard;
 /// <summary>
 /// Represents a Slim Jim hazard power-up in the Breakout game.
 /// </summary>
-public class SlimJimHazard : IPowerUp
+public class SlimJimHazard : IGameModifier
 {
     /// <summary>
     /// Gets the image representation of the Slim Jim hazard power-up.
@@ -24,6 +24,6 @@ public class SlimJimHazard : IPowerUp
     /// Gets the activator for the Slim Jim hazard power-up.
     /// </summary>
     /// <returns>The activator for the Slim Jim hazard power-up.</returns>
-    public IPowerUpActivator Activator() =>
+    public IGameModifierActivator Activator() =>
         new SlimJimHzActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
 }

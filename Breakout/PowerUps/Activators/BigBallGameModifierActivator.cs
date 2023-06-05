@@ -8,7 +8,7 @@ namespace Breakout.PowerUps.Activators;
 /// <summary>
 /// Represents an activator for the Big Ball power-up.
 /// </summary>
-public class BigBallPowerUpActivator : IPowerUpActivator
+public class BigBallGameModifierActivator : IGameModifierActivator
 {
     private const float ScaleFactor = 1.5f;
     private readonly EntityManager _entityManager;
@@ -17,7 +17,7 @@ public class BigBallPowerUpActivator : IPowerUpActivator
     /// Initializes a new instance of the BigBallPowerUpActivator class.
     /// </summary>
     /// <param name="entityManager">The EntityManager instance.</param>
-    public BigBallPowerUpActivator(EntityManager entityManager)
+    public BigBallGameModifierActivator(EntityManager entityManager)
     {
         _entityManager = entityManager;
     }
