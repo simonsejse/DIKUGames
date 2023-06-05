@@ -191,7 +191,7 @@ public class BallEntity : Entity
     {
         return new BallEntity(
             new DynamicShape(pos, extent),
-            new Image(Path.Combine("Assets", "Images", "Ball.png")), direction, PositionUtil.BallSpeed, isBallStuck);
+            new Image(Path.Combine("Assets", "Images", "ball.png")), direction, PositionUtil.BallSpeed, isBallStuck);
     }
 
     /// <summary>
