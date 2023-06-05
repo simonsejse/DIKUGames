@@ -20,6 +20,7 @@ public class BallEntity : Entity
     public bool IsBallStuck { get; set; }
 
     private bool markedForDeletion;
+    private CollisionDirection collisionDirection;
     private float _speed;
     private Vec2F _direction;
     private const float MaxSpeed = 0.25f;
@@ -131,6 +132,7 @@ public class BallEntity : Entity
             default:
                 throw new ArgumentOutOfRangeException(nameof(collisionDir), collisionDir, null);
         }
+        collisionDirection = collisionDir;
     }
 
 
@@ -201,5 +203,10 @@ public class BallEntity : Entity
     public BallEntity Clone()
     {
         return new BallEntity(this);;
+    }
+
+    public CollisionDirection GetCollisionDirection()
+    {
+        return collisionDirection;
     }
 }
