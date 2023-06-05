@@ -45,7 +45,7 @@ public class GameRunningStateUiManager
     
     public void UpdateLevel(int level)
     {
-        _levelText.SetText($"Level: {level}");
+        _levelText.SetText($"Level: {level + 1}");
     }
     
     public void UpdateTimer(int? time)
