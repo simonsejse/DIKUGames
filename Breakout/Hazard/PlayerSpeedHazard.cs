@@ -6,14 +6,13 @@ using DIKUArcade.Graphics;
 
 namespace Breakout.Hazard;
 
-public class LoseLifeHazard : IHazard
+public class PlayerSpeedHazard : IHazard
 {
     public IBaseImage GetImage()
     {
-        return new Image(Path.Combine("Assets", "Images", "LoseLife.png"));
+        return new Image(Path.Combine("Assets", "Images", "Slowness.png"));
     }
 
     public IHazardActivator Activator() =>
-        new LoseLifeHzActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
-
+        new PlayerSpeedHzActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
 }

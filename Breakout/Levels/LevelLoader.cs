@@ -3,6 +3,7 @@ using Breakout.Entities.BlockTypes;
 using Breakout.Factories;
 using Breakout.IO;
 using Breakout.PowerUps;
+using Breakout.Hazard;
 using Breakout.Storage;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
@@ -78,6 +79,8 @@ public class LevelLoader
                     _ => null
                 };
                 
+                var hazard = blockType is StandardBlockType ? HazardStorage.GetRandomHazard() : null;
+                
                 var blockEntity = BlockEntity.Create(pos,
                     new Image(Path.Combine("Assets",
                         "Images",
@@ -86,7 +89,8 @@ public class LevelLoader
                         "Images",
                         imgDmgPath)), 
                     blockType, 
-                    powerUp);
+                    powerUp,
+                    hazard);
 
                 blockEntities.AddEntity(blockEntity);
             }

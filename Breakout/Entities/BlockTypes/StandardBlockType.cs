@@ -13,11 +13,13 @@ public class StandardBlockType : IBlockType
 
     /// <summary>
     /// A method of handling collision between the block and the ball entity
+    /// Also drops Hazard-game modifiers.
     /// </summary>
     /// <param name="block">The blockentity</param>
     public void HandleCollision(BlockEntity block) 
     {
         block.TakeDamage();
+        block.DropHazard();
     }
     #endregion
 }

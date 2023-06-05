@@ -4,7 +4,7 @@ using DIKUArcade.Math;
 
 namespace Breakout.Hazard.Activators;
 
-public class SlimJimHzActivator : IPowerUpActivator
+public class SlimJimHzActivator : IHazardActivator
 {
     private const float ScaleFactor = 0.75f;
     private readonly PlayerEntity _playerEntity;

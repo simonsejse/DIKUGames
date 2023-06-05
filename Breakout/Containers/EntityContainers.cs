@@ -10,7 +10,8 @@ public class EntityManager
     private readonly GameRunningState _state;
     public EntityContainer<BlockEntity> BlockEntities { get; set; }
     public EntityContainer<BallEntity> BallEntities { get; }
-    public EntityContainer<PowerUpEntity> PowerUpEntities { get; } = new();
+    public EntityContainer<GameModifierEntity> PowerUpEntities { get; } = new();
+    public EntityContainer<GameModifierEntity> HazardEntities { get; } = new();
     public PlayerEntity PlayerEntity { get; }
 
     public EntityManager(GameRunningState state)
@@ -27,10 +28,11 @@ public class EntityManager
         BallEntities.RenderEntities();
         PlayerEntity.RenderEntity();
         PowerUpEntities.RenderEntities();
+        HazardEntities.RenderEntities();
     }
 
     /// <summary>
-    /// Moves the player, balls, and power-ups, and performs collision checks and updates.
+    /// Moves the player, balls, power-ups and hazards, and performs collision checks and updates.
     /// </summary>
 
     public void Move()
@@ -60,7 +62,7 @@ public class EntityManager
         
         PowerUpEntities.Iterate(powerUp =>
         {
-            bool checkPowerUpPlayerCollision = CollisionProcessor.CheckPowerUpPlayerCollision(powerUp, PlayerEntity);
+            bool checkPowerUpPlayerCollision = CollisionProcessor.CheckGameModifierEntityPlayerCollision(powerUp, PlayerEntity);
             powerUp.Move();
             if (checkPowerUpPlayerCollision)
             {
@@ -72,6 +74,23 @@ public class EntityManager
             if (powerUp.Shape.Position.Y < 0)
             {
                 powerUp.DeleteEntity();
+            }
+        });
+        
+        HazardEntities.Iterate(hazard =>
+        {
+            bool checkHazardPlayerCollision = CollisionProcessor.CheckGameModifierEntityPlayerCollision(hazard, PlayerEntity);
+            hazard.Move();
+            if (checkHazardPlayerCollision)
+            {
+                hazard.ActivateHazard();
+                _state.UpdateText();
+                hazard.DeleteEntity();
+            }
+            else
+            if (hazard.Shape.Position.Y < 0)
+            {
+                hazard.DeleteEntity();
             }
         });
     }

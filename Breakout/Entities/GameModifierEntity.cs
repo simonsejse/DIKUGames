@@ -1,4 +1,5 @@
 ﻿using Breakout.Events;
+using Breakout.Hazard;
 using Breakout.PowerUps;
 using Breakout.Utility;
 using DIKUArcade.Entities;
@@ -7,13 +8,15 @@ using DIKUArcade.Math;
 
 namespace Breakout.Entities;
 
-public class PowerUpEntity : Entity
+public class GameModifierEntity : Entity
 {
     private readonly IPowerUpActivator _powerUpActivator;
+    private readonly IHazardActivator _hazardActivator;
     
-    private PowerUpEntity(Shape shape, IBaseImage image, IPowerUpActivator powerUpActivator) : base(shape, image)
+    private GameModifierEntity(Shape shape, IBaseImage image, IPowerUpActivator powerUpActivator, IHazardActivator hazardActivator) : base(shape, image)
     {
         _powerUpActivator = powerUpActivator;
+        _hazardActivator = hazardActivator;
         Shape.AsDynamicShape().Direction = new Vec2F(0f, -0.005f);
     }
 
@@ -27,14 +30,16 @@ public class PowerUpEntity : Entity
     /// <param name="blockType">The type of the block.</param>
     /// <param name="powerUpActivator"></param>
     /// <returns></returns>
-    public static PowerUpEntity Create(Vec2F pos, IBaseImage image, IPowerUpActivator powerUpActivator)
+    public static GameModifierEntity Create(Vec2F pos, IBaseImage image, IPowerUpActivator powerUpActivator, IHazardActivator hazardActivator)
     {
-        return new PowerUpEntity(
+        return new GameModifierEntity(
             new DynamicShape(pos, PositionUtil.PowerUpExtent),
             image,
-            powerUpActivator
+            powerUpActivator,
+            hazardActivator
         );
     }
+    
 
     public void Move()
     {
@@ -43,9 +48,11 @@ public class PowerUpEntity : Entity
 
     public void ActivatePowerUp()
     {
-        //TODO: the PowerupActivator can return an enum like "HealthUp" or "WidePaddle" or "FastBall" or "SlowBall" and then we can use activate
-        //TODO: BreakoutBus.GetBus().RegisterEvent(null);
-        //TODO: Ask Boris
         _powerUpActivator.Activate();
+    }
+    
+    public void ActivateHazard()
+    {
+        _hazardActivator.Activate();
     }
 }

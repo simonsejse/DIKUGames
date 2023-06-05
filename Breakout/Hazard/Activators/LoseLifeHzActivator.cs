@@ -3,7 +3,7 @@ using Breakout.PowerUps;
 
 namespace Breakout.Hazard.Activators;
 
-public class LoseLifeHzActivator : IPowerUpActivator
+public class LoseLifeHzActivator : IHazardActivator
 {
     private readonly PlayerEntity _playerEntity;
 
