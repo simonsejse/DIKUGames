@@ -9,6 +9,5 @@ namespace Breakout.Factories;
 /// </summary>
 public interface ITextFactory
 {
-
     Text Create(string text, Vec2F pos, Vec2F extent, Color color);
 }

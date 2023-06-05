@@ -111,7 +111,7 @@ public class PlayerEntity : Entity
     {
         _lives++;
     }
-
+    
     public void SetPlayerMovementSpeed(float speed)
     {
         _movementSpeed = speed;

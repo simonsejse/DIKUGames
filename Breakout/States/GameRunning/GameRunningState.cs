@@ -178,8 +178,6 @@ public class GameRunningState : IGameState
 
     /// <summary>
     /// Updates the text elements displaying the player's health, score, and current level.
-    /// TODO: This is not very good since it's instantiates a new text object every frame..^^ leading to performance issues.
-    /// TODO: Instead we should invoke <see cref="Text"/> method <see cref="Text.SetText"/> to update the text.
     /// </summary>
     public void UpdateText()
     {

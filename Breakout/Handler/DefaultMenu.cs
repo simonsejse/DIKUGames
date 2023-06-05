@@ -15,6 +15,11 @@ public class DefaultMenu : IMenu
     private int ActiveButton { get; set; }
     private Text[] MenuButtons { get; }
     
+    /// <summary>
+    /// Initializes a new instance of the DefaultMenu class with the provided menu buttons and background entity.
+    /// </summary>
+    /// <param name="menuButtons">The array of menu buttons as Text entities.</param>
+    /// <param name="background">The background entity.</param>
     protected DefaultMenu(Text[] menuButtons, Entity background)
     {
         ActiveButton = 0; 
@@ -22,6 +27,11 @@ public class DefaultMenu : IMenu
         _background = background;
     }
     
+    /// <summary>
+    /// Sets the color of a menu button at the specified index.
+    /// </summary>
+    /// <param name="index">The index of the menu button.</param>
+    /// <param name="color">The color to set.</param>
     private void SetButtonColor(int index, Color color)
     {
         if (index < 0 || index > MenuButtons.Length)
@@ -29,6 +39,9 @@ public class DefaultMenu : IMenu
         MenuButtons[index].SetColor(color);
     }
 
+    /// <summary>
+    /// Shifts the active menu item up, updating the button colors accordingly.
+    /// </summary>
     public void ShiftMenuUp()
     {
         SetButtonColor(ActiveButton, Color.White);
@@ -36,6 +49,9 @@ public class DefaultMenu : IMenu
         SetButtonColor(ActiveButton, Color.Crimson);
     }
 
+    /// <summary>
+    /// Shifts the active menu item down, updating the button colors accordingly.
+    /// </summary>
     public void ShiftMenuDown()
     {
         SetButtonColor(ActiveButton, Color.White);
@@ -43,6 +59,9 @@ public class DefaultMenu : IMenu
         SetButtonColor(ActiveButton, Color.Crimson);
     }
 
+    /// <summary>
+    /// Renders the menu items, including the background and menu buttons.
+    /// </summary>
     protected void RenderMenuItems()
     {
         _background.RenderEntity();
@@ -50,5 +69,4 @@ public class DefaultMenu : IMenu
     }
 
     public int GetActiveMenuItem() => ActiveButton;
-    
 }
