@@ -121,11 +121,11 @@ public static class CollisionProcessor
     /// <summary>
     /// Checks for a collision between a power-up entity and a player entity using Axis-Aligned Bounding Box (AABB) collision detection.
     /// </summary>
-    /// <param name="powerUpEntity">The power-up entity to check for collision.</param>
+    /// <param name="gameModifierEntity">The power-up entity to check for collision.</param>
     /// <param name="playerEntity">The player entity to check for collision.</param>
     /// <returns>True if a collision is detected; otherwise, false.</returns>
-    public static bool CheckPowerUpPlayerCollision(PowerUpEntity powerUpEntity, PlayerEntity playerEntity)
+    public static bool CheckGameModifierEntityPlayerCollision(GameModifierEntity gameModifierEntity, PlayerEntity playerEntity)
     {
-        return CollisionDetection.Aabb(powerUpEntity.Shape.AsDynamicShape(), playerEntity.Shape).Collision;
+        return CollisionDetection.Aabb(gameModifierEntity.Shape.AsDynamicShape(), playerEntity.Shape).Collision;
     }
 }

@@ -50,6 +50,7 @@ public static class PositionUtil
     public const float BallSpeed = 0.013f;
     
     public static readonly Vec2F PowerUpExtent = new(0.04f, 0.04f);
+    public static readonly Vec2F HazardExtent = new(0.04f, 0.04f);
     
     //Lost game state
     public static readonly Vec2F LostGamePosition = new(0.3f, 0.1f);

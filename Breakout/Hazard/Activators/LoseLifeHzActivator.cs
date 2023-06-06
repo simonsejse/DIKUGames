@@ -6,7 +6,7 @@ namespace Breakout.Hazard.Activators;
 /// <summary>
 /// Represents an activator for the Lose Life hazard power-up in the Breakout game.
 /// </summary>
-public class LoseLifeHzActivator : IPowerUpActivator
+public class LoseLifeHzActivator : IHazardActivator
 {
     private readonly PlayerEntity _playerEntity;
 

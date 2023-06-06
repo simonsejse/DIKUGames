@@ -41,7 +41,8 @@ public class CollisionManagerTests
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
             new StandardBlockType(), 
-            new ExtraLifePowerUp()
+            new ExtraLifePowerUp(),
+            null
         );
         blockEntities.AddEntity(block);
         

@@ -9,7 +9,7 @@ namespace Breakout.Hazard;
 /// <summary>
 /// Represents a lose life hazard power-up in the Breakout game.
 /// </summary>
-public class LoseLifeHazard : IPowerUp
+public class LoseLifeHazard : IHazard
 {
     /// <summary>
     /// Gets the image representation of the lose life hazard power-up.
@@ -24,6 +24,6 @@ public class LoseLifeHazard : IPowerUp
     /// Gets the activator for the lose life hazard power-up.
     /// </summary>
     /// <returns>The activator for the lose life hazard power-up.</returns>
-    public IPowerUpActivator Activator() =>
+    public IHazardActivator Activator() =>
         new LoseLifeHzActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
 }

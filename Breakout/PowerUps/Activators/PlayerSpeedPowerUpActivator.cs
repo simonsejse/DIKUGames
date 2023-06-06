@@ -1,4 +1,5 @@
 ﻿using Breakout.Entities;
+using Breakout.Utility;
 
 namespace Breakout.PowerUps.Activators;
 
@@ -8,7 +9,6 @@ namespace Breakout.PowerUps.Activators;
 public class PlayerSpeedPowerUpActivator : IPowerUpActivator
 {
     private readonly PlayerEntity _playerEntity;
-    private const float ScaleFactor = 2.0f;
 
     /// <summary>
     /// Initializes a new instance of the PlayerSpeedPowerUpActivator class.
@@ -25,7 +25,7 @@ public class PlayerSpeedPowerUpActivator : IPowerUpActivator
     public void Activate()
     {
         float currentSpeed = _playerEntity.GetPlayerMovementSpeed();
-        _playerEntity.SetPlayerMovementSpeed(currentSpeed * ScaleFactor);
+        _playerEntity.SetPlayerMovementSpeed(currentSpeed * GameUtil.PlayerSpeedFactor);
         Task.Delay(5000).ContinueWith(t => _playerEntity.SetPlayerMovementSpeed(currentSpeed));
     }
 }
