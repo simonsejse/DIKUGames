@@ -72,7 +72,7 @@ public class EntityManager
             powerUp.Move();
             if (checkPowerUpPlayerCollision)
             {
-                powerUp.ActivatePowerUp();
+                powerUp.ActivateModifier();
                 _state.UpdateText();
                 powerUp.DeleteEntity();
             }
@@ -89,7 +89,7 @@ public class EntityManager
             hazard.Move();
             if (checkHazardPlayerCollision)
             {
-                hazard.ActivateHazard();
+                hazard.ActivateModifier();
                 _state.UpdateText();
                 hazard.DeleteEntity();
             }

@@ -1,11 +1,12 @@
 ﻿using Breakout.Entities;
+using Breakout.GameModifiers;
 
 namespace Breakout.PowerUps.Activators;
 
 /// <summary>
 /// Represents an activator for the Health power-up.
 /// </summary>
-public class HealthPowerUpActivator : IPowerUpActivator
+public class HealthGameModifierActivator : IGameModifierActivator
 {
     private readonly PlayerEntity _playerEntity;
 
@@ -13,7 +14,7 @@ public class HealthPowerUpActivator : IPowerUpActivator
     /// Initializes a new instance of the HealthPowerUpActivator class.
     /// </summary>
     /// <param name="playerEntity">The PlayerEntity instance.</param>
-    public HealthPowerUpActivator(PlayerEntity playerEntity)
+    public HealthGameModifierActivator(PlayerEntity playerEntity)
     {
         _playerEntity = playerEntity;
     }

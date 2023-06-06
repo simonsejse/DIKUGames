@@ -2,12 +2,12 @@
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 
-namespace Breakout.PowerUps;
+namespace Breakout.GameModifiers.PowerUps;
 
 /// <summary>
 /// Represents the Player Speed Power-Up.
 /// </summary>
-public class PlayerSpeedPowerUp : IPowerUp
+public class PlayerSpeedGameModifier : IGameModifier
 {
     /// <summary>
     /// Gets the image associated with the Player Speed Power-Up.
@@ -20,6 +20,6 @@ public class PlayerSpeedPowerUp : IPowerUp
     /// Gets the activator for the Player Speed Power-Up.
     /// </summary>
     /// <returns>The activator for the Player Speed Power-Up.</returns>
-    public IPowerUpActivator Activator() => 
-        new PlayerSpeedPowerUpActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
+    public IGameModifierActivator Activator() => 
+        new PlayerSpeedGameModifierActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
 }

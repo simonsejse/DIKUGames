@@ -2,12 +2,12 @@
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 
-namespace Breakout.PowerUps;
+namespace Breakout.GameModifiers.PowerUps;
 
 /// <summary>
 /// Represents the Split Ball Power-Up.
 /// </summary>
-public class SplitBallPowerUp : IPowerUp
+public class SplitBallGameModifier : IGameModifier
 {
     /// <summary>
     /// Gets the image associated with the Split Ball Power-Up.
@@ -21,6 +21,6 @@ public class SplitBallPowerUp : IPowerUp
     /// Gets the activator for the Split Ball Power-Up.
     /// </summary>
     /// <returns>The activator for the Split Ball Power-Up.</returns>
-    public IPowerUpActivator Activator() =>
-        new SplitBallPowerUpActivator(GameRunningState.GetInstance().EntityManager);
+    public IGameModifierActivator Activator() =>
+        new SplitBallGameModifierActivator(GameRunningState.GetInstance().EntityManager);
 }

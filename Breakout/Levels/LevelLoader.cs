@@ -1,6 +1,8 @@
 ﻿using Breakout.Entities;
 using Breakout.Entities.BlockTypes;
 using Breakout.Factories;
+using Breakout.GameModifiers;
+using Breakout.GameModifiers.PowerUps;
 using Breakout.IO;
 using Breakout.PowerUps;
 using Breakout.Hazard;
@@ -91,11 +93,11 @@ public class LevelLoader
                 
                 var powerUp = key switch
                 {
-                    _ when key == level.Meta.PowerUp => PowerUpStorage.GetRandomPowerUp(),
+                    _ when key == level.Meta.PowerUp => GameModifierStorage.GetRandomPowerUp(),
                     _ => null
                 };
                 
-                var hazard = blockType is StandardBlockType ? HazardStorage.GetRandomHazard() : null;
+                var hazard = blockType is StandardBlockType ? GameModifierStorage.GetRandomHazard() : null;
                 
                 var blockEntity = BlockEntity.Create(pos,
                     new Image(Path.Combine("Assets",
