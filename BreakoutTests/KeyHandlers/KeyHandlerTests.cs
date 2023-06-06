@@ -26,6 +26,7 @@ public class KeyHandlerTests
     
     private DefaultKeyboardReleaseHandler _defaultKeyboardReleaseHandler;
     private DefaultKeyboardPressHandler _defaultKeyboardPressHandler;
+    private DefaultKeyEventHandler _defaultKeyEventHandler;
     
     [SetUp]
     public void Setup()
@@ -38,9 +39,9 @@ public class KeyHandlerTests
         {
             {SetFactory.Create(KeyboardKey.W), new KeyPressCommand()}
         };
-        _defaultKeyboardReleaseHandler = new DefaultKeyboardReleaseHandler(releaseKeyboardActions);
-        _defaultKeyboardPressHandler = new DefaultKeyboardPressHandler(pressKeyboardActions);
-        
+        _defaultKeyboardReleaseHandler = new(releaseKeyboardActions);
+        _defaultKeyboardPressHandler = new(pressKeyboardActions);
+        _defaultKeyEventHandler = new(pressKeyboardActions, releaseKeyboardActions);
     }
 
     [Test]
@@ -70,6 +71,22 @@ public class KeyHandlerTests
         string consoleOutput = sw.ToString();
 
         Assert.That(consoleOutput, Does.Not.Contain("Keyboard Key W is released."));
+        Assert.That(consoleOutput, Does.Contain("Keyboard Key W is pressed."));
+    }
+    
+    [Test]
+    public void TestKeyPressRelease()
+    {
+        using var sw = new StringWriter();
+        
+        Console.SetOut(sw); 
+
+        _defaultKeyEventHandler.HandleKeyRelease(KeyboardKey.W);
+        _defaultKeyEventHandler.HandleKeyPress(KeyboardKey.W);
+
+        string consoleOutput = sw.ToString();
+
+        Assert.That(consoleOutput, Does.Contain("Keyboard Key W is released."));
         Assert.That(consoleOutput, Does.Contain("Keyboard Key W is pressed."));
     }
 }
