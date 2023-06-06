@@ -94,7 +94,7 @@ public static void CheckBlockCollisions(EntityContainer<BlockEntity> blockEntiti
         float impactAreaX = playerEntity.Shape.Position.X + (playerEntity.Shape.Extent.X / 2);
         float dImpact = ballCenterX - impactAreaX;
 
-        float maxImpact = 0.15f;
+        const float maxImpact = 0.15f;
         float angle = dImpact / maxImpact * 90f;
         
         float angleInRadians = angle * (float)Math.PI / 180f;
