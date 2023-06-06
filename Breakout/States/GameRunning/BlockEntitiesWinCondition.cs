@@ -19,6 +19,11 @@ public class BlockEntitiesWinCondition : IWinCondition
         _levelLoader = levelLoader;
     }
 
+    /// <summary>
+    /// Checks if the player has won the game.
+    /// </summary>
+    /// <param name="currentLevel">The current level number.</param>
+    /// <returns>True if the player has won the game, false otherwise.</returns>
     public bool HasWon(int currentLevel)
     {
         bool moreBlocksLeft = _entityManager.BlockEntities.CountEntities() > 0;

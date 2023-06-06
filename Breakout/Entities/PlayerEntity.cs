@@ -111,7 +111,7 @@ public class PlayerEntity : Entity
     {
         _lives++;
     }
-
+    
     public void SetPlayerMovementSpeed(float speed)
     {
         _movementSpeed = speed;
@@ -158,7 +158,7 @@ public class PlayerEntity : Entity
     {
         return new PlayerEntity(
             new DynamicShape(PositionUtil.PlayerPosition, PositionUtil.PlayerExtent),
-            new Image(Path.Combine(Directory.GetCurrentDirectory(), "Assets", "Images", "Player.png"))
+            new Image(Path.Combine(Directory.GetCurrentDirectory(), "Assets", "Images", "player.png"))
         );
     }
 

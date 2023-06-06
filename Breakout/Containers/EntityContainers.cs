@@ -14,6 +14,10 @@ public class EntityManager
     public EntityContainer<GameModifierEntity> HazardEntities { get; } = new();
     public PlayerEntity PlayerEntity { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EntityManager"/> class.
+    /// </summary>
+    /// <param name="state">The game running state.</param>
     public EntityManager(GameRunningState state)
     {
         _state = state;
@@ -22,6 +26,9 @@ public class EntityManager
         BallEntities = new EntityContainer<BallEntity>();
     }
 
+    /// <summary>
+    /// Renders all the entities in the entity manager.
+    /// </summary>
     public void RenderEntities()
     {
         BlockEntities.RenderEntities();
@@ -34,7 +41,6 @@ public class EntityManager
     /// <summary>
     /// Moves the player, balls, power-ups and hazards, and performs collision checks and updates.
     /// </summary>
-
     public void Move()
     {
         PlayerEntity.Move();
