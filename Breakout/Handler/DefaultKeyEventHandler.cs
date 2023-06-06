@@ -30,7 +30,9 @@ public class DefaultKeyEventHandler : IKeyboardEventHandler
     /// <param name="key">The pressed keyboard key.</param>
     public void HandleKeyPress(KeyboardKey key)
     {
-        var command = PressKeyboardActions.FirstOrDefault(keyPairValue => keyPairValue.Key.Contains(key)).Value;
+        var command = PressKeyboardActions
+            .FirstOrDefault(keyPairValue => keyPairValue.Key.Contains(key)).Value;
+        
         command?.Execute();
     }
 
@@ -40,7 +42,9 @@ public class DefaultKeyEventHandler : IKeyboardEventHandler
     /// <param name="key">The released keyboard key.</param>
     public void HandleKeyRelease(KeyboardKey key)
     {
-        var command = ReleaseKeyboardActions.FirstOrDefault(keyPairValue => keyPairValue.Key.Contains(key)).Value;
+        var command = ReleaseKeyboardActions
+            .FirstOrDefault(keyPairValue => keyPairValue.Key.Contains(key)).Value;
+        
         command?.Execute();
     }
 }

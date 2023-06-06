@@ -15,48 +15,48 @@ public class MovePlayerLeftCommandTests
     [Test]
     public void MoveLeftTrueTest()
     {
-        PlayerEntity playerEntity = PlayerEntity.Create();
-        var shouldMove = true;
+        var playerEntity = PlayerEntity.Create();
+        const bool shouldMove = true;
         var command = new MovePlayerLeftCommand(playerEntity, shouldMove);
             
         command.Execute();
             
-        Assert.That(shouldMove == playerEntity.GetMoveLeft());
+        Assert.That(playerEntity.GetMoveLeft(), Is.EqualTo(shouldMove));
     }
 
     [Test]
     public void MoveLeftFalseTest()
     {
-        PlayerEntity playerEntity = PlayerEntity.Create();
-        var shouldMove = false;
+        var playerEntity = PlayerEntity.Create();
+        const bool shouldMove = false;
         var command = new MovePlayerLeftCommand(playerEntity, shouldMove);
             
         command.Execute();
             
-        Assert.That(shouldMove == playerEntity.GetMoveLeft());
+        Assert.That(playerEntity.GetMoveLeft(), Is.EqualTo(shouldMove));
     }
         
     [Test]
     public void MoveRightTrueTest()
     {
-        PlayerEntity playerEntity = PlayerEntity.Create();
-        var shouldMove = true;
+        var playerEntity = PlayerEntity.Create();
+        const bool shouldMove = true;
         var command = new MovePlayerLeftCommand(playerEntity, shouldMove);
             
         command.Execute();
             
-        Assert.That(shouldMove == playerEntity.GetMoveLeft());
+        Assert.That(playerEntity.GetMoveLeft(), Is.EqualTo(shouldMove));
     }
 
     [Test]
     public void MoveRightFalseTest()
     {
-        PlayerEntity playerEntity = PlayerEntity.Create();
-        var shouldMove = false;
+        var playerEntity = PlayerEntity.Create();
+        const bool shouldMove = false;
         var command = new MovePlayerRightCommand(playerEntity, shouldMove);
             
         command.Execute();
             
-        Assert.That(shouldMove == playerEntity.GetMoveRight());
+        Assert.That(playerEntity.GetMoveRight(), Is.EqualTo(shouldMove));
     }
 }
