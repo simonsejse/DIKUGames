@@ -3,8 +3,7 @@ namespace Breakout.States;
 /// <summary>
 /// Represents a Game State
 /// </summary>
-public enum GameState
-{
+public enum GameState {
     Running,
     Paused,
     Lost,

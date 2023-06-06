@@ -8,8 +8,7 @@ using DIKUArcade.Timers;
 
 namespace Breakout.Commands.MainMenu;
 
-public class MainMenuEnterCommand : IKeyboardCommand
-{
+public class MainMenuEnterCommand : IKeyboardCommand {
     private readonly DefaultMenu _menu;
     private readonly GameEventFactory _gameEventFactory;
 
@@ -18,19 +17,17 @@ public class MainMenuEnterCommand : IKeyboardCommand
     /// </summary>
     /// <param name="menu">The current default menu.</param>
     /// <param name="gameEventFactory">The game event factory.</param>
-    public MainMenuEnterCommand(DefaultMenu menu, GameEventFactory gameEventFactory)
-    {
+    public MainMenuEnterCommand(DefaultMenu menu, GameEventFactory gameEventFactory) {
         _menu = menu;
         _gameEventFactory = gameEventFactory;
     }
 
     /// <summary>
-    /// Executes the command by creating a game event based on the active menu item and registering it with the Breakout bus.
+    /// Executes the command by creating a game event based on the active menu item and registering 
+    /// it with the Breakout bus.
     /// </summary>
-    public void Execute()
-    {
-        GameEvent<GameEventType> @event = _menu.GetActiveMenuItem() switch
-        {
+    public void Execute() {
+        GameEvent<GameEventType> @event = _menu.GetActiveMenuItem() switch {
             0 => _gameEventFactory.CreateGameEvent(GameEventType.GameStateEvent, "NEW_GAME",
                 Enum.GetName(GameState.Running) ?? "Running"),
             _ => _gameEventFactory.CreateGameEvent(GameEventType.WindowEvent, "CLOSE_WINDOW")

@@ -7,16 +7,16 @@ namespace Breakout.Handler;
 /// Default implementation of the IKeyboardReleaseHandler interface that handles keyboard key releases
 /// and executes the associated commands.
 /// </summary>
-public class DefaultKeyboardReleaseHandler : IKeyboardReleaseHandler
-{
+public class DefaultKeyboardReleaseHandler : IKeyboardReleaseHandler {
     /// <summary>
     /// Initializes a new instance of the DefaultKeyboardReleaseHandler class with the provided
     /// dictionary of keyboard key sets and their associated commands for key releases.
     /// </summary>
-    /// <param name="releaseKeyboardActions">The dictionary of keyboard key sets and their associated commands for key releases.</param>
-    public DefaultKeyboardReleaseHandler(Dictionary<HashSet<KeyboardKey>, IKeyboardCommand> releaseKeyboardActions)
-    {
-        ReleaseKeyboardActions = releaseKeyboardActions;
+    /// <param name="releaseKeyboardActions">The dictionary of keyboard key sets and their 
+    /// associated commands for key releases.</param>
+    public DefaultKeyboardReleaseHandler(
+        Dictionary<HashSet<KeyboardKey>, IKeyboardCommand> releaseKeyboardActions) {
+            ReleaseKeyboardActions = releaseKeyboardActions;
     }
 
     /// <summary>
@@ -28,9 +28,9 @@ public class DefaultKeyboardReleaseHandler : IKeyboardReleaseHandler
     /// Handles the key release event by executing the associated command.
     /// </summary>
     /// <param name="key">The released keyboard key.</param>
-    public void HandleKeyRelease(KeyboardKey key)
-    {
-        var command = ReleaseKeyboardActions.FirstOrDefault(keyPairValue => keyPairValue.Key.Contains(key)).Value;
+    public void HandleKeyRelease(KeyboardKey key) {
+        var command = ReleaseKeyboardActions.FirstOrDefault(
+            keyPairValue => keyPairValue.Key.Contains(key)).Value;
         command?.Execute();
     }
 }

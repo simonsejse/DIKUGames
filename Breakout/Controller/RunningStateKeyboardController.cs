@@ -11,21 +11,23 @@ namespace Breakout.Controller;
 /// <summary>
 /// Default concrete implementation for the abstract interface <see cref="IKeyboardEventHandler"/>.
 /// </summary>
-public class RunningStateKeyboardController : DefaultKeyEventHandler
-{
+public class RunningStateKeyboardController : DefaultKeyEventHandler {
     /// <summary>
     /// Initializes a new instance of the <see cref="RunningStateKeyboardController"/> class.
     /// </summary>
     /// <param name="playerEntity">The player entity.</param>
     public RunningStateKeyboardController(PlayerEntity playerEntity) : base(
-        new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
-        {
-            { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), new MovePlayerRightCommand(playerEntity, true) },
-            { SetFactory.Create(KeyboardKey.Left, KeyboardKey.A), new MovePlayerLeftCommand(playerEntity, true) },
-            { SetFactory.Create(KeyboardKey.Escape), new PauseGameCommand(new GameEventFactory()) }
-        }, new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
-        {
-            { SetFactory.Create(KeyboardKey.Left, KeyboardKey.A), new MovePlayerLeftCommand(playerEntity, false) },
-            { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), new MovePlayerRightCommand(playerEntity, false) }
+        new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand> {
+            { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), 
+                new MovePlayerRightCommand(playerEntity, true) },
+            { SetFactory.Create(KeyboardKey.Left, KeyboardKey.A), 
+                new MovePlayerLeftCommand(playerEntity, true) },
+            { SetFactory.Create(KeyboardKey.Escape), 
+                new PauseGameCommand(new GameEventFactory()) }
+        }, new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand> {
+            { SetFactory.Create(KeyboardKey.Left, KeyboardKey.A), 
+                new MovePlayerLeftCommand(playerEntity, false) },
+            { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), 
+                new MovePlayerRightCommand(playerEntity, false) }
         }) { }
 }

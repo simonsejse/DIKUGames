@@ -15,8 +15,7 @@ public interface IKeyboardEventHandler : IKeyboardPressHandler, IKeyboardRelease
 /// implemented by concrete classes that provide actual implementation
 /// for only key press events.
 /// </summary>
-public interface IKeyboardPressHandler
-{
+public interface IKeyboardPressHandler {
     void HandleKeyPress(KeyboardKey key);
 }
 
@@ -25,7 +24,6 @@ public interface IKeyboardPressHandler
 /// implemented by concrete classes that provide actual implementation
 /// for only key release events.
 /// </summary>
-public interface IKeyboardReleaseHandler
-{
+public interface IKeyboardReleaseHandler {
     void HandleKeyRelease(KeyboardKey key);
 }

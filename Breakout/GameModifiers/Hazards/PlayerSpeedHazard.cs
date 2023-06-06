@@ -4,10 +4,8 @@ using DIKUArcade.Graphics;
 
 namespace Breakout.GameModifiers.Hazards;
 
-public class PlayerSpeedHazard : IGameModifier
-{
-    public IBaseImage GetImage()
-    {
+public class PlayerSpeedHazard : IGameModifier {
+    public IBaseImage GetImage() {
         return new Image(Path.Combine("Assets", "Images", "Slowness.png"));
     }
 

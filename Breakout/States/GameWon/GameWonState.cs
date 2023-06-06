@@ -11,24 +11,19 @@ public class GameWonState : IGameState
     /// Gets the singleton instance of the <see cref="GameWonState"/>.
     /// </summary>
     /// <returns>The singleton instance of the <see cref="GameWonState"/>.</returns>
-    public static GameWonState GetInstance()
-    {
+    public static GameWonState GetInstance() {
         return _instance ??= new GameWonState();
     }
 
-    public void ResetState()
-    {
+    public void ResetState() {
     }
 
-    public void UpdateState()
-    {
+    public void UpdateState() {
     }
 
-    public void RenderState()
-    {
+    public void RenderState() {
     }
 
-    public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
-    {
+    public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
     }
 }

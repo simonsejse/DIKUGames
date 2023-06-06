@@ -7,14 +7,12 @@ namespace Breakout.GameModifiers.Hazard;
 /// <summary>
 /// Represents a lose life hazard power-up in the Breakout game.
 /// </summary>
-public class LoseLifeHazard : IGameModifier
-{
+public class LoseLifeHazard : IGameModifier {
     /// <summary>
     /// Gets the image representation of the lose life hazard power-up.
     /// </summary>
     /// <returns>The image of the lose life hazard power-up.</returns>
-    public IBaseImage GetImage()
-    {
+    public IBaseImage GetImage() {
         return new Image(Path.Combine("Assets", "Images", "LoseLife.png"));
     }
 

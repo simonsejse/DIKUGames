@@ -1,7 +1,6 @@
 namespace Breakout.Commands;
 
-public interface IKeyboardCommand
-{
+public interface IKeyboardCommand {
     /// <summary>
     /// Executes the command.
     /// </summary>

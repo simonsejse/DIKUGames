@@ -2,8 +2,7 @@
 
 namespace Breakout.Entities.BlockBehaviors;
 
-public class HardenedBlockTypeBehavior : IBlockTypeBehavior
-{
+public class HardenedBlockTypeBehavior : IBlockTypeBehavior {
     /// <summary>
     /// Modifies the health of a hardened block by doubling it.
     /// </summary>

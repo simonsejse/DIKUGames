@@ -6,8 +6,7 @@ namespace Breakout.Storage;
 /// <summary>
 /// Responsible for storing all file paths in the Assets/Levels directory.
 /// </summary>
-public class LevelStorage
-{
+public class LevelStorage {
     /// <summary>
     /// Stores all file paths in the Assets/Levels directory.
     /// </summary>
@@ -17,8 +16,7 @@ public class LevelStorage
     /// Constructs a new LevelStorage object.
     /// Adds all file paths in the Assets/Levels directory to the LevelPaths list.
     /// </summary>
-    public LevelStorage()
-    {
+    public LevelStorage() {
         LevelPaths = DirectoryExplorer.GetDirectoryFilePaths(Path.Combine("Assets", "Levels"));
     }
 }

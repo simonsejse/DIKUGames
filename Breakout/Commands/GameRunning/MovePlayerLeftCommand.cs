@@ -2,8 +2,7 @@ using Breakout.Entities;
 
 namespace Breakout.Commands.GameRunning;
 
-public class MovePlayerLeftCommand : IKeyboardCommand
-{
+public class MovePlayerLeftCommand : IKeyboardCommand {
     private readonly PlayerEntity _playerEntity;
     private readonly bool _shouldMove;
 
@@ -12,8 +11,7 @@ public class MovePlayerLeftCommand : IKeyboardCommand
     /// </summary>
     /// <param name="playerEntity">A player entity</param>
     /// <param name="shouldMove">A boolean indicating if the player should move or not</param>
-    public MovePlayerLeftCommand(PlayerEntity playerEntity, bool shouldMove)
-    {
+    public MovePlayerLeftCommand(PlayerEntity playerEntity, bool shouldMove) {
         _playerEntity = playerEntity;
         _shouldMove = shouldMove;
     }
@@ -21,8 +19,7 @@ public class MovePlayerLeftCommand : IKeyboardCommand
     /// <summary>
     /// Executes the command by setting the left movement of the player entity.
     /// </summary>
-    public void Execute()
-    {
+    public void Execute() {
         _playerEntity.SetMoveLeft(_shouldMove);
     }
 }

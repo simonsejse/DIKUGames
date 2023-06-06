@@ -7,8 +7,7 @@ namespace Breakout.GameModifiers;
 /// <summary>
 /// Static class that stores all the power up types.
 /// </summary>
-public static class GameModifierStorage
-{
+public static class GameModifierStorage {
     /// <summary>
     /// A collection of all the power up types.
     /// </summary>
@@ -22,14 +21,13 @@ public static class GameModifierStorage
     /// <summary>
     /// Static constructor that adds all the power up types to the collection.
     /// </summary>
-    static GameModifierStorage()
-    {
+    static GameModifierStorage() {
         //Power Ups
-        //PowerUps.Add(new ExtraLifePowerUp());
-        //PowerUps.Add(new WidePowerUp());
-        //PowerUps.Add(new BigBallPowerUp());
-        //PowerUps.Add(new SplitBallPowerUp());
-        //PowerUps.Add(new HardBallPowerUp());
+        PowerUps.Add(new ExtraLifePowerUp());
+        PowerUps.Add(new WidePowerUp());
+        PowerUps.Add(new BigBallPowerUp());
+        PowerUps.Add(new SplitBallPowerUp());
+        PowerUps.Add(new HardBallPowerUp());
         PowerUps.Add(new RocketGameModifier());
         
         //Hazards
@@ -42,8 +40,7 @@ public static class GameModifierStorage
     /// Returns a random power up.
     /// </summary>
     /// <returns>A random power up.</returns>
-    public static IGameModifier GetRandomPowerUp()
-    {
+    public static IGameModifier GetRandomPowerUp() {
         var random = new Random();
         int randomIndex = random.Next(0, PowerUps.Count);
         return PowerUps[randomIndex];
@@ -53,8 +50,7 @@ public static class GameModifierStorage
     /// Returns a random power up.
     /// </summary>
     /// <returns>A random power up.</returns>
-    public static IGameModifier GetRandomHazard()
-    {
+    public static IGameModifier GetRandomHazard() {
         var random = new Random();
         int randomIndex = random.Next(0, Hazards.Count);
         return Hazards[randomIndex];

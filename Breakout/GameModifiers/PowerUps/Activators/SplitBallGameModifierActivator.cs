@@ -7,16 +7,14 @@ namespace Breakout.GameModifiers.PowerUps.Activators;
 /// <summary>
 /// Represents an activator for the Split Ball power-up.
 /// </summary>
-public class SplitBallGameModifierActivator : IGameModifierActivator
-{
+public class SplitBallGameModifierActivator : IGameModifierActivator {
     private readonly EntityManager _entityManager;
 
     /// <summary>
     /// Initializes a new instance of the SplitBallPowerUpActivator class.
     /// </summary>
     /// <param name="entityManager">The EntityManager instance.</param>
-    public SplitBallGameModifierActivator(EntityManager entityManager)
-    {
+    public SplitBallGameModifierActivator(EntityManager entityManager) {
         _entityManager = entityManager;
     }
     
@@ -24,13 +22,10 @@ public class SplitBallGameModifierActivator : IGameModifierActivator
     /// Activates the Split Ball power-up by splitting each ball into three new balls,
     /// each traveling in a new direction.
     /// </summary>
-    public void Activate()
-    {
+    public void Activate() {
         List<BallEntity> newBalls = new();
         //Each ball on the screen splits into three new balls which each travels in a new direction.
-        _entityManager.BallEntities.Iterate(ball =>
-        {
-            
+        _entityManager.BallEntities.Iterate(ball => {
             var ballEntity1 = ball.Clone();
             ballEntity1.SetDirection(new Vec2F(GenerateRandomAngle(), GenerateRandomAngle()));
             
@@ -52,8 +47,7 @@ public class SplitBallGameModifierActivator : IGameModifierActivator
     /// </summary>
     /// <returns>A random angle in radians.</returns>
     private readonly Random random = new();
-    private float GenerateRandomAngle()
-    {
+    private float GenerateRandomAngle() {
         return (float)(random.NextDouble() * 360f) / 360f;
     }
 }

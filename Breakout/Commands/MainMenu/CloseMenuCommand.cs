@@ -5,23 +5,21 @@ using DIKUArcade.Events.Generic;
 
 namespace Breakout.Commands.MainMenu;
 
-public class CloseMenuCommand : IKeyboardCommand
-{
+public class CloseMenuCommand : IKeyboardCommand {
     private readonly IGameEventFactory<GameEventType> _gameEventFactory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CloseMenuCommand"/> class.
     /// </summary>
-    public CloseMenuCommand() 
-    {
+    public CloseMenuCommand() {
         _gameEventFactory = new GameEventFactory();
     }
 
     /// <summary>
-    /// Executes the command by creating a game event to close the window and registering it with the Breakout bus.
+    /// Executes the command by creating a game event to close the window and registering it 
+    // with the Breakout bus.
     /// </summary>
-    public void Execute()
-    {
+    public void Execute() {
         GameEvent<GameEventType> closeEvent = _gameEventFactory.CreateGameEvent(
             GameEventType.WindowEvent,
             "CLOSE_WINDOW");
