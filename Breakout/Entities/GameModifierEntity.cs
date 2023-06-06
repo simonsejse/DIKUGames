@@ -1,4 +1,5 @@
 ﻿using Breakout.Events;
+using Breakout.GameModifiers;
 using Breakout.Hazard;
 using Breakout.PowerUps;
 using Breakout.Utility;
@@ -10,13 +11,11 @@ namespace Breakout.Entities;
 
 public class GameModifierEntity : Entity
 {
-    private readonly IPowerUpActivator _powerUpActivator;
-    private readonly IHazardActivator _hazardActivator;
+    private readonly IGameModifierActivator _gameModifierActivator;
     
-    private GameModifierEntity(Shape shape, IBaseImage image, IPowerUpActivator powerUpActivator, IHazardActivator hazardActivator) : base(shape, image)
+    private GameModifierEntity(Shape shape, IBaseImage image, IGameModifierActivator gameModifierActivator) : base(shape, image)
     {
-        _powerUpActivator = powerUpActivator;
-        _hazardActivator = hazardActivator;
+        _gameModifierActivator = gameModifierActivator;
         Shape.AsDynamicShape().Direction = new Vec2F(0f, -0.005f);
     }
 
@@ -26,33 +25,24 @@ public class GameModifierEntity : Entity
     /// <returns>A BlockEntity instance</returns>
     /// <param name="pos">The position of the block.</param>
     /// <param name="image">The image of the block.</param>
-    /// <param name="image2">The second image of the block.</param>
-    /// <param name="blockType">The type of the block.</param>
-    /// <param name="powerUpActivator"></param>
+    /// <param name="gameModifierActivator"></param>
     /// <returns></returns>
-    public static GameModifierEntity Create(Vec2F pos, IBaseImage image, IPowerUpActivator powerUpActivator, IHazardActivator hazardActivator)
+    public static GameModifierEntity Create(Vec2F pos, IBaseImage image, IGameModifierActivator gameModifierActivator)
     {
         return new GameModifierEntity(
             new DynamicShape(pos, PositionUtil.PowerUpExtent),
             image,
-            powerUpActivator,
-            hazardActivator
+            gameModifierActivator
         );
     }
-    
 
     public void Move()
     {
         Shape.Move();
     }
 
-    public void ActivatePowerUp()
+    public void ActivateModifier()
     {
-        _powerUpActivator.Activate();
-    }
-    
-    public void ActivateHazard()
-    {
-        _hazardActivator.Activate();
+        _gameModifierActivator.Activate();
     }
 }

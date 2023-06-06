@@ -1,9 +1,9 @@
 ﻿using Breakout.Entities;
 using Breakout.Utility;
 
-namespace Breakout.Hazard.Activators;
+namespace Breakout.GameModifiers.Hazard.Activators;
 
-public class PlayerSpeedHzActivator : IHazardActivator
+public class PlayerSpeedHzActivator : IGameModifierActivator
 {
     private readonly PlayerEntity _playerEntity;
 

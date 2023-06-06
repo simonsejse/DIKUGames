@@ -2,12 +2,12 @@
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 
-namespace Breakout.PowerUps;
+namespace Breakout.GameModifiers.PowerUps;
 
 /// <summary>
 /// Represents the Wide Power-Up.
 /// </summary>
-public class WidePowerUp : IPowerUp
+public class WideGameModifier : IGameModifier
 {
     /// <summary>
     /// Gets the image associated with the Wide Power-Up.
@@ -22,6 +22,6 @@ public class WidePowerUp : IPowerUp
     /// Gets the activator for the Wide Power-Up.
     /// </summary>
     /// <returns>The activator for the Wide Power-Up.</returns>
-    public IPowerUpActivator Activator() =>
-        new WidePowerUpActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
+    public IGameModifierActivator Activator() =>
+        new WideGameModifierActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
 }

@@ -4,6 +4,7 @@ using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 using Breakout.Entities.BlockTypes;
+using Breakout.GameModifiers.PowerUps;
 using Breakout.PowerUps;
 
 namespace BreakoutTests.EntitiesTest;
@@ -26,7 +27,7 @@ public class BlockEntityTest
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
             new StandardBlockType(), 
-            new ExtraLifePowerUp(),
+            new ExtraLifeGameModifier(),
             null
         );
         Assert.That(blockEntity.Health, Is.EqualTo(1));
@@ -44,7 +45,7 @@ public class BlockEntityTest
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
             new HardenedBlockType(),
-            new ExtraLifePowerUp(),
+            new ExtraLifeGameModifier(),
             null
 
         );
@@ -66,7 +67,7 @@ public class BlockEntityTest
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
             new HardenedBlockType(),
-            new ExtraLifePowerUp(),
+            new ExtraLifeGameModifier(),
             null
         );
         Assert.That(blockEntity.Health, Is.EqualTo(2));
@@ -81,7 +82,7 @@ public class BlockEntityTest
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
             new UnbreakableBlockType(),
-            new ExtraLifePowerUp(),
+            new ExtraLifeGameModifier(),
             null
         );
         Assert.That(blockEntity.Health, Is.EqualTo(-1));

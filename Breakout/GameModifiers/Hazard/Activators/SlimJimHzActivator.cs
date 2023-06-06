@@ -1,13 +1,12 @@
 ﻿using Breakout.Entities;
-using Breakout.PowerUps;
 using DIKUArcade.Math;
 
-namespace Breakout.Hazard.Activators;
+namespace Breakout.GameModifiers.Hazard.Activators;
 
 /// <summary>
 /// Represents an activator for the Slim Jim hazard power-up in the Breakout game.
 /// </summary>
-public class SlimJimHzActivator : IHazardActivator
+public class SlimJimHzActivator : IGameModifierActivator
 {
     private const float ScaleFactor = 0.75f;
     private readonly PlayerEntity _playerEntity;

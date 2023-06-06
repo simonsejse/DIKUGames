@@ -1,15 +1,13 @@
 ﻿using Breakout.Hazard.Activators;
-using Breakout.PowerUps;
-using Breakout.PowerUps.Activators;
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 
-namespace Breakout.Hazard;
+namespace Breakout.GameModifiers.Hazard;
 
 /// <summary>
 /// Represents a lose life hazard power-up in the Breakout game.
 /// </summary>
-public class LoseLifeHazard : IHazard
+public class LoseLifeHazard : IGameModifier
 {
     /// <summary>
     /// Gets the image representation of the lose life hazard power-up.
@@ -24,6 +22,6 @@ public class LoseLifeHazard : IHazard
     /// Gets the activator for the lose life hazard power-up.
     /// </summary>
     /// <returns>The activator for the lose life hazard power-up.</returns>
-    public IHazardActivator Activator() =>
+    public IGameModifierActivator Activator() =>
         new LoseLifeHzActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
 }

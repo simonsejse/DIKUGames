@@ -7,14 +7,14 @@ public class Application
 {
     private static void Main(string[] args)
     {
-        var windowArgs = new WindowArgs
+        var window = new WindowArgs
         {
-            Title = "Breakout v1", 
-            Width = 700, 
+            Title = "Breakout v1",
+            Width = 700,
             Height = 700
         };
-        
-        var game = new Game(windowArgs);
+
+        var game = new Game(window);
         game.Run();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Breakout.Entities;
+using Breakout.GameModifiers;
 using Breakout.PowerUps;
 
 namespace Breakout.Hazard.Activators;
@@ -6,7 +7,7 @@ namespace Breakout.Hazard.Activators;
 /// <summary>
 /// Represents an activator for the Lose Life hazard power-up in the Breakout game.
 /// </summary>
-public class LoseLifeHzActivator : IHazardActivator
+public class LoseLifeHzActivator : IGameModifierActivator
 {
     private readonly PlayerEntity _playerEntity;
 

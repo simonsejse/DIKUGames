@@ -1,4 +1,5 @@
 ﻿using Breakout.Entities;
+using Breakout.GameModifiers;
 using DIKUArcade.Math;
 
 namespace Breakout.PowerUps.Activators;
@@ -6,7 +7,7 @@ namespace Breakout.PowerUps.Activators;
 /// <summary>
 /// Represents an activator for the Wide Power-Up.
 /// </summary>
-public class WidePowerUpActivator : IPowerUpActivator
+public class WideGameModifierActivator : IGameModifierActivator
 {
     private readonly PlayerEntity _playerEntity;
 
@@ -14,7 +15,7 @@ public class WidePowerUpActivator : IPowerUpActivator
     /// Initializes a new instance of the WidePowerUpActivator class.
     /// </summary>
     /// <param name="playerEntity">The PlayerEntity instance.</param>
-    public WidePowerUpActivator(PlayerEntity playerEntity)
+    public WideGameModifierActivator(PlayerEntity playerEntity)
     {
         _playerEntity = playerEntity;
     }
