@@ -1,8 +1,7 @@
-﻿namespace Breakout.Entities;
+namespace Breakout.Entities;
 
 
-public class Meta
-{
+public class Meta {
     public string? Name { get; }
     public int? Time { get; }
     public char? Hardened { get; }
@@ -18,8 +17,7 @@ public class Meta
     /// <param name="hardened">Indicates if the entity is hardened.</param>
     /// <param name="powerUp">Indicates if the entity has a power-up.</param>
     /// <param name="unbreakable">Indicates if the entity is unbreakable.</param>
-    public Meta(string? name, int? time, char? hardened, char? powerUp, char? unbreakable)
-    {
+    public Meta(string? name, int? time, char? hardened, char? powerUp, char? unbreakable) {
         Name = name;
         Time = time;
         Hardened = hardened;

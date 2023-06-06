@@ -1,4 +1,4 @@
-﻿using DIKUArcade.Input;
+using DIKUArcade.Input;
 using DIKUArcade.State;
 
 namespace Breakout.States.GameWon;
@@ -11,30 +11,26 @@ public class GameWonState : IGameState
     /// Gets the singleton instance of the <see cref="GameWonState"/>.
     /// </summary>
     /// <returns>The singleton instance of the <see cref="GameWonState"/>.</returns>
-    public static GameWonState GetInstance()
-    {
+    public static GameWonState GetInstance() {
         return _instance ??= new GameWonState();
     }
 
     /// <summary>
     /// Resets the state of the game won state.
     /// </summary>
-    public void ResetState()
-    {
+    public void ResetState() {
     }
 
     /// <summary>
     /// Updates the game state.
     /// </summary>
-    public void UpdateState()
-    {
+    public void UpdateState() {
     }
 
     /// <summary>
     /// Renders the game state.
     /// </summary>
-    public void RenderState()
-    {
+    public void RenderState() {
     }
 
     /// <summary>
@@ -42,7 +38,6 @@ public class GameWonState : IGameState
     /// </summary>
     /// <param name="action">The keyboard action.</param>
     /// <param name="key">The keyboard key.</param>
-    public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
-    {
+    public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
     }
 }

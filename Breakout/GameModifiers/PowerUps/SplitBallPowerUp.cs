@@ -8,8 +8,7 @@ namespace Breakout.GameModifiers.PowerUps;
 /// <summary>
 /// Represents the Split Ball Power-Up.
 /// </summary>
-public class SplitBallPowerUp : IGameModifier
-{
+public class SplitBallPowerUp : IGameModifier {
     /// <summary>
     /// Gets the image associated with the Split Ball Power-Up.
     /// </summary>

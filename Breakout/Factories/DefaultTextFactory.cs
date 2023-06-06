@@ -5,10 +5,10 @@ using DIKUArcade.Math;
 namespace Breakout.Factories;
 
 /// <summary>
-/// Concrete implementation of a <see cref="ITextFactory"/> that creates instances of the <see cref="Text"/> class.
+/// Concrete implementation of a <see cref="ITextFactory"/> that creates instances of 
+/// the <see cref="Text"/> class.
 /// </summary>
-public static class DefaultTextFactory
-{
+public static class DefaultTextFactory {
     /// <summary>
     /// Creates a new <see cref="Text"/> object with the specified text, position, extent, and color.
     /// </summary>

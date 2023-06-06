@@ -3,12 +3,9 @@
 namespace Breakout;
 
 
-public class Application
-{
-    private static void Main(string[] args)
-    {
-        var window = new WindowArgs
-        {
+public class Application {
+    private static void Main(string[] args) {
+        var window = new WindowArgs {
             Title = "Breakout v1",
             Width = 700,
             Height = 700

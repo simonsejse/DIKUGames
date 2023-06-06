@@ -2,8 +2,7 @@
 
 namespace Breakout.Entities.BlockBehaviors;
 
-public class UnbreakableBlockTypeBehaviour : IBlockTypeBehavior
-{
+public class UnbreakableBlockTypeBehaviour : IBlockTypeBehavior {
     /// <summary>
     /// Modifies the health of an unbreakable block by negating it meaning no change has been made and therefore cannot be broken.
     /// </summary>

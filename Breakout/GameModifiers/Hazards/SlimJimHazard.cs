@@ -1,4 +1,4 @@
-﻿using Breakout.GameModifiers.Hazard.Activators;
+using Breakout.GameModifiers.Hazard.Activators;
 using Breakout.Hazard.Activators;
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
@@ -8,14 +8,12 @@ namespace Breakout.GameModifiers.Hazard;
 /// <summary>
 /// Represents a Slim Jim hazard in the Breakout game.
 /// </summary>
-public class SlimJimHazard : IGameModifier
-{
+public class SlimJimHazard : IGameModifier {
     /// <summary>
     /// Gets the image representation of the Slim Jim hazard.
     /// </summary>
     /// <returns>The image of the Slim Jim hazard.</returns>
-    public IBaseImage GetImage()
-    {
+    public IBaseImage GetImage() {
         return new Image(Path.Combine("Assets", "Images", "SlimJim.png"));
     }
 

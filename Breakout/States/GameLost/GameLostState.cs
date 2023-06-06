@@ -9,8 +9,7 @@ namespace Breakout.States.GameLost;
 /// <summary>
 /// Represents the game state when the player has lost the game.
 /// </summary>
-public class GameLostState : DefaultMenu, IGameState
-{
+public class GameLostState : DefaultMenu, IGameState {
     private static GameLostState? _instance;
 
     private readonly IKeyboardPressHandler _keyboardPressHandler;
@@ -18,37 +17,32 @@ public class GameLostState : DefaultMenu, IGameState
     /// Gets the singleton instance of the <see cref="GameLostState"/>.
     /// </summary>
     /// <returns>The singleton instance of the <see cref="GameLostState"/>.</returns>
-    public static GameLostState GetInstance()
-    {
+    public static GameLostState GetInstance() {
         return _instance ??= new GameLostState();
     }
     
-    private GameLostState() : base(MenuUtil.LostMenuItems, MenuUtil.LostBackground)
-    {
+    private GameLostState() : base(MenuUtil.LostMenuItems, MenuUtil.LostBackground) {
         _keyboardPressHandler = new LostGameKeyboardController(this);
     }
     
     /// <summary>
     /// Resets the state of the game lost state.
     /// </summary>
-    public void ResetState()
-    {
+    public void ResetState() {
         _instance = null;
     }
 
     /// <summary>
     /// Updates the state of the game lost state.
     /// </summary>
-    public void UpdateState()
-    {
+    public void UpdateState() {
         
     }
 
     /// <summary>
     /// Renders the state of the game lost state.
     /// </summary>
-    public void RenderState()
-    {
+    public void RenderState() {
         base.RenderMenuItems();
     }
 
@@ -57,8 +51,7 @@ public class GameLostState : DefaultMenu, IGameState
     /// </summary>
     /// <param name="action">The keyboard action.</param>
     /// <param name="key">The keyboard key.</param>
-    public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
-    {
+    public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
         if (action == KeyboardAction.KeyRelease) return;
         _keyboardPressHandler.HandleKeyPress(key);   
     }

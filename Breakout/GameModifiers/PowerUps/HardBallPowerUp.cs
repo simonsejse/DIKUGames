@@ -1,4 +1,4 @@
-﻿using Breakout.GameModifiers.PowerUps.Activators;
+using Breakout.GameModifiers.PowerUps.Activators;
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 
@@ -7,8 +7,7 @@ namespace Breakout.GameModifiers.PowerUps;
 /// <summary>
 /// Represents a game modifier for the Hard Ball power-up.
 /// </summary>
-public class HardBallPowerUp : IGameModifier
-{
+public class HardBallPowerUp : IGameModifier {
     /// <summary>
     /// Gets the image representation of the Hard Ball power-up.
     /// </summary>

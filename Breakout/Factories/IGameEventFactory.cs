@@ -1,4 +1,4 @@
-﻿using DIKUArcade.Events;
+using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
 
 namespace Breakout.Factories;
@@ -7,8 +7,7 @@ namespace Breakout.Factories;
 /// Represents a game event factory.
 /// </summary>
 /// <typeparam name="TEvent">The type of game event.</typeparam>
-public interface IGameEventFactory<TEvent> where TEvent : Enum
-{
+public interface IGameEventFactory<TEvent> where TEvent : Enum {
     /// <summary>
     /// Creates a game event of the specified type with the given message and optional string argument.
     /// </summary>
@@ -25,5 +24,6 @@ public interface IGameEventFactory<TEvent> where TEvent : Enum
     /// <param name="to">The event processor instance.</param>
     /// <param name="message">The message associated with the game event.</param>
     /// <returns>The created game event.</returns>
-    GameEvent<TEvent> CreateGameEventForSpecificProcessors<T>(GameEventType type, T to, string message) where T : IGameEventProcessor<TEvent>;
+    GameEvent<TEvent> CreateGameEventForSpecificProcessors<T>(GameEventType type, T to, 
+        string message) where T : IGameEventProcessor<TEvent>;
 }

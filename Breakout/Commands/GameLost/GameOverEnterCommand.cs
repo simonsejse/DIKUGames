@@ -7,8 +7,7 @@ using DIKUArcade.Events.Generic;
 
 namespace Breakout.Commands.GameLost;
 
-public class GameOverEnterCommand : IKeyboardCommand
-{
+public class GameOverEnterCommand : IKeyboardCommand {
     private readonly DefaultMenu _menu;
     private readonly GameEventFactory _gameEventFactory;
 
@@ -17,8 +16,7 @@ public class GameOverEnterCommand : IKeyboardCommand
     /// </summary>
     /// <param name="menu">The default menu.</param>
     /// <param name="gameEventFactory">The game event factory.</param>
-    public GameOverEnterCommand(DefaultMenu menu, GameEventFactory gameEventFactory)
-    {
+    public GameOverEnterCommand(DefaultMenu menu, GameEventFactory gameEventFactory) {
         _menu = menu;
         _gameEventFactory = gameEventFactory;
     }
@@ -26,10 +24,8 @@ public class GameOverEnterCommand : IKeyboardCommand
     /// <summary>
     /// Executes the game over enter command.
     /// </summary>
-    public void Execute()
-    {
-        GameEvent<GameEventType> @event = _menu.GetActiveMenuItem() switch
-        {
+    public void Execute() {
+        GameEvent<GameEventType> @event = _menu.GetActiveMenuItem() switch {
             0 => _gameEventFactory.CreateGameEvent(GameEventType.GameStateEvent, "CHANGE_STATE",
                 Enum.GetName(GameState.Menu) ?? "Menu"),
             _ => _gameEventFactory.CreateGameEvent(GameEventType.WindowEvent, "CLOSE_WINDOW")

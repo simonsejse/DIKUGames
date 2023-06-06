@@ -2,8 +2,7 @@
 
 namespace Breakout.Entities.BlockBehaviors;
 
-public class StandardBlockTypeBehaviour : IBlockTypeBehavior
-{
+public class StandardBlockTypeBehaviour : IBlockTypeBehavior {
     /// <summary>
     /// Modifies the health of a standard block, where the health remains unchanged.
     /// </summary>

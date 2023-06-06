@@ -3,8 +3,7 @@
 /// <summary>
 /// A win condition for the game.
 /// </summary>
-public interface IWinCondition
-{
+public interface IWinCondition {
     /// <summary>
     /// Checks if the player has won the game.
     /// </summary>

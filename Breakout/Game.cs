@@ -11,8 +11,7 @@ namespace Breakout;
 /// <summary>
 /// Represents a game object that inherits from the DIKUGame class.
 /// </summary>
-public class Game : DIKUGame, IGameEventProcessor<GameEventType>
-{
+public class Game : DIKUGame, IGameEventProcessor<GameEventType> {
     /// <summary>
     /// The <see cref="StateMachine"/> represents the internal state
     /// and uses the state pattern to infer and change
@@ -24,8 +23,7 @@ public class Game : DIKUGame, IGameEventProcessor<GameEventType>
     /// Constant field that represents all game types that will be used
     /// throughout the applications life cycle.
     /// </summary>
-    private static readonly IReadOnlyList<GameEventType> GameEventTypes = new List<GameEventType>
-    {
+    private static readonly IReadOnlyList<GameEventType> GameEventTypes = new List<GameEventType> {
         GameEventType.InputEvent, 
         GameEventType.GameStateEvent,
         GameEventType.WindowEvent,
@@ -36,8 +34,7 @@ public class Game : DIKUGame, IGameEventProcessor<GameEventType>
     /// Initializes a new instance of the Game class with the specified WindowArgs.
     /// </summary>
     /// <param name="windowArgs">The arguments used to create the game's window.</param>
-    public Game(WindowArgs windowArgs) : base(windowArgs)
-    {
+    public Game(WindowArgs windowArgs) : base(windowArgs) {
         BreakoutBus.GetBus().InitializeEventBus(GameEventTypes.ToList());
         BreakoutBus.GetBus().Subscribe(GameEventType.WindowEvent, this);
         _stateMachine = new StateMachine();
@@ -47,8 +44,7 @@ public class Game : DIKUGame, IGameEventProcessor<GameEventType>
     /// <summary>
     /// Updates the game's state by calling the active state's UpdateState method.
     /// </summary>
-    public override void Update()
-    {
+    public override void Update() {
         _stateMachine.ActiveState.UpdateState();
         BreakoutBus.GetBus().ProcessEventsSequentially();
     }
@@ -56,8 +52,7 @@ public class Game : DIKUGame, IGameEventProcessor<GameEventType>
     /// <summary>
     /// Renders the game's state by calling the active state's RenderState method.
     /// </summary>
-    public override void Render()
-    {
+    public override void Render() {
         _stateMachine.ActiveState.RenderState();
     }
     
@@ -66,8 +61,7 @@ public class Game : DIKUGame, IGameEventProcessor<GameEventType>
     /// </summary>
     /// <param name="action">The action that occurred (press or release).</param>
     /// <param name="key">The key that was pressed or released.</param>
-    private void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
-    {
+    private void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
         _stateMachine.ActiveState.HandleKeyEvent(action, key);
     }
 
@@ -75,8 +69,7 @@ public class Game : DIKUGame, IGameEventProcessor<GameEventType>
     /// TODO: Add good comment, idk what to write lmao
     /// </summary>
     /// <param name="gameEvent"></param>
-    public void ProcessEvent(GameEvent<GameEventType> gameEvent)
-    {
+    public void ProcessEvent(GameEvent<GameEventType> gameEvent) {
         if (!"CLOSE_WINDOW".Equals(gameEvent.Message)) return;
         window.CloseWindow();
     }

@@ -8,8 +8,7 @@ namespace Breakout.GameModifiers.PowerUps;
 /// <summary>
 /// Represents the Big Ball Power-Up.
 /// </summary>
-public class BigBallPowerUp : IGameModifier
-{
+public class BigBallPowerUp : IGameModifier {
     /// <summary>
     /// Gets the image associated with the Big Ball Power-Up.
     /// </summary>
