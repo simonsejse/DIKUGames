@@ -16,7 +16,7 @@ public static class FileReader
         {
             data = File.ReadAllText(path);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             data = "";
         }

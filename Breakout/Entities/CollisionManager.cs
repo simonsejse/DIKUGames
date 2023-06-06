@@ -99,25 +99,9 @@ public static void CheckBlockCollisions(EntityContainer<BlockEntity> blockEntiti
         
         float angleInRadians = angle * (float)Math.PI / 180f;
 
-        switch (dImpact)
-        {
-            case > 0:
-            {
-                float newX = ballEntity.GetDirection().X * (float)Math.Cos(angleInRadians) - ballEntity.GetDirection().Y * (float)Math.Sin(angleInRadians);
-                float newY = ballEntity.GetDirection().X * (float)Math.Sin(angleInRadians) + ballEntity.GetDirection().Y * (float)Math.Cos(angleInRadians);
-
-                ballEntity.ChangeDirection(newX, -newY);
-                break;
-            }
-            case < 0:
-            {
-                float newX = ballEntity.GetDirection().X * (float)Math.Cos(angleInRadians) - ballEntity.GetDirection().Y * (float)Math.Sin(angleInRadians);
-                float newY = ballEntity.GetDirection().X * (float)Math.Sin(angleInRadians) + ballEntity.GetDirection().Y * (float)Math.Cos(angleInRadians);
-
-                ballEntity.ChangeDirection(newX, -newY);
-                break;
-            }
-        }
+        float newX = ballEntity.GetDirection().X * (float)Math.Cos(angleInRadians) - ballEntity.GetDirection().Y * (float)Math.Sin(angleInRadians);
+        float newY = ballEntity.GetDirection().X * (float)Math.Sin(angleInRadians) + ballEntity.GetDirection().Y * (float)Math.Cos(angleInRadians);
+        ballEntity.ChangeDirection(newX, -newY);
 
         ballEntity.Shape.Move(ballEntity.GetDirection());
     }
