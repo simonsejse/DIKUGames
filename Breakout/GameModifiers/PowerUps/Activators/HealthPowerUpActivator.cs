@@ -6,7 +6,7 @@ namespace Breakout.PowerUps.Activators;
 /// <summary>
 /// Represents an activator for the Health power-up.
 /// </summary>
-public class HealthGameModifierActivator : IGameModifierActivator
+public class HealthPowerUpActivator : IGameModifierActivator
 {
     private readonly PlayerEntity _playerEntity;
 
@@ -14,7 +14,7 @@ public class HealthGameModifierActivator : IGameModifierActivator
     /// Initializes a new instance of the HealthPowerUpActivator class.
     /// </summary>
     /// <param name="playerEntity">The PlayerEntity instance.</param>
-    public HealthGameModifierActivator(PlayerEntity playerEntity)
+    public HealthPowerUpActivator(PlayerEntity playerEntity)
     {
         _playerEntity = playerEntity;
     }

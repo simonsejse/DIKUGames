@@ -102,7 +102,7 @@ public class BlockEntity : Entity
         
         float randomValue = (float) new Random().NextDouble();
 
-        if (!(randomValue < GameUtil.HazardDroprate)) return;
+        if (!(randomValue < GameUtil.HazardDropRate)) return;
         
         float positionX = Shape.Position.X + Shape.Extent.X / 2 - PositionUtil.HazardExtent.X / 2;
         float positionY = Shape.Position.Y + Shape.Extent.Y / 2 - PositionUtil.HazardExtent.Y / 2;

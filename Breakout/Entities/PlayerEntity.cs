@@ -112,11 +112,19 @@ public class PlayerEntity : Entity
         _lives++;
     }
     
+    /// <summary>
+    /// Set player movement speed.
+    /// </summary>
+    /// <param name="speed"></param>
     public void SetPlayerMovementSpeed(float speed)
     {
         _movementSpeed = speed;
     }
     
+    /// <summary>
+    /// Get player movement speed.
+    /// </summary>
+    /// <returns></returns>
     public float GetPlayerMovementSpeed()
     {
         return _movementSpeed;
@@ -138,12 +146,19 @@ public class PlayerEntity : Entity
     {
         Shape.Extent *= factor;
     }
-
+    
+    /// <summary>
+    /// Get can move left
+    /// </summary>
+    /// <returns></returns>
     public bool GetMoveLeft()
     {
         return _moveLeft != 0f;
     }
-
+    /// <summary>
+    /// Get can move right
+    /// </summary>
+    /// <returns></returns>
     public bool GetMoveRight()
     {
         return _moveRight != 0f;

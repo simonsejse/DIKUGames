@@ -21,5 +21,5 @@ public class ExtraLifeGameModifier : IGameModifier
     /// </summary>
     /// <returns>The activator for the Extra Life Power-Up.</returns>
     public IGameModifierActivator Activator() => 
-        new HealthGameModifierActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
+        new HealthPowerUpActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
 }
