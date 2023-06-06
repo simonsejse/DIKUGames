@@ -7,6 +7,9 @@ using DIKUArcade.Physics;
 
 namespace Breakout.Entities;
 
+/// <summary>
+/// Provides a collection of collision detection methods.
+/// </summary>
 public static class CollisionProcessor {
     /// <summary>
     /// Checks for collisions between a ball and blocks in the block entities container.
