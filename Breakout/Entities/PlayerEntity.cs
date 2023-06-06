@@ -10,8 +10,7 @@ namespace Breakout.Entities;
 /// <summary>
 /// A class that represents the player entity.
 /// </summary>
-public class PlayerEntity : Entity
-{
+public class PlayerEntity : Entity {
     // Field for player's movement and its movement speed
     private float _moveRight = 0.0f;
     private float _moveLeft = 0.0f;
@@ -21,48 +20,48 @@ public class PlayerEntity : Entity
     private int _rockets; 
     
     // Constructor that intializes player's shape and image by using the base class constructor
-    public PlayerEntity(Shape shape, IBaseImage image) : base(shape, image)
-    {
+    public PlayerEntity(Shape shape, IBaseImage image) : base(shape, image) {
         _lives = 3;
     }
 
     /// <summary>
-    /// Moves the player left or right based upon their movement fields and speed and updates their position
-    /// and direction. Also restricts position to be within game window limits
+    /// Moves the player left or right based upon their movement fields and speed and updates 
+    /// their position and direction. Also restricts position to be within game window limits
     /// </summary>
-    public void Move()
-    {
-        if (Shape.Position.X < 0f){
+    public void Move() {
+        if (Shape.Position.X < 0f) {
             SetMoveLeft(false);
         }
-        if (Shape.Position.X > (1.0f - Shape.Extent.X)){
+        if (Shape.Position.X > (1.0f - Shape.Extent.X)) {
             SetMoveRight(false);
         }
         Shape.Move();
     }
+
     /// <summary>
     /// Updates the player's direction based upon their movement fields
     /// </summary>
-    private void UpdateDirection()
-    {
+    private void UpdateDirection() {
         float x = _moveLeft + _moveRight;
         Shape.AsDynamicShape().Direction = new Vec2F(x, 0);
     }
+
     /// <summary>
-    /// Sets the movement of the player to the left based on a boolean value and updates their direction.
+    /// Sets the movement of the player to the left based on a boolean value and 
+    /// updates their direction.
     /// </summary>
     /// <param name="val">A boolean value indicating whether the player should move left.</param>
-    public void SetMoveLeft(bool val)
-    {
+    public void SetMoveLeft(bool val) {
         _moveLeft = val ? _moveLeft - _movementSpeed : 0f;
         UpdateDirection();
     }
+
     /// <summary>
-    /// Sets the movement of the player to the right based on a boolean value and updates their direction.
+    /// Sets the movement of the player to the right based on a boolean value and 
+    /// updates their direction.
     /// </summary>
     /// <param name="val">A boolean value indicating whether the player should move right.</param>
-    public void SetMoveRight(bool val)
-    {
+    public void SetMoveRight(bool val) {
         _moveRight = val ? _moveRight + _movementSpeed : 0f;
         UpdateDirection();
     }
@@ -71,8 +70,7 @@ public class PlayerEntity : Entity
     /// Adds count points to the player's points. If the added points are not positive, do nothing
     /// </summary>
     /// <param name="count">Integer for the added points.</param>
-    public void AddPoints(int count)
-    {
+    public void AddPoints(int count) {
         if (count < 0) return;
         _points += count;
     }
@@ -81,8 +79,7 @@ public class PlayerEntity : Entity
     /// Gets the amount of points the player has.
     /// </summary>
     /// <returns>An int the represents the amount of points.</returns>
-    public int GetPoints()
-    {
+    public int GetPoints() {
         return _points;
     }
     
@@ -90,16 +87,14 @@ public class PlayerEntity : Entity
     /// Represents the lives the player has left.
     /// </summary>
     /// <returns>An int that represents the amount of lives the player has left.</returns>
-    public int GetLives()
-    {
+    public int GetLives() {
         return _lives;
     }
     
     /// <summary>
     /// Decrements the players life by one. If the player has no lives left, do nothing.
     /// </summary>
-    public void TakeLife()
-    {
+    public void TakeLife() {
         if (_lives <= 0) return;
         _lives--;
     }
@@ -107,16 +102,14 @@ public class PlayerEntity : Entity
     /// <summary>
     /// Increments players life by one.
     /// </summary>
-    public void AddLife()
-    {
+    public void AddLife() {
         _lives++;
     }
     
     /// <summary>
     /// A setter for the player's life.
     /// </summary>
-    public void SetLives(int lives)
-    {
+    public void SetLives(int lives) {
         _lives = lives;
     }
     
@@ -124,8 +117,7 @@ public class PlayerEntity : Entity
     /// Set player movement speed.
     /// </summary>
     /// <param name="speed"></param>
-    public void SetPlayerMovementSpeed(float speed)
-    {
+    public void SetPlayerMovementSpeed(float speed) {
         _movementSpeed = speed;
     }
     
@@ -133,16 +125,14 @@ public class PlayerEntity : Entity
     /// Get player movement speed.
     /// </summary>
     /// <returns></returns>
-    public float GetPlayerMovementSpeed()
-    {
+    public float GetPlayerMovementSpeed() {
         return _movementSpeed;
     }
     
     /// <summary>
     /// Decrements the players life by one. If the player has no lives left, do nothing.
     /// </summary>
-    public int GetRockets()
-    {
+    public int GetRockets() {
         return _rockets;
     }
 
@@ -150,8 +140,7 @@ public class PlayerEntity : Entity
     /// Multiplies the player's extent by a factor.
     /// </summary>
     /// <param name="factor">Represents the factor scalar</param>
-    public void MultiplyExtent(Vec2F factor)
-    {
+    public void MultiplyExtent(Vec2F factor) {
         Shape.Extent *= factor;
     }
     
@@ -159,26 +148,23 @@ public class PlayerEntity : Entity
     /// Get can move left
     /// </summary>
     /// <returns></returns>
-    public bool GetMoveLeft()
-    {
+    public bool GetMoveLeft() {
         return _moveLeft != 0f;
     }
+
     /// <summary>
     /// Get can move right
     /// </summary>
     /// <returns></returns>
-    public bool GetMoveRight()
-    {
+    public bool GetMoveRight() {
         return _moveRight != 0f;
     }
-    
     
     /// <summary>
     /// A factory method for instantiating a default PlayerEntity.
     /// </summary>
     /// <returns>A PlayerEntity instance.</returns>
-    public static PlayerEntity Create()
-    {
+    public static PlayerEntity Create() {
         return new PlayerEntity(
             new DynamicShape(PositionUtil.PlayerPosition, PositionUtil.PlayerExtent),
             new Image(Path.Combine(Directory.GetCurrentDirectory(), "Assets", "Images", "player.png"))

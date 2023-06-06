@@ -19,8 +19,7 @@ namespace Breakout.States.GameRunning;
 /// <summary>
 /// Represents the game state when the game is running.
 /// </summary>
-public class GameRunningState : IGameState
-{
+public class GameRunningState : IGameState {
     private Level _currentLevel;
     public int CurrentLevel { get; set; }
     
@@ -36,28 +35,26 @@ public class GameRunningState : IGameState
     /// Gets the singleton instance of the <see cref="GameRunningState"/>.
     /// </summary>
     /// <returns>The singleton instance of the <see cref="GameRunningState"/>.</returns>
-    public static GameRunningState GetInstance()
-    {
+    public static GameRunningState GetInstance() {
         return _instance ??= new GameRunningState();
     }
     
     /// <summary>
     /// Initializes a new instance of the <see cref="GameRunningState"/> class.
     /// </summary>
-    public GameRunningState()
-    {
+    public GameRunningState() {
         CurrentLevel = 0;
         _levelLoader = new LevelLoader();
         _currentLevel = _levelLoader.LoadLevel(CurrentLevel);
 
         _gameEventFactory = new GameEventFactory();
-        EntityManager = new EntityManager(this)
-        {
+        EntityManager = new EntityManager(this) {
             BlockEntities = _levelLoader.ConstructBlockEntities(_currentLevel)
         };
         _keyboardEventHandler = new RunningStateKeyboardController(EntityManager.PlayerEntity);
 
-        var ballEntity = BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallDirection, true);
+        var ballEntity = BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, 
+            PositionUtil.BallExtent, PositionUtil.BallDirection, true);
         EntityManager.AddBallEntity(ballEntity);
         UpdateText();
         
@@ -67,19 +64,16 @@ public class GameRunningState : IGameState
     /// <summary>
     /// Resets the state by clearing the singleton instance.
     /// </summary>
-    public void ResetState()
-    {
+    public void ResetState() {
         _instance = null;
     }
     
     /// <summary>
     /// Handles all update logic for the game running state.
     /// </summary>
-    public void UpdateState()
-    {
+    public void UpdateState() {
         EntityManager.Move();
-        EntityManager.BallEntities.Iterate(ball =>
-        {
+        EntityManager.BallEntities.Iterate(ball => {
             if (!ball.IsBallStuck) return;
             
             var playerShape = EntityManager.PlayerEntity.Shape;
@@ -95,31 +89,32 @@ public class GameRunningState : IGameState
     /// <summary>
     /// Handles game winning and losing logic.
     /// </summary>
-    public void HandleGameLogic()
-    {
-        bool timeRanOut = _currentLevel.Meta.Time.HasValue && _currentLevel.Meta.Time <= StaticTimer.GetElapsedSeconds();
+    public void HandleGameLogic() {
+        bool timeRanOut = _currentLevel.Meta.Time.HasValue && _currentLevel.Meta.Time <= 
+            StaticTimer.GetElapsedSeconds();
         bool playerNoMoreLives = EntityManager.PlayerEntity.GetLives() == 0;
         
-        if (playerNoMoreLives || timeRanOut)
-        {
-            GameEvent<GameEventType> gameEvent = _gameEventFactory.CreateGameEvent(GameEventType.GameStateEvent, "CHANGE_STATE", nameof(GameState.Lost));
+        if (playerNoMoreLives || timeRanOut) {
+            GameEvent<GameEventType> gameEvent = _gameEventFactory.CreateGameEvent(
+                GameEventType.GameStateEvent, "CHANGE_STATE", nameof(GameState.Lost));
             BreakoutBus.GetBus().RegisterEvent(gameEvent);
             return;
         }
 
-        if (_winCondition.HasWon(CurrentLevel))
-        {
-            GameEvent<GameEventType> gameEvent = _gameEventFactory.CreateGameEvent(GameEventType.GameStateEvent, "CHANGE_STATE", nameof(GameState.Won));
+        if (_winCondition.HasWon(CurrentLevel)) {
+            GameEvent<GameEventType> gameEvent = _gameEventFactory.CreateGameEvent(
+                GameEventType.GameStateEvent, "CHANGE_STATE", nameof(GameState.Won));
             BreakoutBus.GetBus().RegisterEvent(gameEvent);
             return;
         }
         
         bool noMoreBalls = EntityManager.BallEntities.CountEntities() == 0;
-        if (noMoreBalls)
-        {
+        if (noMoreBalls) {
             EntityManager.PlayerEntity.TakeLife();
             _gameRunningStateUiManager.ToggleLaunch();
-            EntityManager.AddBallEntity(BallEntity.Create(PositionUtil.PlayerPosition + PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallDirection, true));
+            EntityManager.AddBallEntity(BallEntity.Create(PositionUtil.PlayerPosition + 
+                PositionUtil.PlayerExtent / 2, PositionUtil.BallExtent, PositionUtil.BallDirection, 
+                true));
             _gameRunningStateUiManager.UpdateHealth(EntityManager.PlayerEntity.GetLives());
         }
         
@@ -130,8 +125,7 @@ public class GameRunningState : IGameState
     /// <summary>
     /// Loads the next level into the game.
     /// </summary>
-    public void LoadNextLevel()
-    {
+    public void LoadNextLevel() {
         if (EntityManager.BallEntities.CountEntities() > 0)
             EntityManager.BallEntities.ClearContainer();
         if (EntityManager.PowerUpEntities.CountEntities() > 0)
@@ -147,8 +141,7 @@ public class GameRunningState : IGameState
     /// <summary>
     /// Renders the game state.
     /// </summary>
-    public void RenderState()
-    {
+    public void RenderState() {
         EntityManager.RenderEntities();
         _gameRunningStateUiManager.RenderText();
     }
@@ -156,14 +149,12 @@ public class GameRunningState : IGameState
     /// <summary>
     /// Handles the keyboard event based on the specified action and key.
     /// </summary>
-    /// <param name="action">The action associated with the keyboard event (e.g., KeyPress, KeyRelease).</param>
+    /// <param name="action">The action associated with the keyboard event 
+    /// (e.g., KeyPress, KeyRelease).</param>
     /// <param name="key">The keyboard key that triggered the event.</param>
-    public void HandleKeyEvent(KeyboardAction action, KeyboardKey key)
-    {
-        if (key == KeyboardKey.L)
-        {
-            EntityManager.BallEntities.Iterate(ball =>
-            {
+    public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
+        if (key == KeyboardKey.L) {
+            EntityManager.BallEntities.Iterate(ball => {
                 if (!ball.IsBallStuck) return;
                 _gameRunningStateUiManager.ToggleLaunch();
                 ball.IsBallStuck = false;
@@ -179,8 +170,7 @@ public class GameRunningState : IGameState
     /// <summary>
     /// Updates the text elements displaying the player's health, score, and current level.
     /// </summary>
-    public void UpdateText()
-    {
+    public void UpdateText() {
         int lives = EntityManager.PlayerEntity.GetLives();
         _gameRunningStateUiManager.UpdateHealth(lives);
         _gameRunningStateUiManager.UpdateScore(EntityManager.PlayerEntity.GetPoints());

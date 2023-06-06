@@ -7,14 +7,12 @@ namespace Breakout.GameModifiers.PowerUps;
 /// <summary>
 /// Represents the Wide Power-Up.
 /// </summary>
-public class WidePowerUp : IGameModifier
-{
+public class WidePowerUp : IGameModifier {
     /// <summary>
     /// Gets the image associated with the Wide Power-Up.
     /// </summary>
     /// <returns>The image of the Wide Power-Up.</returns>
-    public IBaseImage GetImage()
-    {
+    public IBaseImage GetImage() {
         return new Image(Path.Combine("Assets", "Images", "WidePowerUp.png"));
     }
 

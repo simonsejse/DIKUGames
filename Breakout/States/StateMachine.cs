@@ -12,11 +12,9 @@ namespace Breakout.States;
 /// This class represents a state machine for managing different game states in a Breakout game,
 /// e.g., GameRunning state, MainMenu or Lost etc.
 /// </summary>
-public class StateMachine : IGameEventProcessor<GameEventType>
-{
+public class StateMachine : IGameEventProcessor<GameEventType> {
 
-    private static readonly Dictionary<GameState, Func<IGameState>> States = new()
-    {
+    private static readonly Dictionary<GameState, Func<IGameState>> States = new() {
         { GameState.Menu, MainMenuState.GetInstance },
         { GameState.Running, GameRunningState.GetInstance },
         { GameState.Paused, GamePauseState.GetInstance },
@@ -26,7 +24,8 @@ public class StateMachine : IGameEventProcessor<GameEventType>
 
     
     /// <summary>
-    /// The transformer used to convert from and to string representations to GameState enums, respectively.
+    /// The transformer used to convert from and to string representations to GameState 
+    /// enums, respectively.
     /// </summary>
     private readonly StateTransformer _stateTransformer = new();
     
@@ -39,8 +38,7 @@ public class StateMachine : IGameEventProcessor<GameEventType>
     /// <summary>
     /// Initializes a new instance of the StateMachine class.
     /// </summary>
-    public StateMachine()
-    {
+    public StateMachine() {
         BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
         ActiveState = MainMenuState.GetInstance();
     }
@@ -49,23 +47,20 @@ public class StateMachine : IGameEventProcessor<GameEventType>
     /// Switches to the specified game state.
     /// </summary>
     /// <param name="stateType">The type of game state to switch to.</param>
-    private void SwitchState(GameState stateType)
-    {
+    private void SwitchState(GameState stateType) {
         if (!States.ContainsKey(stateType))
             throw new ArgumentException("State does not exist!", nameof(stateType));
 
         ActiveState = States[stateType]();
     }
         
-    public void ProcessEvent(GameEvent<GameEventType> gameEvent)
-    {
+    public void ProcessEvent(GameEvent<GameEventType> gameEvent) {
         if (gameEvent.EventType != GameEventType.GameStateEvent) return;
 
         string message = gameEvent.Message;
         string arg1 = gameEvent.StringArg1;
 
-        switch (message)
-        {
+        switch (message) {
             case "CHANGE_STATE":
                 SwitchState(_stateTransformer.TransformStringToState(arg1));
                 break;
@@ -76,8 +71,7 @@ public class StateMachine : IGameEventProcessor<GameEventType>
         }
     }
 
-    private void ResetAllStates()
-    {
+    private void ResetAllStates() {
         foreach (Func<IGameState> state in States.Values) state().ResetState();
     }
 }

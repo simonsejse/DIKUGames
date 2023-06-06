@@ -5,9 +5,7 @@ namespace Breakout.Entities.BlockTypes;
 /// <summary>
 /// This is the standard block type
 /// </summary>
-public class StandardBlockType : IBlockType 
-{
-    #region Methods
+public class StandardBlockType : IBlockType {
 
     public IBlockTypeBehavior GetBlockTypeBehavior() => new StandardBlockTypeBehaviour();
 
@@ -16,10 +14,8 @@ public class StandardBlockType : IBlockType
     /// Also drops Hazard-game modifiers.
     /// </summary>
     /// <param name="block">The blockentity</param>
-    public void HandleCollision(BlockEntity block) 
-    {
+    public void HandleCollision(BlockEntity block) {
         block.TakeDamage();
         block.DropHazard();
     }
-    #endregion
 }

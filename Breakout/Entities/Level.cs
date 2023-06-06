@@ -1,7 +1,6 @@
 ﻿namespace Breakout.Entities;
 
-public class Level
-{
+public class Level {
     /// <summary>
     /// Map is a 2-dimensional char array accessible through a public getter and private setter
     /// </summary>
@@ -11,7 +10,8 @@ public class Level
     /// </summary>
     public Meta Meta { get; private set; }
     /// <summary>
-    /// Legends is a dictionary mapping characters to strings, accessible through a public getter and private setter
+    /// Legends is a dictionary mapping characters to strings, accessible through a public getter 
+    /// and private setter
     /// </summary>
     public Dictionary<char, string> Legends  { get; private set; }
     
@@ -20,9 +20,9 @@ public class Level
    /// </summary>
    /// <param name="map">A two-dimensional char array representing the level map</param>
    /// <param name="meta">A Meta object containing metadata about the level</param>
-   /// <param name="legends">A dictionary containing character keys and corresponding string values for the level legends</param>
-    public Level(char[][] map, Meta meta, Dictionary<char, string> legends)
-    {
+   /// <param name="legends">A dictionary containing character keys and corresponding string values 
+   /// for the level legends</param>
+    public Level(char[][] map, Meta meta, Dictionary<char, string> legends) {
         Map = map;
         Meta = meta;
         Legends = legends;

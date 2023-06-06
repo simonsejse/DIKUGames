@@ -16,8 +16,7 @@ namespace Breakout.Entities;
 /// <summary>
 /// Defines the class for the blocks within the game with a certain value and health.
 /// </summary>
-public class BlockEntity : Entity
-{
+public class BlockEntity : Entity {
     private readonly IGameModifier? _powerUp;
     private readonly IGameModifier? _hazard;
     
@@ -41,17 +40,16 @@ public class BlockEntity : Entity
     /// <param name="blockType">The type of the block.</param>
     /// <param name="powerUp">The power-up type of the block.</param>
     /// <param name="hazard">The hazard type of the block.</param>
-    private BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, IBlockType blockType, IGameModifier? powerUp, IGameModifier? hazard) : 
-        base(shape, image)
-    {
-        Value = value;
-        Health = health;
-        BlockType = blockType;
-        _powerUp = powerUp;
-        _hazard = hazard;
-        Health = blockType.GetBlockTypeBehavior().ModifyHealth(health);
-        StartHealth = Health;
-        DamagedImage = damagedImage;
+    private BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, 
+        IBlockType blockType, IGameModifier? powerUp, IGameModifier? hazard) : base(shape, image) {
+            Value = value;
+            Health = health;
+            BlockType = blockType;
+            _powerUp = powerUp;
+            _hazard = hazard;
+            Health = blockType.GetBlockTypeBehavior().ModifyHealth(health);
+            StartHealth = Health;
+            DamagedImage = damagedImage;
     }
     /// <summary>
     /// Returns a boolean indicating whether the block health is below zero.
@@ -62,24 +60,20 @@ public class BlockEntity : Entity
     /// <summary>
     /// Removes 1 point of health from the block entity
     /// </summary>
-    public virtual void TakeDamage() 
-    {
+    public virtual void TakeDamage()  {
         Health--;
-        if (IsDead())
-        {
+        if (IsDead()) {
             DeleteEntity();
         }
     }
 
     public void HandleCollision() => BlockType.HandleCollision(this);
-
     
     /// <summary>
     /// 
     /// </summary>
     /// <param name="block"></param>
-    public void DropPowerUp()
-    {
+    public void DropPowerUp() {
         if (_powerUp == null) return;
         float positionX = Shape.Position.X + Shape.Extent.X / 2 - PositionUtil.PowerUpExtent.X / 2;
         float positionY = Shape.Position.Y + Shape.Extent.Y / 2 - PositionUtil.PowerUpExtent.Y / 2;
@@ -96,8 +90,7 @@ public class BlockEntity : Entity
 
 
 
-    public void DropHazard()
-    {
+    public void DropHazard() {
         if (_hazard == null) return;
         
         float randomValue = (float) new Random().NextDouble();
@@ -125,8 +118,8 @@ public class BlockEntity : Entity
     /// <param name="powerUp">The powerup modifier</param>
     /// <param name="hazard">The hazard modifier</param>
     /// <returns></returns>
-    public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType, IGameModifier? powerUp = null, IGameModifier? hazard = null)
-    {
+    public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType, 
+        IGameModifier? powerUp = null, IGameModifier? hazard = null) {
         return new BlockEntity(
             new StationaryShape(pos, PositionUtil.BlockExtent),
             image,

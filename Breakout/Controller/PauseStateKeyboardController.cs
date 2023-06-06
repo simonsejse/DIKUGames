@@ -13,10 +13,10 @@ public class PauseStateKeyboardController : DefaultKeyboardPressHandler
     /// Initializes a new instance of the <see cref="PauseStateKeyboardController"/> class.
     /// </summary>
     /// <param name="menu">The default menu.</param>
-    public PauseStateKeyboardController(DefaultMenu menu) : base(new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
-    {
-        { SetFactory.Create(KeyboardKey.Up, KeyboardKey.W), new ShiftMenuUpCommand(menu) },
-        { SetFactory.Create(KeyboardKey.Down, KeyboardKey.S), new ShiftMenuDownCommand(menu) },
-        { SetFactory.Create(KeyboardKey.Enter), new PauseEnterCommand(menu, new GameEventFactory())},
+    public PauseStateKeyboardController(DefaultMenu menu) : base(new Dictionary<HashSet<KeyboardKey>, 
+        IKeyboardCommand> {
+            { SetFactory.Create(KeyboardKey.Up, KeyboardKey.W), new ShiftMenuUpCommand(menu) },
+            { SetFactory.Create(KeyboardKey.Down, KeyboardKey.S), new ShiftMenuDownCommand(menu) },
+            { SetFactory.Create(KeyboardKey.Enter), new PauseEnterCommand(menu, new GameEventFactory())},
     }) { }
 }

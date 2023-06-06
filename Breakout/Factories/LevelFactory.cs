@@ -3,30 +3,29 @@ using Breakout.Entities;
 namespace Breakout.Factories;
 
 /// <summary>
-/// Concrete implementation of <see cref="IModelFactory{T}"/> for creating instances of <see cref="Level"/>.
+/// Concrete implementation of <see cref="IModelFactory{T}"/> for creating instances 
+/// of <see cref="Level"/>.
 /// </summary>
-public class LevelFactory : IModelFactory<Level>
-{
+public class LevelFactory : IModelFactory<Level> {
     private const string WindowsNewline = "\r\n";
     private const string MacbookNewline = "\n";
 
     /// <summary>
-    /// Parses the input data string and returns a new instance of <see cref="Level"/> with the parsed data.
+    /// Parses the input data string and returns a new instance of <see cref="Level"/> 
+    /// with the parsed data.
     /// </summary>
     /// <param name="data">The input data string to parse.</param>
     /// <returns>A new instance of <see cref="Level"/> with the parsed data.</returns>
-    public Level Parse(string data)
-    {
+    public Level Parse(string data) {
         string mapStart = data.Split("Map:")[1];
         string mapEnd = mapStart.Split("Map/")[0];
 
         string newLine = mapEnd.Contains(WindowsNewline) ? WindowsNewline : MacbookNewline;
 
         string[] map = mapEnd.Split(newLine)
-            //.Select(row => row.Trim())
             .Where(row => row.Length > 0)
             .ToArray()
-            .Reverse() //Needed to make it go from top-to-bottom
+            .Reverse()
             .ToArray();
         
         char[][] xs = map.Select(row => row.Select(column => column).ToArray()).ToArray();

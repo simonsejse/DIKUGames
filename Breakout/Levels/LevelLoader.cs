@@ -20,8 +20,7 @@ namespace Breakout.Levels;
 /// Makes it more flexible and easily interchangeable with new LevelLoaders.
 /// follows 
 /// </summary>
-public class LevelLoader
-{
+public class LevelLoader {
     private readonly LevelStorage _levelStorage;
     private readonly IModelFactory<Level> _levelFactory;
 
@@ -33,8 +32,7 @@ public class LevelLoader
     /// <summary>
     /// Initializes a new instance of the LevelLoader class.
     /// </summary>
-    public LevelLoader()
-    {
+    public LevelLoader() {
         _levelFactory = new LevelFactory();
         _levelStorage = new LevelStorage();
     }
@@ -44,8 +42,7 @@ public class LevelLoader
     /// </summary>
     /// <param name="levelNum">The number of the level to load.</param>
     /// <returns>The loaded Level.</returns>
-    public Level LoadLevel(int levelNum)
-    {
+    public Level LoadLevel(int levelNum) {
         string filePath = _levelStorage.LevelPaths[levelNum];
         FileReader.ReadFileFromPath(Path.Combine("Assets", "Levels", filePath), out string? data);
         var level = _levelFactory.Parse(data);
@@ -57,13 +54,10 @@ public class LevelLoader
     /// </summary>
     /// <param name="level">The Level containing the block information.</param>
     /// <returns>An EntityContainer containing the constructed BlockEntities.</returns>
-    public EntityContainer<BlockEntity> ConstructBlockEntities(Level level)
-    {
+    public EntityContainer<BlockEntity> ConstructBlockEntities(Level level) {
         EntityContainer<BlockEntity> blockEntities = new();
-        for (int row = 0; row < level.Map.Length; row++)
-        {
-            for (int column = 0; column < level.Map[row].Length; column++)
-            {
+        for (int row = 0; row < level.Map.Length; row++) {
+            for (int column = 0; column < level.Map[row].Length; column++) {
                 char key = level.Map[row][column];
                 if (key == '-') continue;
 
@@ -77,11 +71,11 @@ public class LevelLoader
 
                 Vec2F pos = new(posX, posY);
 
-                string imgPath = level.Legends.TryGetValue(key, out string? image) ? image : "error-block.png";
+                string imgPath = level.Legends.TryGetValue(key, out string? image) ? 
+                    image : "error-block.png";
                 string imgDmgPath = imgPath.Replace(".png", "-damaged.png");
                 
-                IBlockType blockType = key switch
-                {
+                IBlockType blockType = key switch {
                     _ when key == level.Meta.PowerUp =>
                         new PowerUpBlockType(),
                     _ when key == level.Meta.Hardened =>
@@ -91,13 +85,13 @@ public class LevelLoader
                     _ => new StandardBlockType()
                 };
                 
-                var powerUp = key switch
-                {
+                var powerUp = key switch {
                     _ when key == level.Meta.PowerUp => GameModifierStorage.GetRandomPowerUp(),
                     _ => null
                 };
                 
-                var hazard = blockType is StandardBlockType ? GameModifierStorage.GetRandomHazard() : null;
+                var hazard = blockType is StandardBlockType ? GameModifierStorage.GetRandomHazard() 
+                    : null;
                 
                 var blockEntity = BlockEntity.Create(pos,
                     new Image(Path.Combine("Assets",

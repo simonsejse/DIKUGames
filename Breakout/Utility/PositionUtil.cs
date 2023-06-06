@@ -2,9 +2,7 @@
 
 namespace Breakout.Utility;
 
-public static class PositionUtil
-{
-    
+public static class PositionUtil {
     public static readonly Vec2F StartGamePosition = new(0.1f, 0.1f);
     public static readonly Vec2F StartGameExtent = new(0.5f, 0.5f);
 
@@ -58,6 +56,4 @@ public static class PositionUtil
     
     public static readonly Vec2F LostGamePressEnterPosition = new(0.3f, 0f);
     public static readonly Vec2F LostGamePressEnterExtent = new(0.5f, 0.5f);
-
-    
 }

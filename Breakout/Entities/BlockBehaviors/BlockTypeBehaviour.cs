@@ -1,7 +1,6 @@
 ﻿namespace Breakout.Entities.BlockBehaviors;
 
-public interface IBlockTypeBehavior
-{
+public interface IBlockTypeBehavior {
     /// <summary>
     /// Modifies the health of the block based on its type.
     /// </summary>
