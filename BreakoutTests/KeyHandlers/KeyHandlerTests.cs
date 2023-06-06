@@ -48,7 +48,6 @@ public class KeyHandlerTests
     {
         using var sw = new StringWriter();
         
-        // Redirect console output to StringWriter
         Console.SetOut(sw); 
 
         _defaultKeyboardReleaseHandler.HandleKeyRelease(KeyboardKey.W);
@@ -64,7 +63,6 @@ public class KeyHandlerTests
     {
         using var sw = new StringWriter();
         
-        // Redirect console output to StringWriter
         Console.SetOut(sw); 
 
         _defaultKeyboardPressHandler.HandleKeyPress(KeyboardKey.W);
