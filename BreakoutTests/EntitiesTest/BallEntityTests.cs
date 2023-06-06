@@ -3,6 +3,8 @@ using Breakout.Factories;
 using Breakout.IO;
 using Breakout.Entities;
 using Breakout.Utility;
+using DIKUArcade.Entities;
+using DIKUArcade.Graphics;
 using DIKUArcade.GUI;
 using DIKUArcade.Math;
 using DIKUArcade.Physics;
@@ -27,12 +29,70 @@ public class BallEntityTests
     [Test]
     public void TestMove()
     {
-        var initPos = ballEntity.Shape.Position;
+        Vec2F initialPosition = new Vec2F(0.5f, 0.5f);
+        Vec2F extent = new Vec2F(0.1f, 0.1f);
+        Vec2F direction = new Vec2F(1.0f, 0.0f);
+        float speed = 0.2f;
+        bool isBallStuck = false;
+        IBaseImage defaultBallImage = new Image(Path.Combine("Assets", "Images", "ball.png"));
+        BallEntity ballEntity = new BallEntity(new DynamicShape(initialPosition, extent), defaultBallImage, null, direction, speed, isBallStuck);
 
-        Assert.That(ballEntity.Shape.Position, Is.EqualTo(initPos));
         ballEntity.Move();
-        Assert.That(ballEntity.Shape.Position, Is.Not.EqualTo(initPos));
+
+        Assert.That(ballEntity.Shape.Position.X, Is.Not.EqualTo(initialPosition.X));
+        Assert.That(ballEntity.Shape.Position.Y, Is.EqualTo(initialPosition.Y));
+
+
+        ballEntity.Shape.Position = new Vec2F(-extent.X, 0.5f);
+        ballEntity.Move();
+        Assert.That(ballEntity.GetDirection().X, Is.Not.EqualTo(Math.Abs(direction.X)));
+
+        ballEntity.Shape.Position = new Vec2F(1.0f + extent.X, 0.5f);
+        ballEntity.Move();
+        Assert.That(ballEntity.GetDirection().X, Is.Not.EqualTo(-Math.Abs(direction.X)));
+
+        ballEntity.Shape.Position = new Vec2F(0.5f, 1.0f + extent.Y);
+        ballEntity.Move();
+        Assert.That(ballEntity.GetDirection().Y, Is.EqualTo(-direction.Y));
+
+        ballEntity.Shape.Position = new Vec2F(-extent.X - 0.1f, 0.5f);
+        ballEntity.Move();
+        Assert.That(ballEntity.GetDirection().X, Is.Not.EqualTo(Math.Abs(direction.X)));
     }
+
+    
+    [Test]
+    public void TestBallBounceOff()
+    {
+        // Arrange
+        Vec2F direction = new Vec2F(1.0f, 1.0f);
+        BallEntity ballEntity = new BallEntity(null, null, null, direction, 0.0f, false);
+
+
+        ballEntity.BallBounceOff(CollisionDirection.CollisionDirUp);
+        Assert.That(ballEntity.GetDirection().X, Is.EqualTo(direction.X));
+        Assert.That(ballEntity.GetDirection().Y, Is.EqualTo(direction.Y));
+        
+        ballEntity.BallBounceOff(CollisionDirection.CollisionDirDown);
+        Assert.That(ballEntity.GetDirection().X, Is.EqualTo(direction.X));
+        Assert.That(ballEntity.GetDirection().Y, Is.EqualTo(direction.Y));
+        
+        ballEntity.BallBounceOff(CollisionDirection.CollisionDirLeft);
+        Assert.That(ballEntity.GetDirection().X, Is.EqualTo(direction.X));
+        Assert.That(ballEntity.GetDirection().Y, Is.EqualTo(direction.Y));
+        
+        ballEntity.BallBounceOff(CollisionDirection.CollisionDirRight);
+        Assert.That(ballEntity.GetDirection().X, Is.EqualTo(direction.X));
+        Assert.That(ballEntity.GetDirection().Y, Is.EqualTo(direction.Y));
+        
+        ballEntity.BallBounceOff(CollisionDirection.CollisionDirUnchecked);
+        Assert.That(ballEntity.GetDirection().X, Is.EqualTo(direction.X));
+        Assert.That(ballEntity.GetDirection().Y, Is.EqualTo(direction.Y));
+        
+        Assert.Throws<ArgumentOutOfRangeException>(() => ballEntity.BallBounceOff((CollisionDirection)99));
+    }
+
+
     
     [Test]
     public void TestMoveStuck()
@@ -118,5 +178,44 @@ public class BallEntityTests
         Assert.That(ballEntity.GetDirection(), Is.EqualTo(direction));
         Assert.That(ballEntity.IsBallStuck, Is.EqualTo(isBallStuck));
     }
+    
+    [Test]
+    public void TestBallEntityConstructor_ClonePattern()
+    {
+        Vec2F pos = new Vec2F(0.5f, 0.5f);
+        Vec2F extent = new Vec2F(0.1f, 0.1f);
+        Vec2F direction = new Vec2F(1.0f, 0.5f);
+        float speed = 2.0f;
+        bool isBallStuck = true;
+        IBaseImage defaultBallImage = new Image(Path.Combine("Assets", "Images", "ball.png"));
+        IBaseImage hardBallImage = new Image(Path.Combine("Assets", "Images", "ball2.png"));
+        BallEntity originalBall = new BallEntity(new DynamicShape(pos, extent), defaultBallImage, hardBallImage, direction, speed, isBallStuck);
+
+        BallEntity clonedBall = originalBall.Clone();
+        
+        Assert.That(clonedBall.Shape.Position.X, Is.EqualTo(originalBall.Shape.Position.X));
+        Assert.That(clonedBall.Shape.Position.Y, Is.EqualTo(originalBall.Shape.Position.Y));
+        Assert.That(clonedBall.Shape.Extent.X, Is.EqualTo(originalBall.Shape.Extent.X));
+        Assert.That(clonedBall.Shape.Extent.Y, Is.EqualTo(originalBall.Shape.Extent.Y));
+        Assert.That(clonedBall.Image, Is.EqualTo(originalBall.Image));
+        Assert.That(clonedBall.GetDirection(), Is.EqualTo(originalBall.GetDirection()));
+        Assert.That(clonedBall.IsBallStuck, Is.EqualTo(originalBall.IsBallStuck));
+    }
+    
+    [Test]
+    public void TestGetCollisionDirection()
+    {
+        Vec2F direction = new Vec2F(1.0f, 1.0f);
+        CollisionDirection expectedDirection = CollisionDirection.CollisionDirUp;
+        BallEntity ballEntity = new BallEntity(null, null, null, direction, 0.0f, false);
+        ballEntity.BallBounceOff(expectedDirection);
+        
+        CollisionDirection actualDirection = ballEntity.GetCollisionDirection();
+        
+        Assert.AreEqual(expectedDirection, actualDirection);
+    }
+
+
+
 
 }
