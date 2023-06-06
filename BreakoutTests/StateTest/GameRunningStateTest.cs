@@ -43,29 +43,23 @@ public class GameRunningStateTests
     [Test]
     public void UpdateState_WithNoBallsAndNoBlocks_CallsLoadNextLevel()
     {
-        // Arrange
         _gameRunningState.EntityManager.BallEntities.ClearContainer();
         _gameRunningState.EntityManager.BlockEntities.ClearContainer();
         _gameRunningState.CurrentLevel = 1;
 
-        // Act
         _gameRunningState.UpdateState();
 
-        // Assert
         Assert.AreEqual(2, _gameRunningState.CurrentLevel);  // Assuming LoadNextLevel increments the level by 1
     }
 
     [Test]
     public void HandleGameLogic_WithNoMoreBalls_DecreasesPlayerLives()
     {
-        // Arrange
         _gameRunningState.EntityManager.BallEntities.ClearContainer();
         _gameRunningState.EntityManager.PlayerEntity.SetLives(3);
 
-        // Act
         _gameRunningState.HandleGameLogic();
 
-        // Assert
         Assert.That(_gameRunningState.EntityManager.PlayerEntity.GetLives(), Is.EqualTo(2));
     }
 
