@@ -20,6 +20,7 @@ public class EntityManagerTests
     private EntityContainer<BlockEntity> blockEntities;
     private BallEntity ballEntity;
     private PlayerEntity playerEntity;
+    private readonly GameRunningState _state;
 
     [SetUp]
     public void Setup()
@@ -80,6 +81,32 @@ public class EntityManagerTests
     }
     
     [Test]
+    public void TestPowerUpEntityBehavior_ActivateModifier()
+    {
+        GameRunningState state = new GameRunningState();
+        EntityManager entityManager = new EntityManager(state);
+
+        PlayerEntity player = PlayerEntity.Create();
+        int initialLifeCount = player.GetLives();
+
+        IGameModifierActivator gameModifierActivator = new HealthPowerUpActivator(player);
+        var startpos = new Vec2F(PositionUtil.PlayerPosition.X, PositionUtil.PlayerPosition.Y);
+        GameModifierEntity powerUp = GameModifierEntity.Create(startpos,
+            new Image(Path.Combine("Assets", "Images", "LifePickUp.png")),
+            gameModifierActivator
+        );
+        entityManager.PowerUpEntities.AddEntity(powerUp);
+        
+        powerUp.ActivateModifier();
+
+        int expectedLifeCount = initialLifeCount + 1;
+        Assert.That(player.GetLives(), Is.EqualTo(expectedLifeCount));
+    }
+
+
+
+    
+    [Test]
     public void TestHazardEntityBehavior()
     {
         GameRunningState state = new GameRunningState();
@@ -99,6 +126,30 @@ public class EntityManagerTests
 
         Assert.That(hazard.Shape.Position.X, Is.EqualTo(startpos.X));
         Assert.That(hazard.Shape.Position.Y, Is.Not.EqualTo(startpos.Y));
+    }
+    
+    
+    [Test]
+    public void TestHazardBehavior_ActivateModifier()
+    {
+        GameRunningState state = new GameRunningState();
+        EntityManager entityManager = new EntityManager(state);
+
+        PlayerEntity player = PlayerEntity.Create();
+        int initialLifeCount = player.GetLives();
+
+        IGameModifierActivator gameModifierActivator = new LoseLifeHzActivator(player);
+        var startpos = new Vec2F(PositionUtil.PlayerPosition.X, PositionUtil.PlayerPosition.Y);
+        GameModifierEntity hazard = GameModifierEntity.Create(startpos,
+            new Image(Path.Combine("Assets", "Images", "LoseLife.png")),
+            gameModifierActivator
+        );
+        entityManager.PowerUpEntities.AddEntity(hazard);
+        
+        hazard.ActivateModifier();
+
+        int expectedLifeCount = initialLifeCount - 1;
+        Assert.That(player.GetLives(), Is.EqualTo(expectedLifeCount));
     }
     
 }
