@@ -1,7 +1,6 @@
 ﻿using Breakout.GameModifiers.Hazard;
 using Breakout.GameModifiers.Hazards;
 using Breakout.GameModifiers.PowerUps;
-using Breakout.Hazard;
 
 namespace Breakout.GameModifiers;
 
@@ -26,11 +25,11 @@ public static class GameModifierStorage
     static GameModifierStorage()
     {
         //Power Ups
-        //PowerUps.Add(new ExtraLifeGameModifier());
-        //PowerUps.Add(new WideGameModifier());
-        //PowerUps.Add(new BigBallGameModifier());
-        //PowerUps.Add(new SplitBallGameModifier());
-        //PowerUps.Add(new PlayerSpeedGameModifier());
+        //PowerUps.Add(new ExtraLifePowerUp());
+        //PowerUps.Add(new WidePowerUp());
+        //PowerUps.Add(new BigBallPowerUp());
+        //PowerUps.Add(new SplitBallPowerUp());
+        //PowerUps.Add(new HardBallPowerUp());
         PowerUps.Add(new RocketGameModifier());
         
         //Hazards

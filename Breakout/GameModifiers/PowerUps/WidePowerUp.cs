@@ -7,7 +7,7 @@ namespace Breakout.GameModifiers.PowerUps;
 /// <summary>
 /// Represents the Wide Power-Up.
 /// </summary>
-public class WideGameModifier : IGameModifier
+public class WidePowerUp : IGameModifier
 {
     /// <summary>
     /// Gets the image associated with the Wide Power-Up.

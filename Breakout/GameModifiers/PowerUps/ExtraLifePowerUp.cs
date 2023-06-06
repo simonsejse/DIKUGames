@@ -7,7 +7,7 @@ namespace Breakout.GameModifiers.PowerUps;
 /// <summary>
 /// Represents the Extra Life Power-Up.
 /// </summary>
-public class ExtraLifeGameModifier : IGameModifier
+public class ExtraLifePowerUp : IGameModifier
 {
     /// <summary>
     /// Gets the image associated with the Extra Life Power-Up.

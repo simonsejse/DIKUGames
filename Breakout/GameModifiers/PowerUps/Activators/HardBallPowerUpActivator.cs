@@ -1,13 +1,9 @@
 ﻿using Breakout.Containers;
 using Breakout.Entities;
-using DIKUArcade.Entities;
-using DIKUArcade.Graphics;
-using DIKUArcade.Math;
-using System.Timers;
 
-namespace Breakout.PowerUps.Activators
+namespace Breakout.GameModifiers.PowerUps.Activators
 {
-    public class HardBallPowerUpActivator : IPowerUpActivator
+    public class HardBallPowerUpActivator : IGameModifierActivator
     {
         private readonly EntityManager _entityManager;
 

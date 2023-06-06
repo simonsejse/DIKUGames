@@ -1,9 +1,8 @@
-﻿using Breakout.GameModifiers;
-using Breakout.PowerUps.Activators;
+﻿using Breakout.GameModifiers.PowerUps.Activators;
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 
-namespace Breakout.PowerUps;
+namespace Breakout.GameModifiers.PowerUps;
 
 public class HardBallPowerUp : IGameModifier
 {
