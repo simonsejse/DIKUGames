@@ -4,6 +4,7 @@ using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 using Breakout.Entities.BlockTypes;
+using Breakout.GameModifiers.Hazard;
 using Breakout.GameModifiers.PowerUps;
 using Breakout.PowerUps;
 
@@ -71,6 +72,7 @@ public class BlockEntityTest
             null
         );
         Assert.That(blockEntity.Health, Is.EqualTo(2));
+        blockEntity.HandleCollision();
         Assert.That(blockEntity.StartHealth, Is.EqualTo(2));
     }
 
@@ -88,5 +90,37 @@ public class BlockEntityTest
         Assert.That(blockEntity.Health, Is.EqualTo(-1));
         blockEntity.HandleCollision();
         Assert.That(blockEntity.Health, Is.EqualTo(-1));
+    }
+    
+    [Test]
+    public void TestStandardBlockType()
+    {
+        var blockEntity = BlockEntity.Create(
+            new Vec2F(0.5f, 0.5f),
+            new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
+            new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
+            new StandardBlockType(),
+            null,
+            new LoseLifeHazard()
+        );
+        Assert.That(blockEntity.Health, Is.EqualTo(1));
+        blockEntity.HandleCollision();
+        Assert.That(blockEntity.Health, Is.EqualTo(0));
+    }
+    
+    [Test]
+    public void TestPowerUpBlockType()
+    {
+        var blockEntity = BlockEntity.Create(
+            new Vec2F(0.5f, 0.5f),
+            new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
+            new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
+            new PowerUpBlockType(),
+            new ExtraLifePowerUp(),
+            null
+        );
+        Assert.That(blockEntity.Health, Is.EqualTo(1));
+        blockEntity.HandleCollision();
+        Assert.That(blockEntity.Health, Is.EqualTo(0));
     }
 }

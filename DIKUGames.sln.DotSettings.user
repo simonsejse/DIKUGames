@@ -60,6 +60,7 @@
     &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.StateTest.GameRunningStateTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.StateTest.GameRunningStateTests.ClearsBallEntitiesAndPowerUpEntitiesOnLoadNextLevel&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.StateTest.GameRunningStateTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::9B68C0DC-4706-4282-BE9F-77EDFEC5558F::net6.0::BreakoutTests.CommandsTest.MovePlayerLeftCommandTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d838a422_002Df84f_002D4687_002Da75f_002D9ba97756c196/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
