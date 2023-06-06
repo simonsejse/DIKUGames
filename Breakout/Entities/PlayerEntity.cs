@@ -113,6 +113,14 @@ public class PlayerEntity : Entity
     }
     
     /// <summary>
+    /// A setter for the player's life.
+    /// </summary>
+    public void SetLives(int lives)
+    {
+        _lives = lives;
+    }
+    
+    /// <summary>
     /// Set player movement speed.
     /// </summary>
     /// <param name="speed"></param>

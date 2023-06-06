@@ -22,7 +22,7 @@ namespace Breakout.States.GameRunning;
 public class GameRunningState : IGameState
 {
     private Level _currentLevel;
-    private int CurrentLevel { get; set; }
+    public int CurrentLevel { get; set; }
     
     private readonly IGameEventFactory<GameEventType> _gameEventFactory;
     private readonly IKeyboardEventHandler _keyboardEventHandler;
@@ -95,7 +95,7 @@ public class GameRunningState : IGameState
     /// <summary>
     /// Handles game winning and losing logic.
     /// </summary>
-    private void HandleGameLogic()
+    public void HandleGameLogic()
     {
         bool timeRanOut = _currentLevel.Meta.Time.HasValue && _currentLevel.Meta.Time <= StaticTimer.GetElapsedSeconds();
         bool playerNoMoreLives = EntityManager.PlayerEntity.GetLives() == 0;
@@ -130,7 +130,7 @@ public class GameRunningState : IGameState
     /// <summary>
     /// Loads the next level into the game.
     /// </summary>
-    private void LoadNextLevel()
+    public void LoadNextLevel()
     {
         if (EntityManager.BallEntities.CountEntities() > 0)
             EntityManager.BallEntities.ClearContainer();
