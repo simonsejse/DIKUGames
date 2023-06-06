@@ -1,4 +1,5 @@
 using Breakout.Entities;
+using Breakout.GameModifiers;
 using Breakout.GameModifiers.Hazard;
 using Breakout.GameModifiers.Hazard.Activators;
 using Breakout.GameModifiers.Hazards;
@@ -16,7 +17,7 @@ namespace BreakoutTests.PowerUpHazardTests;
 /// </summary>
 public class HazardTests
 {
-    private readonly List<IHazard> Hazards = new List<IHazard>()
+    private readonly List<IGameModifier> Hazards = new()
     {
         new LoseLifeHazard(),
         new SlimJimHazard()
@@ -31,7 +32,7 @@ public class HazardTests
     [Test]
     public void TestPowerUp()
     {
-        foreach(IHazard hazard in Hazards) 
+        foreach(var hazard in Hazards) 
         {
             Assert.That(hazard.GetImage(), Is.Not.Null);
             Assert.That(hazard.Activator(), Is.Not.Null);
@@ -42,8 +43,8 @@ public class HazardTests
     public void LoseLifeHazard()
     {
         PlayerEntity player = PlayerEntity.Create();
-        IHazard extraLifePowerUp = new LoseLifeHazard();
-        IHazardActivator activator = new LoseLifeHzActivator(player);
+        IGameModifier extraLifePowerUp = new LoseLifeHazard();
+        IGameModifierActivator activator = new LoseLifeHzActivator(player);
         Assert.That(player.GetLives(), Is.EqualTo(3));
         activator.Activate();
         Assert.That(player.GetLives(), Is.LessThan(3));
@@ -53,8 +54,8 @@ public class HazardTests
     public void SlimJimHazard()
     {
         PlayerEntity player = PlayerEntity.Create();
-        IHazard extraLifePowerUp = new SlimJimHazard();
-        IHazardActivator activator = new SlimJimHzActivator(player);
+        IGameModifier extraLifePowerUp = new SlimJimHazard();
+        IGameModifierActivator activator = new SlimJimHzActivator(player);
         Assert.That(player.Shape.Extent.X, Is.EqualTo(0.2f));
         Assert.That(player.Shape.Extent.Y, Is.EqualTo(0.028f));
         activator.Activate();
@@ -69,7 +70,7 @@ public class HazardTests
         float initialSpeed = player.GetPlayerMovementSpeed();
         float expectedSpeed = initialSpeed / GameUtil.PlayerSpeedFactor;
 
-        IHazardActivator activator = new PlayerSpeedHzActivator(player);
+        IGameModifierActivator activator = new PlayerSpeedHzActivator(player);
         activator.Activate();
 
         Assert.That(player.GetPlayerMovementSpeed(), Is.EqualTo(expectedSpeed).Within(0.001f));
@@ -82,7 +83,7 @@ public class HazardTests
     [Test]
     public void GetRandomHazard_NonNull()
     {
-        IHazard hazard = HazardStorage.GetRandomHazard();
+        var hazard = GameModifierStorage.GetRandomHazard();
         
         Assert.That(hazard, Is.Not.Null);
     }
@@ -90,7 +91,7 @@ public class HazardTests
     [Test]
     public void GetRandomHazard_GivenHazard()
     {
-        IHazard hazard = HazardStorage.GetRandomHazard();
+        IGameModifier hazard = GameModifierStorage.GetRandomHazard();
         
         Assert.That(hazard is LoseLifeHazard || 
                       hazard is SlimJimHazard || 

@@ -23,10 +23,10 @@ public class PowerUpTests
 {
     private readonly List<IGameModifier> PowerUps = new List<IGameModifier>()
     {
-        new ExtraLifeGameModifier(),
-        new WideGameModifier(),
-        new BigBallGameModifier(),
-        new SplitBallGameModifier(),
+        new ExtraLifePowerUp(),
+        new WidePowerUp(),
+        new BigBallPowerUp(),
+        new SplitBallPowerUp(),
         new PlayerSpeedGameModifier()
     };
 
@@ -49,7 +49,7 @@ public class PowerUpTests
     [Test]
     public void TestExtraLifePowerUp()
     {
-        IGameModifier extraLifeGameModifier = new ExtraLifeGameModifier();
+        IGameModifier extraLifeGameModifier = new ExtraLifePowerUp();
     }
     
 
@@ -163,10 +163,10 @@ public class PowerUpTests
     {
         IGameModifier gameModifier = GameModifierStorage.GetRandomPowerUp();
         
-        Assert.That(gameModifier is ExtraLifeGameModifier ||
-                      gameModifier is WideGameModifier ||
-                      gameModifier is BigBallGameModifier ||
-                      gameModifier is SplitBallGameModifier ||
+        Assert.That(gameModifier is ExtraLifePowerUp ||
+                      gameModifier is WidePowerUp ||
+                      gameModifier is BigBallPowerUp ||
+                      gameModifier is SplitBallPowerUp ||
                       gameModifier is PlayerSpeedGameModifier, Is.True);
     }
     
