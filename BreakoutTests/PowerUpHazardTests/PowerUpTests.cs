@@ -168,5 +168,53 @@ public class PowerUpTests
                       powerUp is PlayerSpeedPowerUp, Is.True);
     }
     
+    [Test]
+    public void TestHardBallPowerUpActivator()
+    {
+        GameRunningState gameRunningState = new GameRunningState();
+        EntityManager entityManager = new EntityManager(gameRunningState);
+
+        BallEntity ball1 = BallEntity.Create(new Vec2F(0.5f, 0.5f), new Vec2F(0.03f, 0.03f), new Vec2F(0.01f, 0.01f),
+            false);
+        BallEntity ball2 = BallEntity.Create(new Vec2F(0.3f, 0.7f), new Vec2F(0.02f, 0.02f), new Vec2F(-0.02f, -0.01f),
+            true);
+        BallEntity ball3 = BallEntity.Create(new Vec2F(0.8f, 0.2f), new Vec2F(0.04f, 0.04f), new Vec2F(-0.01f, 0.02f),
+            false);
+
+        entityManager.BallEntities.AddEntity(ball1);
+        entityManager.BallEntities.AddEntity(ball2);
+        entityManager.BallEntities.AddEntity(ball3);
+
+        HardBallPowerUpActivator activator = new HardBallPowerUpActivator(entityManager);
+        
+        activator.Activate();
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(ball1.Image, Is.EqualTo(ball1.HardBallImage));
+            Assert.That(ball1.HardBallMode, Is.True);
+
+            Assert.That(ball2.Image, Is.EqualTo(ball2.HardBallImage));
+            Assert.That(ball2.HardBallMode, Is.True);
+
+            Assert.That(ball3.Image, Is.EqualTo(ball3.HardBallImage));
+            Assert.That(ball3.HardBallMode, Is.True);
+        });
+
+        Task.Delay(5500).Wait();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(ball1.Image, Is.EqualTo(ball1.DefaultBallImage));
+            Assert.That(ball1.HardBallMode, Is.False);
+
+            Assert.That(ball2.Image, Is.EqualTo(ball2.DefaultBallImage));
+            Assert.That(ball2.HardBallMode, Is.False);
+
+            Assert.That(ball3.Image, Is.EqualTo(ball3.DefaultBallImage));
+            Assert.That(ball3.HardBallMode, Is.False);
+        });
+    }
+    
 }
     

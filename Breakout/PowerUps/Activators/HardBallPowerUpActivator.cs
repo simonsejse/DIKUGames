@@ -16,45 +16,27 @@ namespace Breakout.PowerUps.Activators
             _entityManager = entityManager;
         }
 
-        public async void Activate()
+        public void Activate()
         {
             List<BallEntity> newBalls = new List<BallEntity>();
+            _entityManager.BallEntities.Iterate(newBalls.Add);
 
-            _entityManager.BallEntities.Iterate(ball =>
+            newBalls.ForEach(ball =>
             {
-                var ballEntity1 = ball.HardBall();
-                ballEntity1.HardBallMode = true; 
-                newBalls.Add(ballEntity1);
-                ball.MarkForDeletion();
+                ball.Image = ball.HardBallImage;
+                ball.HardBallMode = true;
             });
+            
 
-            newBalls.ForEach(newBall =>
+            Task.Delay(5000).ContinueWith(_ =>
             {
-                _entityManager.BallEntities.AddEntity(newBall);
+                newBalls.ForEach(ball =>
+                {
+                    ball.Image = ball.DefaultBallImage;
+                    ball.HardBallMode = false;
+                });
             });
-
-            await Task.Delay(5000);
-
-            Deactivate();
         }
-        
-        private void Deactivate()
-        {
-            List<BallEntity> reversedBalls = new List<BallEntity>();
-
-            _entityManager.BallEntities.Iterate(ball =>
-            {
-                //BallEntity reversedBall = ball.ReverseHardBall();
-                ball.HardBallMode = false;
-                //reversedBalls.Add(reversedBall);
-            });
-
-            /*reversedBalls.ForEach(reversedBall =>
-            {
-                _entityManager.BallEntities.AddEntity(reversedBall);
-            });*/
-        }
-
 
     }
 }
