@@ -18,31 +18,35 @@ public static class CollisionProcessor
     /// <param name="ballEntity">The ball entity to check for collisions.</param>
     /// <param name="playerEntity">The player entity.</param>
     /// <param name="state">The current game running state.</param>
-    public static void CheckBlockCollisions(EntityContainer<BlockEntity> blockEntities, BallEntity ballEntity, PlayerEntity playerEntity, GameRunningState state)
+public static void CheckBlockCollisions(EntityContainer<BlockEntity> blockEntities, BallEntity ballEntity, PlayerEntity playerEntity, GameRunningState state)
+{
+    CollisionDirection collisionDir = CollisionDirection.CollisionDirUnchecked;
+
+    blockEntities.Iterate(block =>
     {
-        CollisionDirection collisionDir = CollisionDirection.CollisionDirUnchecked;
-    
-        blockEntities.Iterate(block =>
+        CollisionDirection currentCollisionDir =
+            CollisionDetection.Aabb(ballEntity.Shape.AsDynamicShape(), block.Shape).CollisionDir;
+        if (currentCollisionDir == CollisionDirection.CollisionDirUnchecked)
+            return;
+
+        block.HandleCollision();
+
+        if (!ballEntity.HardBallMode)
         {
-            CollisionDirection currentCollisionDir =
-                CollisionDetection.Aabb(ballEntity.Shape.AsDynamicShape(), block.Shape).CollisionDir;
-            if (currentCollisionDir == CollisionDirection.CollisionDirUnchecked)
-                return;
-            
-            block.HandleCollision();
-            
             ballEntity.BallBounceOff(currentCollisionDir);
-            
-            if (!block.IsDead())
-                return;
-            
-            playerEntity.AddPoints(block.Value);
-            state.UpdateText();
-            
-            if (collisionDir == CollisionDirection.CollisionDirUnchecked)
-                collisionDir = currentCollisionDir;
-        });
-    }
+        }
+
+        if (!block.IsDead())
+            return;
+
+        playerEntity.AddPoints(block.Value);
+        state.UpdateText();
+
+        if (collisionDir == CollisionDirection.CollisionDirUnchecked)
+            collisionDir = currentCollisionDir;
+    });
+}
+
     
     /// <summary>
     /// Checks for collisions between a ball and other balls in the ball entities container.

@@ -1,4 +1,4 @@
-﻿using Breakout.Entities;
+using Breakout.Entities;
 using Breakout.States;
 using Breakout.Utility;
 using DIKUArcade.Math;
@@ -18,6 +18,9 @@ public class BallEntity : Entity
     /// Gets or sets a value indicating whether the ball is stuck.
     /// </summary>
     public bool IsBallStuck { get; set; }
+    public bool HardBallMode { get; set; } = false;
+    public IBaseImage HardBallImage { get; set; }
+    public IBaseImage DefaultBallImage { get; set; }
 
     private bool markedForDeletion;
     private CollisionDirection collisionDirection;
@@ -29,15 +32,18 @@ public class BallEntity : Entity
     /// Initializes a new instance of the BallEntity class.
     /// </summary>
     /// <param name="shape">The shape of the ball.</param>
-    /// <param name="image">The image of the ball.</param>
+    /// <param name="defaultBallImage">The default image of the ball.</param>
+    /// <param name="hardBallImage">The image of the Hard Ball power up</param>
     /// <param name="direction">The initial direction of the ball.</param>
     /// <param name="speed">The speed of the ball.</param>
     /// <param name="isBallStuck">A value indicating whether the ball is stuck.</param>
-    public BallEntity(Shape shape, IBaseImage image, Vec2F direction, float speed, bool isBallStuck) : base(shape, image)
+    public BallEntity(Shape shape, IBaseImage defaultBallImage, IBaseImage hardBallImage, Vec2F direction, float speed, bool isBallStuck) : base(shape, defaultBallImage)
     {
         _direction = direction;
         _speed = speed;
         this.IsBallStuck = isBallStuck;
+        this.HardBallImage = hardBallImage;
+        DefaultBallImage = defaultBallImage;
     }
 
     /// <summary>
@@ -50,6 +56,7 @@ public class BallEntity : Entity
         _direction = ball._direction;
         _speed = ball._speed;
         this.IsBallStuck = ball.IsBallStuck;
+        ball.HardBallImage = ball.HardBallImage;
     }
 
     /// <summary>
@@ -93,11 +100,18 @@ public class BallEntity : Entity
         return Shape.Position.Y + Shape.Extent.Y < 0;
     }
 
+    /// <summary>
+    /// Marks which ball is due for deletion.
+    /// </summary>
     public void MarkForDeletion()
     {
         markedForDeletion = true;
     }
-
+    
+    /// <summary>
+    /// Checks if the object is marked for deletion.
+    /// </summary>
+    /// <returns>true if the object is marked for deletion; otherwise false.</returns>
     public bool IsMarkedForDeletion()
     {
         return markedForDeletion;
@@ -193,7 +207,7 @@ public class BallEntity : Entity
     {
         return new BallEntity(
             new DynamicShape(pos, extent),
-            new Image(Path.Combine("Assets", "Images", "ball.png")), direction, PositionUtil.BallSpeed, isBallStuck);
+            new Image(Path.Combine("Assets", "Images", "ball.png")),new Image(Path.Combine("Assets", "Images", "ball2.png")), direction, PositionUtil.BallSpeed, isBallStuck);
     }
 
     /// <summary>
@@ -204,7 +218,11 @@ public class BallEntity : Entity
     {
         return new BallEntity(this);;
     }
-
+    
+    /// <summary>
+    /// Gets the collision direction of the object.
+    /// </summary>
+    /// <returns>The collision direction of the object.</returns>
     public CollisionDirection GetCollisionDirection()
     {
         return collisionDirection;
