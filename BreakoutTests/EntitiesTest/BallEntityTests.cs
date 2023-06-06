@@ -31,30 +31,35 @@ public class BallEntityTests
     {
         Vec2F initialPosition = new Vec2F(0.5f, 0.5f);
         Vec2F extent = new Vec2F(0.1f, 0.1f);
-        Vec2F direction = new Vec2F(1.0f, 0.0f); 
+        Vec2F direction = new Vec2F(1.0f, 0.0f);
         float speed = 0.2f;
         bool isBallStuck = false;
         IBaseImage defaultBallImage = new Image(Path.Combine("Assets", "Images", "ball.png"));
         BallEntity ballEntity = new BallEntity(new DynamicShape(initialPosition, extent), defaultBallImage, null, direction, speed, isBallStuck);
-        
+
         ballEntity.Move();
-        
+
         Assert.That(ballEntity.Shape.Position.X, Is.Not.EqualTo(initialPosition.X));
         Assert.That(ballEntity.Shape.Position.Y, Is.EqualTo(initialPosition.Y));
-    
+
 
         ballEntity.Shape.Position = new Vec2F(-extent.X, 0.5f);
         ballEntity.Move();
         Assert.That(ballEntity.GetDirection().X, Is.Not.EqualTo(Math.Abs(direction.X)));
-    
+
         ballEntity.Shape.Position = new Vec2F(1.0f + extent.X, 0.5f);
         ballEntity.Move();
         Assert.That(ballEntity.GetDirection().X, Is.Not.EqualTo(-Math.Abs(direction.X)));
-    
+
         ballEntity.Shape.Position = new Vec2F(0.5f, 1.0f + extent.Y);
         ballEntity.Move();
         Assert.That(ballEntity.GetDirection().Y, Is.EqualTo(-direction.Y));
+
+        ballEntity.Shape.Position = new Vec2F(-extent.X - 0.1f, 0.5f);
+        ballEntity.Move();
+        Assert.That(ballEntity.GetDirection().X, Is.Not.EqualTo(Math.Abs(direction.X)));
     }
+
     
     [Test]
     public void TestBallBounceOff()
