@@ -84,6 +84,27 @@ public class CollisionManagerTests
         Assert.That(ball.GetDirection(), Is.Not.EqualTo(new Vec2F(0.1f, -0.1f)));
         Assert.That(ball.Shape.Position, Is.Not.EqualTo(new Vec2F(0.5f, 0.9f)));
     }
+    
+    [Test]
+    public void TestCheckBallPlayerCollision()
+    {
+        // Arrange
+        var ballPosition = new Vec2F(0.5f, 0.75f);
+        var ballExtent = new Vec2F(0.1f, 0.1f);
+        var ballShape = new DynamicShape(ballPosition, ballExtent);
+        ballEntity = BallEntity.Create(PositionUtil.BallPosition, PositionUtil.BallExtent, PositionUtil.BallDirection, false);
+
+        ballEntity.ChangeDirection(0.1f, -1.0f);
+
+        // Act
+        CollisionProcessor.CheckBallPlayerCollision(ballEntity, playerEntity);
+        
+        Assert.That(ballEntity.Shape.Position, Is.Not.EqualTo(ballPosition));
+        Assert.That(ballEntity.GetDirection().X, Is.EqualTo(0.1f));
+        Assert.That(ballEntity.GetDirection().Y, Is.Not.EqualTo(-0.9f));
+    }
+
+    
     /*
     [Test]
     public void TestCheckBlockCollisions_ColTrue()
