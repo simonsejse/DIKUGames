@@ -1,9 +1,8 @@
 ﻿using Breakout.Containers;
 using Breakout.Entities;
-using Breakout.GameModifiers;
 using DIKUArcade.Math;
 
-namespace Breakout.PowerUps.Activators;
+namespace Breakout.GameModifiers.PowerUps.Activators;
 
 /// <summary>
 /// Represents an activator for the Split Ball power-up.

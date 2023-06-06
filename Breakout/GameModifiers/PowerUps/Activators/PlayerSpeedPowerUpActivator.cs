@@ -1,13 +1,12 @@
 ﻿using Breakout.Entities;
-using Breakout.GameModifiers;
 using Breakout.Utility;
 
-namespace Breakout.PowerUps.Activators;
+namespace Breakout.GameModifiers.PowerUps.Activators;
 
 /// <summary>
 /// Represents an activator for the Player Speed power-up.
 /// </summary>
-public class PlayerSpeedGameModifierActivator : IGameModifierActivator
+public class PlayerSpeedPowerUpActivator : IGameModifierActivator
 {
     private readonly PlayerEntity _playerEntity;
 
@@ -15,7 +14,7 @@ public class PlayerSpeedGameModifierActivator : IGameModifierActivator
     /// Initializes a new instance of the PlayerSpeedPowerUpActivator class.
     /// </summary>
     /// <param name="playerEntity">The PlayerEntity instance.</param>
-    public PlayerSpeedGameModifierActivator(PlayerEntity playerEntity)
+    public PlayerSpeedPowerUpActivator(PlayerEntity playerEntity)
     {
         _playerEntity = playerEntity;
     }
@@ -25,8 +24,11 @@ public class PlayerSpeedGameModifierActivator : IGameModifierActivator
     /// </summary>
     public void Activate()
     {
-        float currentSpeed = _playerEntity.GetPlayerMovementSpeed();
-        _playerEntity.SetPlayerMovementSpeed(currentSpeed * GameUtil.PlayerSpeedFactor);
-        Task.Delay(5000).ContinueWith(t => _playerEntity.SetPlayerMovementSpeed(currentSpeed));
+        _playerEntity.SetPlayerMovementSpeed(_playerEntity.GetPlayerMovementSpeed() * GameUtil.PlayerSpeedFactor);
+        Task.Delay(5000)
+            .ContinueWith(t =>
+                _playerEntity.SetPlayerMovementSpeed(_playerEntity.GetPlayerMovementSpeed() *
+                                                     1 /
+                                                     GameUtil.PlayerSpeedFactor));
     }
 }

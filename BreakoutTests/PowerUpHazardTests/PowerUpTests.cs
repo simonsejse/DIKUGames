@@ -5,6 +5,7 @@ using Breakout.IO;
 using Breakout.Entities;
 using Breakout.GameModifiers;
 using Breakout.GameModifiers.PowerUps;
+using Breakout.GameModifiers.PowerUps.Activators;
 using Breakout.Utility;
 using DIKUArcade.GUI;
 using DIKUArcade.Math;
@@ -87,7 +88,7 @@ public class PowerUpTests
         entityManager.BallEntities.AddEntity(ball2);
         entityManager.BallEntities.AddEntity(ball3);
 
-        IGameModifierActivator activator = new BigBallGameModifierActivator(entityManager);
+        IGameModifierActivator activator = new BigBallPowerUpActivator(entityManager);
 
         Assert.Multiple(() =>
         {
@@ -138,7 +139,7 @@ public class PowerUpTests
         float initialSpeed = playerEntity.GetPlayerMovementSpeed();
         float expectedSpeed = initialSpeed * GameUtil.PlayerSpeedFactor;
 
-        PlayerSpeedGameModifierActivator activator = new PlayerSpeedGameModifierActivator(playerEntity);
+        PlayerSpeedPowerUpActivator activator = new PlayerSpeedPowerUpActivator(playerEntity);
         
         activator.Activate();
         

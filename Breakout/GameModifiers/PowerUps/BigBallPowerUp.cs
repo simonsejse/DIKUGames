@@ -1,4 +1,5 @@
-﻿using Breakout.PowerUps.Activators;
+﻿using Breakout.GameModifiers.PowerUps.Activators;
+using Breakout.PowerUps.Activators;
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 
@@ -22,5 +23,5 @@ public class BigBallGameModifier : IGameModifier
     /// </summary>
     /// <returns>The activator for the Big Ball Power-Up.</returns>
     public IGameModifierActivator Activator() =>
-        new BigBallGameModifierActivator(GameRunningState.GetInstance().EntityManager);
+        new BigBallPowerUpActivator(GameRunningState.GetInstance().EntityManager);
 }

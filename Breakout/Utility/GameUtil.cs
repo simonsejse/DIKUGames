@@ -6,6 +6,6 @@
 /// </summary>
 public static class GameUtil
 {
-    public const float HazardDroprate = 0.1f;
+    public const float HazardDropRate = 1f;
     public const float PlayerSpeedFactor = 2.0f;
 }

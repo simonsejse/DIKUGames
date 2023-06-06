@@ -1,15 +1,14 @@
 ﻿using Breakout.Containers;
 using Breakout.Entities;
-using Breakout.GameModifiers;
 using DIKUArcade.Entities;
 using DIKUArcade.Math;
 
-namespace Breakout.PowerUps.Activators;
+namespace Breakout.GameModifiers.PowerUps.Activators;
 
 /// <summary>
 /// Represents an activator for the Big Ball power-up.
 /// </summary>
-public class BigBallGameModifierActivator : IGameModifierActivator
+public class BigBallPowerUpActivator : IGameModifierActivator
 {
     private const float ScaleFactor = 1.5f;
     private readonly EntityManager _entityManager;
@@ -18,7 +17,7 @@ public class BigBallGameModifierActivator : IGameModifierActivator
     /// Initializes a new instance of the BigBallPowerUpActivator class.
     /// </summary>
     /// <param name="entityManager">The EntityManager instance.</param>
-    public BigBallGameModifierActivator(EntityManager entityManager)
+    public BigBallPowerUpActivator(EntityManager entityManager)
     {
         _entityManager = entityManager;
     }

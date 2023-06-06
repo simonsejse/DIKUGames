@@ -1,8 +1,8 @@
-﻿using Breakout.GameModifiers.Hazard.Activators;
+﻿using Breakout.GameModifiers.Hazards.Activators;
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 
-namespace Breakout.GameModifiers.Hazard;
+namespace Breakout.GameModifiers.Hazards;
 
 public class PlayerSpeedHazard : IGameModifier
 {

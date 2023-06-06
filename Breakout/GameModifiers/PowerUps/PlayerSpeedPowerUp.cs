@@ -1,4 +1,5 @@
-﻿using Breakout.PowerUps.Activators;
+﻿using Breakout.GameModifiers.PowerUps.Activators;
+using Breakout.PowerUps.Activators;
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 
@@ -21,5 +22,5 @@ public class PlayerSpeedGameModifier : IGameModifier
     /// </summary>
     /// <returns>The activator for the Player Speed Power-Up.</returns>
     public IGameModifierActivator Activator() => 
-        new PlayerSpeedGameModifierActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
+        new PlayerSpeedPowerUpActivator(GameRunningState.GetInstance().EntityManager.PlayerEntity);
 }
