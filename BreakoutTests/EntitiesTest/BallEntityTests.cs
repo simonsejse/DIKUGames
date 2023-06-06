@@ -12,6 +12,7 @@ namespace BreakoutTests.BreakoutTests;
 /// <summary>
 /// We have mainly used the Test-Driven Development Approach for these tests
 /// </summary>
+[TestFixture]
 public class BallEntityTests
 {
     private BallEntity ballEntity;

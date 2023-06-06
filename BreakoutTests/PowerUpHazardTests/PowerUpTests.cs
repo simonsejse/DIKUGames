@@ -19,9 +19,10 @@ namespace BreakoutTests.PowerUpHazardTests;
 /// <summary>
 /// We have mainly used the Test-Driven Development Approach for these tests
 /// </summary>
+[TestFixture]
 public class PowerUpTests
 {
-    private readonly List<IGameModifier> PowerUps = new List<IGameModifier>()
+    private readonly List<IGameModifier> PowerUps = new()
     {
         new ExtraLifePowerUp(),
         new WidePowerUp(),

@@ -13,6 +13,7 @@ namespace BreakoutTests;
 /// <summary>
 /// We have mainly used the Test-Driven Development Approach for these tests
 /// </summary>
+[TestFixture]
 public class EntityContainerTest
 {
     private GameRunningState _gameRunningState;

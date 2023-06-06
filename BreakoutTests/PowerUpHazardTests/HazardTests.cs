@@ -15,6 +15,7 @@ namespace BreakoutTests.PowerUpHazardTests;
 /// <summary>
 /// We have mainly used the Test-Driven Development Approach for these tests
 /// </summary>
+[TestFixture]
 public class HazardTests
 {
     private readonly List<IGameModifier> Hazards = new()
