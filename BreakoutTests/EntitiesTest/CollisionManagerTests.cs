@@ -84,6 +84,9 @@ public class CollisionManagerTests
         Assert.That(ball.GetDirection(), Is.Not.EqualTo(new Vec2F(0.1f, -0.1f)));
         Assert.That(ball.Shape.Position, Is.Not.EqualTo(new Vec2F(0.5f, 0.9f)));
     }
+    
+    
+    
     /*
     [Test]
     public void TestCheckBlockCollisions_ColTrue()
