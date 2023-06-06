@@ -2,17 +2,28 @@
 using Breakout.Entities;
 using DIKUArcade.Math;
 
-namespace Breakout.PowerUps.Activators;
+namespace Breakout.GameModifiers.PowerUps.Activators;
 
-public class SplitBallPowerUpActivator : IPowerUpActivator
+/// <summary>
+/// Represents an activator for the Split Ball power-up.
+/// </summary>
+public class SplitBallGameModifierActivator : IGameModifierActivator
 {
     private readonly EntityManager _entityManager;
 
-    public SplitBallPowerUpActivator(EntityManager entityManager)
+    /// <summary>
+    /// Initializes a new instance of the SplitBallPowerUpActivator class.
+    /// </summary>
+    /// <param name="entityManager">The EntityManager instance.</param>
+    public SplitBallGameModifierActivator(EntityManager entityManager)
     {
         _entityManager = entityManager;
     }
     
+    /// <summary>
+    /// Activates the Split Ball power-up by splitting each ball into three new balls,
+    /// each traveling in a new direction.
+    /// </summary>
     public void Activate()
     {
         List<BallEntity> newBalls = new();
@@ -36,6 +47,10 @@ public class SplitBallPowerUpActivator : IPowerUpActivator
         newBalls.ForEach(_entityManager.BallEntities.AddEntity);
     }
     
+    /// <summary>
+    /// Generates a random angle in radians.
+    /// </summary>
+    /// <returns>A random angle in radians.</returns>
     private readonly Random random = new();
     private float GenerateRandomAngle()
     {

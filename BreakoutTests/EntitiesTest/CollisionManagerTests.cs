@@ -3,6 +3,7 @@ using Breakout.Factories;
 using Breakout.IO;
 using Breakout.Entities;
 using Breakout.Entities.BlockTypes;
+using Breakout.GameModifiers.PowerUps;
 using Breakout.PowerUps;
 using Breakout.States.GameRunning;
 using Breakout.Utility;
@@ -41,7 +42,7 @@ public class CollisionManagerTests
             new Image(Path.Combine("Assets", "Images", "teal-block.png")), 
             new Image(Path.Combine("Assets", "Images", "teal-block-damaged.png")),
             new StandardBlockType(), 
-            new ExtraLifePowerUp(),
+            new ExtraLifeGameModifier(),
             null
         );
         blockEntities.AddEntity(block);

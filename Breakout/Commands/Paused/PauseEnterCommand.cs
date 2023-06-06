@@ -13,12 +13,20 @@ public class PauseEnterCommand : IKeyboardCommand
     private readonly DefaultMenu _menu;
     private readonly GameEventFactory _gameEventFactory;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PauseEnterCommand"/> class.
+    /// </summary>
+    /// <param name="menu">The default menu.</param>
+    /// <param name="gameEventFactory">The game event factory.</param>
     public PauseEnterCommand(DefaultMenu menu, GameEventFactory gameEventFactory)
     {
         _menu = menu;
         _gameEventFactory = gameEventFactory;
     }
 
+    /// <summary>
+    /// Executes the command by creating a game event based on the active menu item and registering it with the Breakout bus.
+    /// </summary>
     public void Execute()
     {
         GameEvent<GameEventType> @event;

@@ -2,6 +2,7 @@ using DIKUArcade.Math;
 using DIKUArcade.Entities;
 using Breakout.Entities.BlockTypes;
 using Breakout.Factories;
+using Breakout.GameModifiers;
 using Breakout.PowerUps;
 using Breakout.Hazard;
 using Breakout.PowerUps.Activators;
@@ -17,8 +18,9 @@ namespace Breakout.Entities;
 /// </summary>
 public class BlockEntity : Entity
 {
-    private readonly IPowerUp? _powerUp;
-    private readonly IHazard? _hazard;
+    private readonly IGameModifier? _powerUp;
+    private readonly IGameModifier? _hazard;
+    
     public int Value { get; set; }
     /// <summary>
     /// Gets or sets the health of the block.
@@ -38,7 +40,8 @@ public class BlockEntity : Entity
     /// <param name="health">The health of the block.</param>
     /// <param name="blockType">The type of the block.</param>
     /// <param name="powerUp">The power-up type of the block.</param>
-    private BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, IBlockType blockType, IPowerUp? powerUp, IHazard? hazard) : 
+    /// <param name="hazard">The hazard type of the block.</param>
+    private BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, IBlockType blockType, IGameModifier? powerUp, IGameModifier? hazard) : 
         base(shape, image)
     {
         Value = value;
@@ -86,8 +89,7 @@ public class BlockEntity : Entity
         var powerUp = GameModifierEntity.Create(
             position, 
             _powerUp.GetImage(), 
-            _powerUp.Activator(),
-            null
+            _powerUp.Activator()
         );
         GameRunningState.GetInstance().EntityManager.PowerUpEntities.AddEntity(powerUp);
     }
@@ -100,19 +102,17 @@ public class BlockEntity : Entity
         
         float randomValue = (float) new Random().NextDouble();
 
-        if (randomValue < GameUtil.HazardDroprate);
-        {
-            float positionX = Shape.Position.X + Shape.Extent.X / 2 - PositionUtil.HazardExtent.X / 2;
-            float positionY = Shape.Position.Y + Shape.Extent.Y / 2 - PositionUtil.HazardExtent.Y / 2;
+        if (!(randomValue < GameUtil.HazardDropRate)) return;
+        
+        float positionX = Shape.Position.X + Shape.Extent.X / 2 - PositionUtil.HazardExtent.X / 2;
+        float positionY = Shape.Position.Y + Shape.Extent.Y / 2 - PositionUtil.HazardExtent.Y / 2;
 
-            var position = new Vec2F(positionX, positionY);
+        var position = new Vec2F(positionX, positionY);
 
-            var hazard = GameModifierEntity.Create(position, _hazard.GetImage(), null, _hazard.Activator());
-            GameRunningState.GetInstance().EntityManager.HazardEntities.AddEntity(hazard);
-        }
+        var hazard = GameModifierEntity.Create(position, _hazard.GetImage(), _hazard.Activator());
+        GameRunningState.GetInstance().EntityManager.HazardEntities.AddEntity(hazard);
     }
 
-    
 
     /// <summary>
     /// A factory method for instantiating a default BlockEntity
@@ -122,9 +122,10 @@ public class BlockEntity : Entity
     /// <param name="image">The image of the block.</param>
     /// <param name="image2">The second image of the block.</param>
     /// <param name="blockType">The type of the block.</param>
-    /// <param name="powerUpType"></param>
+    /// <param name="powerUp">The powerup modifier</param>
+    /// <param name="hazard">The hazard modifier</param>
     /// <returns></returns>
-    public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType, IPowerUp? powerUpType, IHazard? hazardType)
+    public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType, IGameModifier? powerUp = null, IGameModifier? hazard = null)
     {
         return new BlockEntity(
             new StationaryShape(pos, PositionUtil.BlockExtent),
@@ -133,8 +134,8 @@ public class BlockEntity : Entity
             10, 
             1,
             blockType,
-            powerUpType,
-            hazardType
+            powerUp,
+            hazard
         );
     }
 }

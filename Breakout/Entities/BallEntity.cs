@@ -1,4 +1,4 @@
-﻿using Breakout.Entities;
+using Breakout.Entities;
 using Breakout.States;
 using Breakout.Utility;
 using DIKUArcade.Math;

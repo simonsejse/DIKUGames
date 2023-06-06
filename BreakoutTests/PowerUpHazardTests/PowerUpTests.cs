@@ -3,6 +3,9 @@ using Breakout.Containers;
 using Breakout.Factories;
 using Breakout.IO;
 using Breakout.Entities;
+using Breakout.GameModifiers;
+using Breakout.GameModifiers.PowerUps;
+using Breakout.GameModifiers.PowerUps.Activators;
 using Breakout.Utility;
 using DIKUArcade.GUI;
 using DIKUArcade.Math;
@@ -18,13 +21,13 @@ namespace BreakoutTests.PowerUpHazardTests;
 /// </summary>
 public class PowerUpTests
 {
-    private readonly List<IPowerUp> PowerUps = new List<IPowerUp>()
+    private readonly List<IGameModifier> PowerUps = new List<IGameModifier>()
     {
-        new ExtraLifePowerUp(),
-        new WidePowerUp(),
-        new BigBallPowerUp(),
-        new SplitBallPowerUp(),
-        new PlayerSpeedPowerUp()
+        new ExtraLifeGameModifier(),
+        new WideGameModifier(),
+        new BigBallGameModifier(),
+        new SplitBallGameModifier(),
+        new PlayerSpeedGameModifier()
     };
 
     [SetUp]
@@ -36,7 +39,7 @@ public class PowerUpTests
     [Test]
     public void TestPowerUp()
     {
-        foreach (IPowerUp powerUp in PowerUps)
+        foreach (IGameModifier powerUp in PowerUps)
         {
             Assert.That(powerUp.GetImage(), Is.Not.Null);
             Assert.That(powerUp.Activator(), Is.Not.Null);
@@ -46,7 +49,7 @@ public class PowerUpTests
     [Test]
     public void TestExtraLifePowerUp()
     {
-        IPowerUp extraLifePowerUp = new ExtraLifePowerUp();
+        IGameModifier extraLifeGameModifier = new ExtraLifeGameModifier();
     }
     
 
@@ -54,7 +57,7 @@ public class PowerUpTests
     public void TestWidePowerUpActivator()
     {
         PlayerEntity playerEntity = PlayerEntity.Create();
-        IPowerUpActivator activator = new WidePowerUpActivator(playerEntity);
+        IGameModifierActivator activator = new WideGameModifierActivator(playerEntity);
         Vec2F initialExtent = playerEntity.Shape.Extent;
 
         activator.Activate();
@@ -85,7 +88,7 @@ public class PowerUpTests
         entityManager.BallEntities.AddEntity(ball2);
         entityManager.BallEntities.AddEntity(ball3);
 
-        IPowerUpActivator activator = new BigBallPowerUpActivator(entityManager);
+        IGameModifierActivator activator = new BigBallPowerUpActivator(entityManager);
 
         Assert.Multiple(() =>
         {
@@ -150,22 +153,21 @@ public class PowerUpTests
     [Test]
     public void GetRandomPowerUp_NonNull()
     {
-        IPowerUp powerUp = PowerUpStorage.GetRandomPowerUp();
+        IGameModifier gameModifier = GameModifierStorage.GetRandomPowerUp();
         
-        Assert.That(powerUp, Is.Not.Null);
+        Assert.That(gameModifier, Is.Not.Null);
     }
     
     [Test]
     public void GetRandomPowerUp_GivenPowerUpType()
     {
-        IPowerUp powerUp = PowerUpStorage.GetRandomPowerUp();
+        IGameModifier gameModifier = GameModifierStorage.GetRandomPowerUp();
         
-        Assert.That(powerUp is ExtraLifePowerUp ||
-                      powerUp is WidePowerUp ||
-                      powerUp is BigBallPowerUp ||
-                      powerUp is SplitBallPowerUp ||
-                      powerUp is HardBallPowerUp ||
-                      powerUp is PlayerSpeedPowerUp, Is.True);
+        Assert.That(gameModifier is ExtraLifeGameModifier ||
+                      gameModifier is WideGameModifier ||
+                      gameModifier is BigBallGameModifier ||
+                      gameModifier is SplitBallGameModifier ||
+                      gameModifier is PlayerSpeedGameModifier, Is.True);
     }
     
     [Test]

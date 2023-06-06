@@ -22,8 +22,8 @@
 ## Checklist
 <!--- Mark the completed tasks with "x" -->
 - [ ] I have tested my changes thoroughly
-- [ ] I have updated the documentation (if applicable)
-- [ ] I have added appropriate comments and meaningful commit messages
+- [ ] I have updated the group report with my changes
+- [ ] I have added appropriate XML documentation, comments and meaningful commit messages
 - [ ] I have reviewed my code for any syntax or style errors
 - [ ] I have verified that the changes are visually consistent
 - [ ] I have considered the performance impact of my changes (if applicable)

@@ -9,6 +9,10 @@ namespace Breakout.Controller;
 
 public class LostGameKeyboardController : DefaultKeyboardPressHandler
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LostGameKeyboardController"/> class.
+    /// </summary>
+    /// <param name="menu">The default menu.</param>
     public LostGameKeyboardController(DefaultMenu menu) : base(new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
     {
         { SetFactory.Create(KeyboardKey.Up, KeyboardKey.W), new ShiftMenuUpCommand(menu) },

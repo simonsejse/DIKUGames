@@ -13,6 +13,10 @@ namespace Breakout.Controller;
 /// </summary>
 public class RunningStateKeyboardController : DefaultKeyEventHandler
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RunningStateKeyboardController"/> class.
+    /// </summary>
+    /// <param name="playerEntity">The player entity.</param>
     public RunningStateKeyboardController(PlayerEntity playerEntity) : base(
         new Dictionary<HashSet<KeyboardKey>, IKeyboardCommand>
         {
@@ -25,5 +29,3 @@ public class RunningStateKeyboardController : DefaultKeyEventHandler
             { SetFactory.Create(KeyboardKey.Right, KeyboardKey.D), new MovePlayerRightCommand(playerEntity, false) }
         }) { }
 }
-
-

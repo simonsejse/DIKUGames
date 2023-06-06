@@ -10,6 +10,13 @@ namespace Breakout.Factories;
 /// </summary>
 public class GameEventFactory : IGameEventFactory<GameEventType>
 {
+    /// <summary>
+    /// Creates a new instance of GameEvent with the specified type, message, and string argument.
+    /// </summary>
+    /// <param name="type">The type of the game event.</param>
+    /// <param name="message">The message associated with the game event.</param>
+    /// <param name="stringArg1">The string argument associated with the game event.</param>
+    /// <returns>The created game event.</returns>
     public GameEvent<GameEventType> CreateGameEvent(GameEventType type,
         string message = "",
         string stringArg1 = "")
@@ -22,6 +29,14 @@ public class GameEventFactory : IGameEventFactory<GameEventType>
         };
     }
 
+    /// <summary>
+    /// Creates a new instance of GameEvent for specific processors, with the specified type, target, and message.
+    /// </summary>
+    /// <typeparam name="T">The type of the game event processor.</typeparam>
+    /// <param name="type">The type of the game event.</param>
+    /// <param name="to">The target game event processor.</param>
+    /// <param name="message">The message associated with the game event.</param>
+    /// <returns>The created game event.</returns>
     public GameEvent<GameEventType> CreateGameEventForSpecificProcessors<T>(GameEventType type, T to, string message) where T : IGameEventProcessor<GameEventType>
     {
         return new GameEvent<GameEventType>
