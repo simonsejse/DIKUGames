@@ -1,4 +1,0 @@
-[submodule "DIKUArcade"]
-	path = DIKUArcade
-	url = git@github.com:diku-dk/DIKUArcade.git
-	branch = master
