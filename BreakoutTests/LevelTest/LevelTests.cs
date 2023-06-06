@@ -141,7 +141,7 @@ public class LevelTests
         {
             foreach (var @char in row)
             {
-                if (@char is '-' or '\r' or '\n' or '\u0000' or '2') continue;
+                if (@char is '-' or '\r' or '\n' or '\u0000') continue;
                 Assert.That(level.Legends, Contains.Key(@char));
             }
         }
