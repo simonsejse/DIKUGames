@@ -91,9 +91,6 @@ public class BlockEntity : Entity {
     /// <summary>
     /// Drops a hazard at the current position of the brick depending on HazardDropRate.
     /// </summary>
-    public void DropHazard()
-    {
-
     public void DropHazard() {
         if (_hazard == null) return;
         
