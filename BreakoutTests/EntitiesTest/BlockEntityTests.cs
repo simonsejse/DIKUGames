@@ -71,6 +71,7 @@ public class BlockEntityTest
             null
         );
         Assert.That(blockEntity.Health, Is.EqualTo(2));
+        blockEntity.HandleCollision();
         Assert.That(blockEntity.StartHealth, Is.EqualTo(2));
     }
 
