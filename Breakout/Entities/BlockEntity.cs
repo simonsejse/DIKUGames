@@ -99,8 +99,8 @@ public class BlockEntity : Entity
         if (_hazard == null) return;
         
         float randomValue = (float) new Random().NextDouble();
-        
-        if (randomValue < GameUtil.HazardDroprate)
+
+        if (randomValue < GameUtil.HazardDroprate);
         {
             float positionX = Shape.Position.X + Shape.Extent.X / 2 - PositionUtil.HazardExtent.X / 2;
             float positionY = Shape.Position.Y + Shape.Extent.Y / 2 - PositionUtil.HazardExtent.Y / 2;

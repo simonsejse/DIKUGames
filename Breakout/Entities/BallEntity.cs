@@ -214,6 +214,13 @@ public class BallEntity : Entity
         return clone;
     }
     
+    public BallEntity ReverseHardBall()
+    {
+        BallEntity clone = new BallEntity(this);
+        clone.ChangeImageFile("ball.png");
+        return clone;
+    }
+    
     
     /// <summary>
     /// Changes the image file path of the ball entity.
@@ -221,7 +228,20 @@ public class BallEntity : Entity
     /// <param name="imageFile">The new image file path.</param>
     public void ChangeImageFile(string imageFile)
     {
-        Image = new Image(Path.Combine("Assets", "Images", imageFile));
+        try
+        {
+            string imagePath = Path.Combine("Assets", "Images", imageFile);
+            if (File.Exists(imagePath))
+            {
+                Image = new Image(imagePath);
+            }
+            else
+            {
+            }
+        }
+        catch (Exception ex)
+        {
+        }
     }
 
     public CollisionDirection GetCollisionDirection()
