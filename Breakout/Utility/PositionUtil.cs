@@ -2,6 +2,10 @@
 
 namespace Breakout.Utility;
 
+/// <summary>
+/// A utility class for creating position-related objects.
+/// There are constants for the positions and extents of objects.
+/// </summary>
 public static class PositionUtil
 {
     

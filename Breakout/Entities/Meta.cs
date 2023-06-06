@@ -9,16 +9,15 @@ public class Meta
     public char? PowerUp { get; }
     public char? Unbreakable { get; }
     
-    /// <summary>
-    /// Constructor that takes several optional (?) parameters
-    /// These parameters are generated individually from the level-ASCII-map.txt files
-    /// </summary>
-    /// <param name="name">Name of the level</param>
-    /// <param name="time">Time limit to cmomplete the level</param>
-    /// <param name="hardened">TODO: </param>
-    /// <param name="powerUp">TODO: </param>
-    /// <param name="unbreakable">TODO: </param>
 
+    /// <summary>
+    /// Represents metadata for a game entity.
+    /// </summary>
+    /// <param name="name">The name of the entity.</param>
+    /// <param name="time">The time of the entity.</param>
+    /// <param name="hardened">Indicates if the entity is hardened.</param>
+    /// <param name="powerUp">Indicates if the entity has a power-up.</param>
+    /// <param name="unbreakable">Indicates if the entity is unbreakable.</param>
     public Meta(string? name, int? time, char? hardened, char? powerUp, char? unbreakable)
     {
         Name = name;

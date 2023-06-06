@@ -25,11 +25,11 @@ public static class GameModifierStorage
     static GameModifierStorage()
     {
         //Power Ups
-        //PowerUps.Add(new ExtraLifePowerUp());
-        //PowerUps.Add(new WidePowerUp());
-        //PowerUps.Add(new BigBallPowerUp());
-        //PowerUps.Add(new SplitBallPowerUp());
-        //PowerUps.Add(new HardBallPowerUp());
+        PowerUps.Add(new ExtraLifePowerUp());
+        PowerUps.Add(new WidePowerUp());
+        PowerUps.Add(new BigBallPowerUp());
+        PowerUps.Add(new SplitBallPowerUp());
+        PowerUps.Add(new HardBallPowerUp());
         PowerUps.Add(new RocketGameModifier());
         
         //Hazards

@@ -75,9 +75,8 @@ public class BlockEntity : Entity
 
     
     /// <summary>
-    /// 
+    /// Drops a power-up at the current position of the brick.
     /// </summary>
-    /// <param name="block"></param>
     public void DropPowerUp()
     {
         if (_powerUp == null) return;
@@ -95,7 +94,9 @@ public class BlockEntity : Entity
     }
 
 
-
+    /// <summary>
+    /// Drops a hazard at the current position of the brick depending on HazardDropRate.
+    /// </summary>
     public void DropHazard()
     {
         if (_hazard == null) return;

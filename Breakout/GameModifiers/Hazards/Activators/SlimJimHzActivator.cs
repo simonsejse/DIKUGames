@@ -4,7 +4,7 @@ using DIKUArcade.Math;
 namespace Breakout.GameModifiers.Hazard.Activators;
 
 /// <summary>
-/// Represents an activator for the Slim Jim hazard power-up in the Breakout game.
+/// Represents an activator for the Slim Jim hazard in the Breakout game.
 /// </summary>
 public class SlimJimHzActivator : IGameModifierActivator
 {
@@ -22,7 +22,7 @@ public class SlimJimHzActivator : IGameModifierActivator
     }
 
     /// <summary>
-    /// Activates the Slim Jim hazard power-up, causing the player entity to scale down
+    /// Activates the Slim Jim hazard, causing the player entity to scale down
     /// for a period of time and then return to its original size.
     /// </summary>
     public void Activate()

@@ -5,7 +5,7 @@ using Breakout.PowerUps;
 namespace Breakout.Hazard.Activators;
 
 /// <summary>
-/// Represents an activator for the Lose Life hazard power-up in the Breakout game.
+/// Represents an activator for the Lose Life hazard in the Breakout game.
 /// </summary>
 public class LoseLifeHzActivator : IGameModifierActivator
 {
@@ -22,7 +22,7 @@ public class LoseLifeHzActivator : IGameModifierActivator
     }
 
     /// <summary>
-    /// Activates the Lose Life hazard power-up, causing the player entity to lose a life.
+    /// Activates the Lose Life hazard, causing the player entity to lose a life.
     /// </summary>
     public void Activate()
     {

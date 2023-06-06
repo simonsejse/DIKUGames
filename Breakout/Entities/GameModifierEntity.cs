@@ -35,12 +35,17 @@ public class GameModifierEntity : Entity
             gameModifierActivator
         );
     }
-
+    /// <summary>
+    /// Moves the GameModifierEntity associated with this object.
+    /// </summary>
     public void Move()
     {
         Shape.Move();
     }
 
+    /// <summary>
+    /// Activates the GameModifierEntity's effect.
+    /// </summary>
     public void ActivateModifier()
     {
         _gameModifierActivator.Activate();
