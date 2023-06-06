@@ -174,6 +174,39 @@ public class PowerUpTests
     }
     
     [Test]
+    public void TestSplitBallPowerUpActivator()
+    {
+        GameRunningState gameRunningState = new GameRunningState();
+        EntityManager entityManager = new EntityManager(gameRunningState);
+
+        var ball1 = BallEntity.Create(new Vec2F(0.5f, 0.5f), new Vec2F(0.03f, 0.03f), new Vec2F(0.01f, 0.01f), false);
+        var ball2 = BallEntity.Create(new Vec2F(0.3f, 0.7f), new Vec2F(0.02f, 0.02f), new Vec2F(-0.02f, -0.01f), true);
+        var ball3 = BallEntity.Create(new Vec2F(0.8f, 0.2f), new Vec2F(0.04f, 0.04f), new Vec2F(-0.01f, 0.02f), false);
+
+        entityManager.BallEntities.AddEntity(ball1);
+        entityManager.BallEntities.AddEntity(ball2);
+        entityManager.BallEntities.AddEntity(ball3);
+
+        var activator = new SplitBallGameModifierActivator(entityManager);
+        
+        activator.Activate();
+        
+        var newBalls = new List<BallEntity>();
+        foreach (var ball in entityManager.BallEntities)
+        {
+            newBalls.Add((BallEntity)ball);
+        }
+
+        Assert.That(newBalls.Count, Is.EqualTo(12));
+        
+        foreach (var ball in newBalls)
+        {
+            Assert.That(ball.HardBallMode, Is.False);
+        }
+    }
+
+    
+    [Test]
     public void TestHardBallPowerUpActivator()
     {
         GameRunningState gameRunningState = new GameRunningState();
