@@ -1,10 +1,14 @@
 ﻿using Breakout.Containers;
 using Breakout.Entities;
+using Breakout.GameModifiers;
+using Breakout.Hazard.Activators;
+using Breakout.PowerUps.Activators;
 using Breakout.States.GameRunning;
 using Breakout.Utility;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.GUI;
+using DIKUArcade.Math;
 
 namespace BreakoutTests.ContainersTest;
 
@@ -52,7 +56,49 @@ public class EntityManagerTests
             Assert.That(entityManager.BallEntities.CountEntities(), Is.EqualTo(2));
         });
     }
+    
+    [Test]
+    public void TestPowerUpEntityBehavior()
+    {
+        GameRunningState state = new GameRunningState();
+        EntityManager entityManager = new EntityManager(state);
 
+        PlayerEntity player = PlayerEntity.Create();
 
+        IGameModifierActivator gameModifierActivator = new HealthPowerUpActivator(playerEntity);
+        var startpos = new Vec2F(0.5f, 0.5f);
+        GameModifierEntity powerUp = GameModifierEntity.Create(startpos,
+            new Image(Path.Combine("Assets", "Images", "LifePickUp.png")),
+            gameModifierActivator
+        );
+        entityManager.PowerUpEntities.AddEntity(powerUp);
 
+        entityManager.Move();
+
+        Assert.That(powerUp.Shape.Position.X, Is.EqualTo(startpos.X));
+        Assert.That(powerUp.Shape.Position.Y, Is.Not.EqualTo(startpos.Y));
+    }
+    
+    [Test]
+    public void TestHazardEntityBehavior()
+    {
+        GameRunningState state = new GameRunningState();
+        EntityManager entityManager = new EntityManager(state);
+
+        PlayerEntity player = PlayerEntity.Create();
+
+        IGameModifierActivator gameModifierActivator = new LoseLifeHzActivator(playerEntity);
+        var startpos = new Vec2F(0.5f, 0.5f);
+        GameModifierEntity hazard = GameModifierEntity.Create(startpos,
+            new Image(Path.Combine("Assets", "Images", "LoseLife.png")),
+            gameModifierActivator
+        );
+        entityManager.HazardEntities.AddEntity(hazard);
+
+        entityManager.Move();
+
+        Assert.That(hazard.Shape.Position.X, Is.EqualTo(startpos.X));
+        Assert.That(hazard.Shape.Position.Y, Is.Not.EqualTo(startpos.Y));
+    }
+    
 }
