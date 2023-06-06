@@ -3,6 +3,7 @@ using DIKUArcade.Entities;
 using Breakout.Entities.BlockTypes;
 using Breakout.Factories;
 using Breakout.PowerUps;
+using Breakout.Hazard;
 using Breakout.PowerUps.Activators;
 using Breakout.States.GameRunning;
 using Breakout.Utility;
@@ -17,6 +18,7 @@ namespace Breakout.Entities;
 public class BlockEntity : Entity
 {
     private readonly IPowerUp? _powerUp;
+    private readonly IHazard? _hazard;
     public int Value { get; set; }
     /// <summary>
     /// Gets or sets the health of the block.
@@ -36,13 +38,14 @@ public class BlockEntity : Entity
     /// <param name="health">The health of the block.</param>
     /// <param name="blockType">The type of the block.</param>
     /// <param name="powerUp">The power-up type of the block.</param>
-    private BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, IBlockType blockType, IPowerUp? powerUp) : 
+    private BlockEntity(Shape shape, IBaseImage image, IBaseImage damagedImage, int value, int health, IBlockType blockType, IPowerUp? powerUp, IHazard? hazard) : 
         base(shape, image)
     {
         Value = value;
         Health = health;
         BlockType = blockType;
         _powerUp = powerUp;
+        _hazard = hazard;
         Health = blockType.GetBlockTypeBehavior().ModifyHealth(health);
         StartHealth = Health;
         DamagedImage = damagedImage;
@@ -79,10 +82,36 @@ public class BlockEntity : Entity
         float positionY = Shape.Position.Y + Shape.Extent.Y / 2 - PositionUtil.PowerUpExtent.Y / 2;
 
         var position = new Vec2F(positionX, positionY);
-        
-        var powerUp = PowerUpEntity.Create(position, _powerUp.GetImage(), _powerUp.Activator());
+    
+        var powerUp = GameModifierEntity.Create(
+            position, 
+            _powerUp.GetImage(), 
+            _powerUp.Activator(),
+            null
+        );
         GameRunningState.GetInstance().EntityManager.PowerUpEntities.AddEntity(powerUp);
     }
+
+
+
+    public void DropHazard()
+    {
+        if (_hazard == null) return;
+        
+        float randomValue = (float) new Random().NextDouble();
+        
+        if (randomValue < GameUtil.HazardDroprate)
+        {
+            float positionX = Shape.Position.X + Shape.Extent.X / 2 - PositionUtil.HazardExtent.X / 2;
+            float positionY = Shape.Position.Y + Shape.Extent.Y / 2 - PositionUtil.HazardExtent.Y / 2;
+
+            var position = new Vec2F(positionX, positionY);
+
+            var hazard = GameModifierEntity.Create(position, _hazard.GetImage(), null, _hazard.Activator());
+            GameRunningState.GetInstance().EntityManager.HazardEntities.AddEntity(hazard);
+        }
+    }
+
     
 
     /// <summary>
@@ -95,7 +124,7 @@ public class BlockEntity : Entity
     /// <param name="blockType">The type of the block.</param>
     /// <param name="powerUpType"></param>
     /// <returns></returns>
-    public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType, IPowerUp? powerUpType)
+    public static BlockEntity Create(Vec2F pos, Image image, Image image2, IBlockType blockType, IPowerUp? powerUpType, IHazard? hazardType)
     {
         return new BlockEntity(
             new StationaryShape(pos, PositionUtil.BlockExtent),
@@ -104,7 +133,8 @@ public class BlockEntity : Entity
             10, 
             1,
             blockType,
-            powerUpType
+            powerUpType,
+            hazardType
         );
     }
 }

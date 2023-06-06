@@ -48,18 +48,7 @@ public class PowerUpTests
     {
         IPowerUp extraLifePowerUp = new ExtraLifePowerUp();
     }
-
-    [Test]
-    public void TestPlayerSpeedPowerUpActivator()
-    {
-        PlayerEntity playerEntity = PlayerEntity.Create();
-        IPowerUpActivator activator = new PlayerSpeedPowerUpActivator(playerEntity);
-        float initialSpeed = playerEntity.GetPlayerMovementSpeed();
-
-        activator.Activate();
-
-        Assert.That(playerEntity.GetPlayerMovementSpeed(), Is.EqualTo(initialSpeed * 2.0f));
-    }
+    
 
     [Test]
     public void TestWidePowerUpActivator()
@@ -137,10 +126,46 @@ public class PowerUpTests
             Assert.That(ball3.Shape.Extent.X, Is.EqualTo(0.04f).Within(0.001f));
             Assert.That(ball3.Shape.Extent.Y, Is.EqualTo(0.04f).Within(0.001f));
         });
-
-
+        
     }
     
+    [Test]
+    public async Task TestPlayerSpeedPowerUpActivator()
+    {
+        PlayerEntity playerEntity = PlayerEntity.Create();
+        float initialSpeed = playerEntity.GetPlayerMovementSpeed();
+        float expectedSpeed = initialSpeed * GameUtil.PlayerSpeedFactor;
+
+        PlayerSpeedPowerUpActivator activator = new PlayerSpeedPowerUpActivator(playerEntity);
+        
+        activator.Activate();
+        
+        Assert.That(playerEntity.GetPlayerMovementSpeed(), Is.EqualTo(expectedSpeed).Within(0.001f));
+        
+        await Task.Delay(5500);
+        
+        Assert.That(playerEntity.GetPlayerMovementSpeed(), Is.EqualTo(initialSpeed).Within(0.001f));
+    }
+    
+    [Test]
+    public void GetRandomPowerUp_NonNull()
+    {
+        IPowerUp powerUp = PowerUpStorage.GetRandomPowerUp();
+        
+        Assert.That(powerUp, Is.Not.Null);
+    }
+    
+    [Test]
+    public void GetRandomPowerUp_GivenPowerUpType()
+    {
+        IPowerUp powerUp = PowerUpStorage.GetRandomPowerUp();
+        
+        Assert.That(powerUp is ExtraLifePowerUp ||
+                      powerUp is WidePowerUp ||
+                      powerUp is BigBallPowerUp ||
+                      powerUp is SplitBallPowerUp ||
+                      powerUp is PlayerSpeedPowerUp, Is.True);
+    }
     
 }
     
