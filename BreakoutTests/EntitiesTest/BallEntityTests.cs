@@ -84,6 +84,7 @@ public class BallEntityTests
         Assert.That(ballEntity.GetDirection().X, Is.EqualTo(direction.X));
         Assert.That(ballEntity.GetDirection().Y, Is.EqualTo(direction.Y));
         
+        Assert.Throws<ArgumentOutOfRangeException>(() => ballEntity.BallBounceOff((CollisionDirection)99));
     }
 
 
