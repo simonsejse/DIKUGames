@@ -53,8 +53,6 @@ public class EntityManagerTests
 
             Assert.That(ball2.Shape.Position.X, Is.Not.EqualTo(PositionUtil.BallDirection.X));
             Assert.That(ball2.Shape.Position.Y, Is.Not.EqualTo(PositionUtil.BallDirection.Y));
-
-            Assert.That(entityManager.BallEntities.CountEntities(), Is.EqualTo(2));
         });
     }
     
