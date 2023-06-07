@@ -28,8 +28,7 @@ public static class GameModifierStorage {
         PowerUps.Add(new BigBallPowerUp());
         PowerUps.Add(new SplitBallPowerUp());
         PowerUps.Add(new HardBallPowerUp());
-        PowerUps.Add(new RocketGameModifier());
-        
+
         //Hazards
         Hazards.Add(new LoseLifeHazard());
         Hazards.Add(new SlimJimHazard());

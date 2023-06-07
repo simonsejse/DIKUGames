@@ -199,20 +199,5 @@ public class BallEntityTests
         Assert.That(clonedBall.IsBallStuck, Is.EqualTo(originalBall.IsBallStuck));
     }
     
-    [Test]
-    public void TestGetCollisionDirection()
-    {
-        Vec2F direction = new Vec2F(1.0f, 1.0f);
-        CollisionDirection expectedDirection = CollisionDirection.CollisionDirUp;
-        BallEntity ballEntity = new BallEntity(null, null, null, direction, 0.0f, false);
-        ballEntity.BallBounceOff(expectedDirection);
-        
-        CollisionDirection actualDirection = ballEntity.GetCollisionDirection();
-        
-        Assert.AreEqual(expectedDirection, actualDirection);
-    }
-
-
-
 
 }

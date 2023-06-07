@@ -22,7 +22,6 @@ public class BallEntity : Entity {
     public IBaseImage DefaultBallImage { get; set; }
 
     private bool markedForDeletion;
-    private CollisionDirection collisionDirection;
     private float _speed;
     private Vec2F _direction;
     private const float MaxSpeed = 0.25f;
@@ -134,7 +133,6 @@ public class BallEntity : Entity {
             default:
                 throw new ArgumentOutOfRangeException(nameof(collisionDir), collisionDir, null);
         }
-        collisionDirection = collisionDir;
     }
 
     /// <summary>
@@ -204,11 +202,5 @@ public class BallEntity : Entity {
         return new BallEntity(this);;
     }
     
-    /// <summary>
-    /// Gets the collision direction of the object.
-    /// </summary>
-    /// <returns>The collision direction of the object.</returns>
-    public CollisionDirection GetCollisionDirection() {
-        return collisionDirection;
-    }
+
 }

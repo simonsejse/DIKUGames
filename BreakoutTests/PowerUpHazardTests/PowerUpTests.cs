@@ -164,7 +164,6 @@ public class PowerUpTests
                       gameModifier is BigBallPowerUp ||
                       gameModifier is SplitBallPowerUp ||
                       gameModifier is HardBallPowerUp ||
-                      gameModifier is RocketGameModifier ||
                       gameModifier is PlayerSpeedGameModifier, Is.True);
     }
     
