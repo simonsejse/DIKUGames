@@ -23,7 +23,7 @@ public class PowerUpTests
         new WidePowerUp(),
         new BigBallPowerUp(),
         new SplitBallPowerUp(),
-        new PlayerSpeedGameModifier()
+        new PlayerSpeedPowerUp()
     };
 
     [SetUp]
@@ -164,7 +164,7 @@ public class PowerUpTests
                       gameModifier is BigBallPowerUp ||
                       gameModifier is SplitBallPowerUp ||
                       gameModifier is HardBallPowerUp ||
-                      gameModifier is PlayerSpeedGameModifier, Is.True);
+                      gameModifier is PlayerSpeedPowerUp, Is.True);
     }
     
     [Test]
