@@ -1,7 +1,4 @@
-﻿using System.Data;
-using Breakout.Factories;
-using Breakout.IO;
-using Breakout.Entities;
+﻿using Breakout.Entities;
 using Breakout.Utility;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;

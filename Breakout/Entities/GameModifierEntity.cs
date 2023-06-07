@@ -1,7 +1,4 @@
-using Breakout.Events;
 using Breakout.GameModifiers;
-using Breakout.Hazard;
-using Breakout.PowerUps;
 using Breakout.Utility;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;

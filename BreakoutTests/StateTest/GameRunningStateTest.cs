@@ -1,11 +1,7 @@
 using Breakout.Entities;
-using Breakout.Events;
 using Breakout.PowerUps.Activators;
-using Breakout.States;
 using Breakout.States.GameRunning;
 using Breakout.Utility;
-using DIKUArcade.Events;
-using DIKUArcade.Events.Generic;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using Window = DIKUArcade.GUI.Window;

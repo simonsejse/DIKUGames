@@ -1,5 +1,4 @@
-﻿using Breakout;
-using Breakout.Events;
+﻿using Breakout.Events;
 using Breakout.Factories;
 using Breakout.States;
 using Breakout.States.GameRunning;

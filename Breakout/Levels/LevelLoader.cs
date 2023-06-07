@@ -2,15 +2,11 @@
 using Breakout.Entities.BlockTypes;
 using Breakout.Factories;
 using Breakout.GameModifiers;
-using Breakout.GameModifiers.PowerUps;
 using Breakout.IO;
-using Breakout.PowerUps;
-using Breakout.Hazard;
 using Breakout.Storage;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-using DIKUArcade.Timers;
 
 namespace Breakout.Levels;
 

@@ -1,8 +1,6 @@
 ﻿using System.Drawing;
-using Breakout.Commands;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using DIKUArcade.Input;
 
 namespace Breakout.Handler;
 

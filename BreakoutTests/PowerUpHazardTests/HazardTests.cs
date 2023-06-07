@@ -5,8 +5,6 @@ using Breakout.GameModifiers.Hazard.Activators;
 using Breakout.GameModifiers.Hazards;
 using Breakout.GameModifiers.Hazards.Activators;
 using DIKUArcade.GUI;
-using Breakout.PowerUps;
-using Breakout.Hazard;
 using Breakout.Hazard.Activators;
 using Breakout.Utility;
 

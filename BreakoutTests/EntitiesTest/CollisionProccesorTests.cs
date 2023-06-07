@@ -1,10 +1,6 @@
-﻿using System.Data;
-using Breakout.Factories;
-using Breakout.IO;
-using Breakout.Entities;
+﻿using Breakout.Entities;
 using Breakout.Entities.BlockTypes;
 using Breakout.GameModifiers.PowerUps;
-using Breakout.PowerUps;
 using Breakout.States.GameRunning;
 using Breakout.Utility;
 using DIKUArcade.Entities;

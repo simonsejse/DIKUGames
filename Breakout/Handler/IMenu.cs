@@ -1,5 +1,3 @@
-using System.Drawing;
-using DIKUArcade.Graphics;
 
 namespace Breakout.Handler;
 

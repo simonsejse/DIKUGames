@@ -1,8 +1,5 @@
-using Breakout.Containers;
-using Breakout.States;
 using Breakout.States.GameRunning;
 using DIKUArcade.Entities;
-using DIKUArcade.Math;
 using DIKUArcade.Physics;
 
 namespace Breakout.Entities;

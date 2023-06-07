@@ -8,7 +8,6 @@ using Breakout.Levels;
 using Breakout.Utility;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
-using DIKUArcade.Graphics;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;

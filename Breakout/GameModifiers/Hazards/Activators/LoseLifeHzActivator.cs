@@ -1,6 +1,5 @@
 ﻿using Breakout.Entities;
 using Breakout.GameModifiers;
-using Breakout.PowerUps;
 
 namespace Breakout.Hazard.Activators;
 

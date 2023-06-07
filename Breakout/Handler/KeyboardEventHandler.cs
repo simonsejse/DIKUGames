@@ -1,4 +1,3 @@
-using Breakout.Commands;
 using DIKUArcade.Input;
 
 namespace Breakout.Handler;

@@ -1,10 +1,7 @@
 ﻿using System.Drawing;
-using Breakout.Commands;
 using Breakout.Factories;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using DIKUArcade.Input;
-using DIKUArcade.Math;
 
 namespace Breakout.Utility;
 

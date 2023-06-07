@@ -1,5 +1,4 @@
 using Breakout.GameModifiers.Hazard.Activators;
-using Breakout.Hazard.Activators;
 using Breakout.States.GameRunning;
 using DIKUArcade.Graphics;
 

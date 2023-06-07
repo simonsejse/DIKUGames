@@ -1,5 +1,3 @@
-
-
 using Breakout.Utility;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;

@@ -2,11 +2,9 @@ using Breakout.Entities;
 using DIKUArcade.GUI;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
-using DIKUArcade.Entities;
 using Breakout.Entities.BlockTypes;
 using Breakout.GameModifiers.Hazard;
 using Breakout.GameModifiers.PowerUps;
-using Breakout.PowerUps;
 
 namespace BreakoutTests.EntitiesTest;
 

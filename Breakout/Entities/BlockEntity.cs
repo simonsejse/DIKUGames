@@ -1,14 +1,9 @@
 using DIKUArcade.Math;
 using DIKUArcade.Entities;
 using Breakout.Entities.BlockTypes;
-using Breakout.Factories;
 using Breakout.GameModifiers;
-using Breakout.PowerUps;
-using Breakout.Hazard;
-using Breakout.PowerUps.Activators;
 using Breakout.States.GameRunning;
 using Breakout.Utility;
-using DIKUArcade.Events;
 using DIKUArcade.Graphics;
 
 namespace Breakout.Entities;

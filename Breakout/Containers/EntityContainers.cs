@@ -1,7 +1,6 @@
 ﻿using Breakout.Entities;
 using Breakout.States.GameRunning;
 using DIKUArcade.Entities;
-using DIKUArcade.Math;
 
 namespace Breakout.Containers;
 

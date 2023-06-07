@@ -1,7 +1,4 @@
-using System.Data;
 using Breakout.Containers;
-using Breakout.Factories;
-using Breakout.IO;
 using Breakout.Entities;
 using Breakout.GameModifiers;
 using Breakout.GameModifiers.PowerUps;
@@ -9,10 +6,8 @@ using Breakout.GameModifiers.PowerUps.Activators;
 using Breakout.Utility;
 using DIKUArcade.GUI;
 using DIKUArcade.Math;
-using Breakout.PowerUps;
 using Breakout.PowerUps.Activators;
 using Breakout.States.GameRunning;
-using DIKUArcade.Entities;
 
 namespace BreakoutTests.PowerUpHazardTests;
 

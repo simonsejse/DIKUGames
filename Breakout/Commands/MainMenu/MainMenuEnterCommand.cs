@@ -4,7 +4,6 @@ using Breakout.Handler;
 using Breakout.States;
 using DIKUArcade.Events;
 using DIKUArcade.Events.Generic;
-using DIKUArcade.Timers;
 
 namespace Breakout.Commands.MainMenu;
 
