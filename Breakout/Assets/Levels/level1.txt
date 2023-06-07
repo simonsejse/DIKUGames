@@ -10,7 +10,7 @@ Map:
 -000----000-
 -%%%%%%%%%%-
 -%%%%%%%%%%-
-------------
+############
 ------------
 ------------
 ------------
@@ -38,4 +38,5 @@ Legend:
 0) grey-block.png
 1) orange-block.png
 a) purple-block.png
+#) yellow-block.png
 Legend/
