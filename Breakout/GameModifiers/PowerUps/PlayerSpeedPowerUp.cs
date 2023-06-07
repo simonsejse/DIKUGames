@@ -8,7 +8,7 @@ namespace Breakout.GameModifiers.PowerUps;
 /// <summary>
 /// Represents the Player Speed Power-Up.
 /// </summary>
-public class PlayerSpeedGameModifier : IGameModifier {
+public class PlayerSpeedPowerUp : IGameModifier {
     /// <summary>
     /// Gets the image associated with the Player Speed Power-Up.
     /// </summary>
