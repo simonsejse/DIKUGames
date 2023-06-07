@@ -8,7 +8,7 @@ namespace Breakout.Factories;
 /// </summary>
 public class LevelFactory : IModelFactory<Level> {
     private const string WindowsNewline = "\r\n";
-    private const string MacbookNewline = "\n";
+    private const string MacbookUnixNewline = "\n";
 
     /// <summary>
     /// Parses the input data string and returns a new instance of <see cref="Level"/> 
@@ -20,7 +20,7 @@ public class LevelFactory : IModelFactory<Level> {
         string mapStart = data.Split("Map:")[1];
         string mapEnd = mapStart.Split("Map/")[0];
 
-        string newLine = mapEnd.Contains(WindowsNewline) ? WindowsNewline : MacbookNewline;
+        string newLine = mapEnd.Contains(WindowsNewline) ? WindowsNewline : MacbookUnixNewline;
 
         string[] map = mapEnd.Split(newLine)
             .Where(row => row.Length > 0)

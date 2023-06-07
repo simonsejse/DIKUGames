@@ -16,7 +16,7 @@ using DIKUArcade.Physics;
 namespace BreakoutTests.EntitiesTest;
 
 [TestFixture]
-public class CollisionManagerTests
+public class CollisionProcessorTests
 {
     private EntityContainer<BlockEntity> blockEntities;
     private BallEntity ballEntity;
