@@ -17,4 +17,4 @@ This allows us to keep track of our progress and ensure that the code is functio
 
 We also use continuous integration through GitHub Actions to automatically run code coverage tests and update the website whenever someone makes a pull request with the test prefix.
 
-Website: https://dikugroup6.github.io/
+Website: https://simonsejse.github.io/dikugroup6.github.io
